@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Траектория құрастырушы — Шың 140</title>
+<meta name="description" content="Шың 140 — ҰБТ-ға жеке дайындық траекториясын құрастырушы: тақырыптық нәтиже бойынша «бағдаршам» картасы және 4 апталық жоспар.">
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#14213d;--mut:#5b6b86;--line:#e2e7f0;--blue:#2f6fdb;--red:#e5484d;--yel:#f5a524;--grn:#2fb36b}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(120deg,#14213d,#2f6fdb);color:#fff;padding:26px 20px 30px}
+header .in{max-width:1100px;margin:0 auto}
+header small{opacity:.8;letter-spacing:.12em;text-transform:uppercase;font-size:12px;font-weight:700}
+header h1{margin:6px 0 6px;font-size:28px}
+header p{margin:0;opacity:.9;max-width:760px}
+main{max-width:1100px;margin:-18px auto 40px;padding:0 16px;display:grid;gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 6px 18px rgba(20,33,61,.05)}
+h2{margin:0 0 12px;font-size:19px}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+label{font-size:13px;color:var(--mut);font-weight:600;display:block;margin-bottom:4px}
+input,select{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;width:100%}
+.f{flex:1;min-width:160px}
+.topics{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:6px}
+.tp{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.tp span{flex:1;font-size:14px}
+.tp input{width:74px;text-align:center}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;background:var(--blue);color:#fff}
+button.sec{background:#eaf0fb;color:var(--blue)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--mut);margin-top:8px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.cell{border-radius:12px;padding:12px;color:#fff;font-weight:600;font-size:14px;position:relative}
+.cell b{display:block;font-size:24px}
+.cell.r{background:var(--red)}.cell.y{background:var(--yel)}.cell.g{background:var(--grn)}
+.week{border-left:4px solid var(--blue);padding:10px 14px;margin:10px 0;background:#f7f9fe;border-radius:0 12px 12px 0}
+.week h3{margin:0 0 6px;font-size:16px}
+.week ul{margin:0;padding-left:18px}.week li{margin:3px 0}
+.stat{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.stat div{flex:1;min-width:150px;background:#f7f9fe;border-radius:12px;padding:12px}
+.stat b{display:block;font-size:22px}
+textarea{width:100%;min-height:120px;font:13px/1.45 ui-monospace,Consolas,monospace;border:1px solid var(--line);border-radius:10px;padding:10px}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:center}
+th{background:#f1f4fa}
+td.r{background:#fde2e3}td.y{background:#fdf0d5}td.g{background:#d9f3e4}
+.scroll{overflow-x:auto}
+.note{font-size:13px;color:var(--mut)}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
+#out,#classOut{display:none}
+@media print{header,.noprint,footer{display:none}main{margin:0}.card{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <a href="../" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">← «Шың 140» сынағына оралу</a><br><small>Шың 140 · Ауыл мектебі + ЖИ</small>
+  <h1>ҰБТ-ға жеке траектория құрастырушы</h1>
+  <p>Оқушының тақырыптық нәтижесін енгізіңіз: құрал «бағдаршам» картасын және 4 апталық жеке жоспарды бірден құрады.</p>
+</div></header>
+<main>
+  <section class="card noprint">
+    <h2>1. Оқушы туралы</h2>
+    <div class="row">
+      <div class="f"><label>Оқушы коды (аты-жөні емес)</label><input id="code" value="Оқушы-07"></div>
+      <div class="f"><label>Қазіргі балы (140-тан)</label><input id="now" type="number" min="0" max="140" value="72"></div>
+      <div class="f"><label>Мақсат балы</label><input id="goal" type="number" min="0" max="140" value="100"></div>
+      <div class="f"><label>Аптасына сабақтан тыс уақыт</label>
+        <select id="hours"><option value="3">3 сағат</option><option value="5" selected>5 сағат</option><option value="8">8 сағат</option></select></div>
+    </div>
+    <h2 style="margin-top:18px">2. Тақырыптар бойынша нәтиже, %</h2>
+    <div class="topics" id="topics"></div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--red)"></i>Қызыл: 50%-дан төмен</span>
+      <span><i class="dot" style="background:var(--yel)"></i>Сары: 50–79%</span>
+      <span><i class="dot" style="background:var(--grn)"></i>Жасыл: 80% және жоғары</span>
+    </div>
+    <div class="btns">
+      <button id="build">Траектория құру</button>
+      <button class="sec" id="demo">Мысал толтыру</button>
+      <button class="sec" id="print">Басып шығару</button>
+    </div>
+  </section>
+
+  <section class="card" id="out">
+    <h2 id="outTitle"></h2>
+    <div class="stat" id="stat"></div>
+    <h2>«Бағдаршам» картасы</h2>
+    <div class="map" id="map"></div>
+    <h2 style="margin-top:18px">4 апталық жеке жоспар</h2>
+    <div id="plan"></div>
+    <p class="note">Жоспарды мұғалім бекітеді. Тақырыптық тесттер «Жартысы — шекара» ережесімен орындалады: жартысынан азы дұрыс болса — тақырып қайталанып, тест қайта тапсырылады; жартысы не одан көбі дұрыс болса — қатемен жұмыс.</p>
+  </section>
+
+  <section class="card noprint">
+    <h2>3. Бүкіл сынып бойынша карта</h2>
+    <p class="note">Google кестесінен көшіріп қойыңыз: бірінші жол — тақырыптар, келесі жолдар — оқушы коды және пайыздар (үтір, нүктелі үтір немесе Tab арқылы бөлінген).</p>
+    <textarea id="csv"></textarea>
+    <div class="btns"><button id="classBtn">Сынып картасын құру</button><button class="sec" id="classDemo">Мысал деректер</button></div>
+  </section>
+  <section class="card" id="classOut">
+    <h2>Сынып картасы</h2>
+    <div class="stat" id="classStat"></div>
+    <div class="scroll"><table id="classTable"></table></div>
+    <p class="note" id="classNote"></p>
+  </section>
+</main>
+<footer>Автор: Юлдашев Кадыржан, математика пәні мұғалімі · Ө.Жәнібеков атындағы ЖББМ, Сауран ауданы · ЖИ көмегімен жасалған прототип</footer>
+
+<script>
+var TOPICS=[
+ ["Сандар жиыны",""],["Арифметикалық амалдар",""],["Бөлшектер мен рационал сандар","Рационал сандар тренажеры"],
+ ["Түбір және дәреже",""],["Санның бөлгіштері (жай, натурал)",""],["Пайыз және пропорция",""],
+ ["Сызықтық және квадрат теңдеулер",""],["Теңсіздіктер",""],["Функция және график",""],
+ ["Прогрессиялар",""],["Логарифм және көрсеткіштік функция",""],["Тригонометрия",""],
+ ["Туынды және интеграл",""],["Планиметрия",""],["Стереометрия",""],["Мәтінді есептер (мат. сауаттылық)",""]
+];
+var DEMO=[90,85,38,45,70,55,65,48,72,60,35,52,58,62,41,57];
+var box=document.getElementById("topics");
+TOPICS.forEach(function(t,i){
+  var d=document.createElement("div");d.className="tp";
+  d.innerHTML='<span>'+t[0]+'</span><input type="number" min="0" max="100" placeholder="—" data-i="'+i+'">';
+  box.appendChild(d);
+});
+var inputs=[].slice.call(box.querySelectorAll("input"));
+function zone(p){return p<50?"r":(p<80?"y":"g");}
+function zname(z){return z==="r"?"Қызыл":(z==="y"?"Сары":"Жасыл");}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+document.getElementById("demo").onclick=function(){inputs.forEach(function(inp,i){inp.value=DEMO[i];});build();};
+document.getElementById("print").onclick=function(){try{window.print();}catch(e){}};
+document.getElementById("build").onclick=build;
+
+function build(){
+  var items=[];
+  inputs.forEach(function(inp,i){var v=parseFloat(inp.value);if(!isNaN(v)){v=Math.max(0,Math.min(100,v));items.push({t:TOPICS[i][0],p:v,z:zone(v)});}});
+  if(!items.length){alert2("Кемінде бір тақырыптың нәтижесін енгізіңіз.");return;}
+  items.sort(function(a,b){return a.p-b.p;});
+  var code=document.getElementById("code").value||"Оқушы",now=+document.getElementById("now").value||0,goal=+document.getElementById("goal").value||0,h=+document.getElementById("hours").value;
+  var red=items.filter(function(x){return x.z==="r";}),yel=items.filter(function(x){return x.z==="y";}),grn=items.filter(function(x){return x.z==="g";});
+  document.getElementById("outTitle").textContent=code+" — жеке траектория";
+  document.getElementById("stat").innerHTML=
+    '<div>Қазіргі / мақсат балы<b>'+now+' → '+goal+'</b></div>'+
+    '<div>Қызыл тақырыптар<b style="color:var(--red)">'+red.length+'</b></div>'+
+    '<div>Сары тақырыптар<b style="color:var(--yel)">'+yel.length+'</b></div>'+
+    '<div>Жасыл тақырыптар<b style="color:var(--grn)">'+grn.length+'</b></div>';
+  document.getElementById("map").innerHTML=items.map(function(x){return '<div class="cell '+x.z+'"><b>'+x.p+'%</b>'+esc(x.t)+'</div>';}).join("");
+  var per=h>=8?3:(h>=5?2:1);
+  var focus=red.concat(yel);
+  var weeks=[[],[],[]];
+  focus.forEach(function(x,i){var w=Math.floor(i/per);if(w<3)weeks[w].push(x);});
+  var rest=focus.slice(per*3);
+  var html="";
+  weeks.forEach(function(ws,i){
+    if(!ws.length)return;
+    html+='<div class="week"><h3>'+(i+1)+'-апта</h3><ul>';
+    ws.forEach(function(x){
+      var extra=x.t.indexOf("Бөлшек")===0?" + «Рационал сандар тренажеры»":"";
+      html+='<li><b>'+esc(x.t)+'</b> ('+x.p+'%, '+zname(x.z).toLowerCase()+'): ЖИ құрастырған деңгейлік есептер'+extra+' → тақырыптық тест → қатемен жұмыс</li>';
+    });
+    if(grn.length)html+='<li>Жасыл тақырыптарды ұмытпау: '+esc(grn.slice(0,2).map(function(x){return x.t;}).join(", "))+' — 5 есептен</li>';
+    html+='<li>Математикалық сауаттылық: 1 мәтінді есептер жинағы</li></ul></div>';
+  });
+  html+='<div class="week"><h3>4-апта</h3><ul><li>Аралас қайталау'+(rest.length?': '+esc(rest.map(function(x){return x.t;}).join(", ")):"")+'</li><li>«Шың 140» толық сынағы → нәтиже бойынша траекторияны жаңарту</li><li>Ата-анаға нәтижені хабарлау</li></ul></div>';
+  document.getElementById("plan").innerHTML=html;
+  var o=document.getElementById("out");o.style.display="block";o.scrollIntoView({behavior:"smooth"});
+}
+function alert2(m){var o=document.getElementById("out");o.style.display="block";document.getElementById("outTitle").textContent=m;document.getElementById("stat").innerHTML="";document.getElementById("map").innerHTML="";document.getElementById("plan").innerHTML="";}
+
+// Сынып картасы
+document.getElementById("classDemo").onclick=function(){
+  var t=["Код","Бөлшек","Түбір","Пайыз","Теңдеу","Функция","Логарифм","Геометрия"];
+  var rows=[t.join("\t")];
+  var seed=[[38,45,55,65,72,35,41],[82,76,90,85,70,62,58],[55,48,61,52,44,30,47],[91,88,95,80,84,75,70],[42,50,47,58,60,28,39],[67,72,58,70,66,49,55]];
+  seed.forEach(function(s,i){rows.push(["Оқушы-0"+(i+1)].concat(s).join("\t"));});
+  document.getElementById("csv").value=rows.join("\n");
+};
+document.getElementById("classBtn").onclick=function(){
+  var lines=document.getElementById("csv").value.trim().split(/\r?\n/).filter(Boolean);
+  if(lines.length<2)return;
+  var sp=function(l){return l.split(/\t|;|,/).map(function(s){return s.trim();});};
+  var head=sp(lines[0]),data=lines.slice(1).map(sp);
+  var n=head.length-1,avg=[];
+  for(var j=1;j<=n;j++){var s=0,c=0;data.forEach(function(r){var v=parseFloat(r[j]);if(!isNaN(v)){s+=v;c++;}});avg.push(c?Math.round(s/c):0);}
+  var html='<tr><th>'+esc(head[0])+'</th>'+head.slice(1).map(function(h){return '<th>'+esc(h)+'</th>';}).join("")+'<th>Қызыл саны</th></tr>';
+  data.forEach(function(r){
+    var reds=0;
+    html+='<tr><th>'+esc(r[0])+'</th>';
+    for(var j=1;j<=n;j++){var v=parseFloat(r[j]);var z=isNaN(v)?"":zone(v);if(z==="r")reds++;html+='<td class="'+z+'">'+(isNaN(v)?"—":v)+'</td>';}
+    html+='<td><b>'+reds+'</b></td></tr>';
+  });
+  html+='<tr><th>Сынып орташасы</th>'+avg.map(function(a){return '<td class="'+zone(a)+'"><b>'+a+'</b></td>';}).join("")+'<td></td></tr>';
+  document.getElementById("classTable").innerHTML=html;
+  var weakest=head.slice(1).map(function(h,i){return{h:h,a:avg[i]};}).sort(function(a,b){return a.a-b.a;});
+  document.getElementById("classStat").innerHTML='<div>Оқушылар саны<b>'+data.length+'</b></div><div>Сыныптың ең әлсіз тақырыбы<b style="color:var(--red)">'+esc(weakest[0].h)+' ('+weakest[0].a+'%)</b></div><div>Ең күшті тақырыбы<b style="color:var(--grn)">'+esc(weakest[weakest.length-1].h)+' ('+weakest[weakest.length-1].a+'%)</b></div>';
+  document.getElementById("classNote").textContent="Ұсыныс: «"+weakest[0].h+"» және «"+(weakest[1]?weakest[1].h:"")+"» тақырыптарын бүкіл сыныппен бірге пысықтаңыз, қалғанын жеке траектория бойынша жүргізіңіз.";
+  var o=document.getElementById("classOut");o.style.display="block";o.scrollIntoView({behavior:"smooth"});
+};
+</script>
+</body>
+</html>
