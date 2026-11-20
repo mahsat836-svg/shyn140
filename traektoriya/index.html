@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Траектория құрастырушы — Шың 140</title>
+<title>ББЖМ мен ҰБТ траектория құрастырушы — Шың 140</title>
 <meta name="description" content="Шың 140 — ҰБТ-ға жеке дайындық траекториясын құрастырушы: тақырыптық нәтиже бойынша «бағдаршам» картасы және 4 апталық жоспар.">
 <style>
 :root{--bg:#f4f6fb;--card:#fff;--ink:#14213d;--mut:#5b6b86;--line:#e2e7f0;--blue:#2f6fdb;--red:#e5484d;--yel:#f5a524;--grn:#2fb36b}
@@ -33,6 +33,7 @@ button.sec{background:#eaf0fb;color:var(--blue)}
 .map{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 .cell{border-radius:12px;padding:12px;color:#fff;font-weight:600;font-size:14px;position:relative}
 .cell b{display:block;font-size:24px}
+.yt{color:#e5484d;text-decoration:none;font-size:13px}.yt2{color:#fff;font-size:12px}
 .cell.r{background:var(--red)}.cell.y{background:var(--yel)}.cell.g{background:var(--grn)}
 .week{border-left:4px solid var(--blue);padding:10px 14px;margin:10px 0;background:#f7f9fe;border-radius:0 12px 12px 0}
 .week h3{margin:0 0 6px;font-size:16px}
@@ -55,15 +56,16 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
 <body>
 <header><div class="in">
   <a href="../" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">← «Шың 140» сынағына оралу</a><br><small>Шың 140 · Ауыл мектебі + ЖИ</small>
-  <h1>ҰБТ-ға жеке траектория құрастырушы</h1>
-  <p>Оқушының тақырыптық нәтижесін енгізіңіз: құрал «бағдаршам» картасын және 4 апталық жеке жоспарды бірден құрады.</p>
+  <h1>ББЖМ мен ҰБТ-ға жеке траектория құрастырушы</h1>
+  <p>Оқушының тақырыптық нәтижесін енгізіңіз: құрал «бағдаршам» картасын, SAURAN BOOK LIFE бейнесабақтарына сілтемелері бар 4 апталық жеке жоспарды бірден құрады. ▶ белгісі — тақырыпқа арналған бейнесабақ.</p>
 </div></header>
 <main>
   <section class="card noprint">
     <h2>1. Оқушы туралы</h2>
     <div class="row">
+      <div class="f"><label>Дайындық түрі</label><select id="mode"><option value="ubt">ҰБТ (11-сынып)</option><option value="bbzhm">ББЖМ (9-сынып)</option></select></div>
       <div class="f"><label>Оқушы коды (аты-жөні емес)</label><input id="code" value="Оқушы-07"></div>
-      <div class="f"><label>Қазіргі балы (140-тан)</label><input id="now" type="number" min="0" max="140" value="72"></div>
+      <div class="f"><label id="nowLbl">Қазіргі балы (140-тан)</label><input id="now" type="number" min="0" max="140" value="72"></div>
       <div class="f"><label>Мақсат балы</label><input id="goal" type="number" min="0" max="140" value="100"></div>
       <div class="f"><label>Аптасына сабақтан тыс уақыт</label>
         <select id="hours"><option value="3">3 сағат</option><option value="5" selected>5 сағат</option><option value="8">8 сағат</option></select></div>
@@ -105,24 +107,37 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
     <p class="note" id="classNote"></p>
   </section>
 </main>
-<footer>Автор: Юлдашев Кадыржан, математика пәні мұғалімі · Ө.Жәнібеков атындағы ЖББМ, Сауран ауданы · ЖИ көмегімен жасалған прототип</footer>
+<footer>Автор: Юлдашев Кадыржан, математика пәні мұғалімі · Ө.Жәнібеков атындағы ЖББМ, Сауран ауданы · Бейнесабақтар: <a href="https://www.youtube.com/@LIFEMATH-d3v" target="_blank" rel="noopener">SAURAN BOOK LIFE</a> · ЖИ көмегімен жасалған</footer>
 
 <script>
-var TOPICS=[
- ["Сандар жиыны",""],["Арифметикалық амалдар",""],["Бөлшектер мен рационал сандар","Рационал сандар тренажеры"],
- ["Түбір және дәреже",""],["Санның бөлгіштері (жай, натурал)",""],["Пайыз және пропорция",""],
- ["Сызықтық және квадрат теңдеулер",""],["Теңсіздіктер",""],["Функция және график",""],
- ["Прогрессиялар",""],["Логарифм және көрсеткіштік функция",""],["Тригонометрия",""],
- ["Туынды және интеграл",""],["Планиметрия",""],["Стереометрия",""],["Мәтінді есептер (мат. сауаттылық)",""]
-];
-var DEMO=[90,85,38,45,70,55,65,48,72,60,35,52,58,62,41,57];
+var V="https://www.youtube.com/watch?v=";
+var MODES={
+ ubt:{name:"ҰБТ (11-сынып)",max:140,now:72,goal:100,
+  topics:[["Сандар жиыны",""],["Арифметикалық амалдар",""],["Бөлшектер мен рационал сандар",""],["Түбір және дәреже",""],["Санның бөлгіштері (жай, натурал)",""],["Пайыз және пропорция",""],["Сызықтық және квадрат теңдеулер",V+"oGoF0FDca9c"],["Теңсіздіктер",V+"Smm0LwCqUuI"],["Функция және график",""],["Прогрессиялар",""],["Логарифм және көрсеткіштік функция",""],["Тригонометрия",""],["Туынды және интеграл",""],["Планиметрия",""],["Стереометрия",""],["Мәтінді есептер (мат. сауаттылық)",V+"SWqHiIFfnPw"]],
+  demo:[90,85,38,45,70,55,65,48,72,60,35,52,58,62,41,57]},
+ bbzhm:{name:"ББЖМ (9-сынып)",max:100,now:45,goal:75,
+  topics:[["Уақытқа байланысты есептер (сағат, күн, апта)",V+"DWAow0fyEmk"],["Өлшем бірліктер және масштаб",V+"K1ad62PQ2dE"],["Арифметикалық орта, мода, медиана",V+"UKHED-jdF6A"],["Эйлер–Венн диаграммасы",V+"q48rpe76EcE"],["Санды ребустар, логикалық есептер",V+"yNvfwXHn1Pw"],["Санның модулі",V+"O6B-QJKJfMA"],["Қысқаша көбейту формулалары",V+"L5-GMllaLPs"],["Айнымалысы бар өрнектер",V+"aSS0YrZn4-0"],["Екі айнымалысы бар сызықтық теңдеулер",V+"Wx2qa0-ZjzM"],["Квадрат теңдеу және квадрат үшмүше",V+"BfaLIDqwgYU"],["Квадрат теңсіздіктер",V+"Smm0LwCqUuI"],["PISA / ББЖМ кешенді есептері",V+"iBEnh2fHFZY"],["ББЖМ нұсқасын талдау",V+"-zQhIdl13fQ"]],
+  demo:[42,55,38,70,61,85,47,66,52,35,44,58,49]}
+};
+var mode="ubt",TOPICS=MODES.ubt.topics,DEMO=MODES.ubt.demo;
 var box=document.getElementById("topics");
-TOPICS.forEach(function(t,i){
-  var d=document.createElement("div");d.className="tp";
-  d.innerHTML='<span>'+t[0]+'</span><input type="number" min="0" max="100" placeholder="—" data-i="'+i+'">';
-  box.appendChild(d);
-});
-var inputs=[].slice.call(box.querySelectorAll("input"));
+function renderTopics(){
+  box.innerHTML="";
+  TOPICS.forEach(function(t,i){
+    var d=document.createElement("div");d.className="tp";
+    d.innerHTML='<span>'+t[0]+(t[1]?' <a class="yt" href="'+t[1]+'" target="_blank" rel="noopener" title="SAURAN BOOK LIFE бейнесабағы">▶</a>':'')+'</span><input type="number" min="0" max="100" placeholder="—" data-i="'+i+'">';
+    box.appendChild(d);
+  });
+  inputs=[].slice.call(box.querySelectorAll("input"));
+}
+document.getElementById("mode").onchange=function(){
+  mode=this.value;var m=MODES[mode];TOPICS=m.topics;DEMO=m.demo;
+  document.getElementById("now").max=m.max;document.getElementById("goal").max=m.max;
+  document.getElementById("now").value=m.now;document.getElementById("goal").value=m.goal;
+  document.getElementById("nowLbl").textContent="Қазіргі балы ("+m.max+"-ден)";
+  renderTopics();document.getElementById("out").style.display="none";
+};
+var inputs=[];renderTopics();
 function zone(p){return p<50?"r":(p<80?"y":"g");}
 function zname(z){return z==="r"?"Қызыл":(z==="y"?"Сары":"Жасыл");}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
@@ -133,7 +148,7 @@ document.getElementById("build").onclick=build;
 
 function build(){
   var items=[];
-  inputs.forEach(function(inp,i){var v=parseFloat(inp.value);if(!isNaN(v)){v=Math.max(0,Math.min(100,v));items.push({t:TOPICS[i][0],p:v,z:zone(v)});}});
+  inputs.forEach(function(inp,i){var v=parseFloat(inp.value);if(!isNaN(v)){v=Math.max(0,Math.min(100,v));items.push({t:TOPICS[i][0],u:TOPICS[i][1],p:v,z:zone(v)});}});
   if(!items.length){alert2("Кемінде бір тақырыптың нәтижесін енгізіңіз.");return;}
   items.sort(function(a,b){return a.p-b.p;});
   var code=document.getElementById("code").value||"Оқушы",now=+document.getElementById("now").value||0,goal=+document.getElementById("goal").value||0,h=+document.getElementById("hours").value;
@@ -144,7 +159,7 @@ function build(){
     '<div>Қызыл тақырыптар<b style="color:var(--red)">'+red.length+'</b></div>'+
     '<div>Сары тақырыптар<b style="color:var(--yel)">'+yel.length+'</b></div>'+
     '<div>Жасыл тақырыптар<b style="color:var(--grn)">'+grn.length+'</b></div>';
-  document.getElementById("map").innerHTML=items.map(function(x){return '<div class="cell '+x.z+'"><b>'+x.p+'%</b>'+esc(x.t)+'</div>';}).join("");
+  document.getElementById("map").innerHTML=items.map(function(x){return '<div class="cell '+x.z+'"><b>'+x.p+'%</b>'+esc(x.t)+(x.u?' <a class="yt2" href="'+x.u+'" target="_blank" rel="noopener">▶ видео</a>':'')+'</div>';}).join("");
   var per=h>=8?3:(h>=5?2:1);
   var focus=red.concat(yel);
   var weeks=[[],[],[]];
@@ -156,12 +171,12 @@ function build(){
     html+='<div class="week"><h3>'+(i+1)+'-апта</h3><ul>';
     ws.forEach(function(x){
       var extra=x.t.indexOf("Бөлшек")===0?" + «Рационал сандар тренажеры»":"";
-      html+='<li><b>'+esc(x.t)+'</b> ('+x.p+'%, '+zname(x.z).toLowerCase()+'): ЖИ құрастырған деңгейлік есептер'+extra+' → тақырыптық тест → қатемен жұмыс</li>';
+      html+='<li><b>'+esc(x.t)+'</b> ('+x.p+'%, '+zname(x.z).toLowerCase()+'): '+(x.u?'<a href="'+x.u+'" target="_blank" rel="noopener">▶ SAURAN BOOK LIFE бейнесабағы</a> → ':'')+'ЖИ құрастырған деңгейлік есептер'+extra+' → тақырыптық тест → қатемен жұмыс</li>';
     });
     if(grn.length)html+='<li>Жасыл тақырыптарды ұмытпау: '+esc(grn.slice(0,2).map(function(x){return x.t;}).join(", "))+' — 5 есептен</li>';
     html+='<li>Математикалық сауаттылық: 1 мәтінді есептер жинағы</li></ul></div>';
   });
-  html+='<div class="week"><h3>4-апта</h3><ul><li>Аралас қайталау'+(rest.length?': '+esc(rest.map(function(x){return x.t;}).join(", ")):"")+'</li><li>«Шың 140» толық сынағы → нәтиже бойынша траекторияны жаңарту</li><li>Ата-анаға нәтижені хабарлау</li></ul></div>';
+  html+='<div class="week"><h3>4-апта</h3><ul><li>Аралас қайталау'+(rest.length?': '+esc(rest.map(function(x){return x.t;}).join(", ")):"")+'</li><li>'+(mode==='bbzhm'?'ББЖМ форматындағы сынақ (Math Literacy)':'«Шың 140» толық сынағы')+' → нәтиже бойынша траекторияны жаңарту</li><li>Ата-анаға нәтижені хабарлау</li></ul></div>';
   document.getElementById("plan").innerHTML=html;
   var o=document.getElementById("out");o.style.display="block";o.scrollIntoView({behavior:"smooth"});
 }
