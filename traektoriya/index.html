@@ -55,9 +55,9 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
 </head>
 <body>
 <header><div class="in">
-  <a href="../" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">← «Шың 140» сынағына оралу</a><br><small>Шың 140 · Ауыл мектебі + ЖИ</small>
+  <a href="../" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">← «Шың 140» сынағына оралу</a> · <a href="../sabaqtar/" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">Бейнесабақтар кітапханасы →</a><br><small>Шың 140 · Ауыл мектебі + ЖИ</small>
   <h1>ББЖМ мен ҰБТ-ға жеке траектория құрастырушы</h1>
-  <p>Оқушының тақырыптық нәтижесін енгізіңіз: құрал «бағдаршам» картасын, SAURAN BOOK LIFE бейнесабақтарына сілтемелері бар 4 апталық жеке жоспарды бірден құрады. ▶ белгісі — тақырыпқа арналған бейнесабақ.</p>
+  <p>Оқушының тақырыптық нәтижесін енгізіңіз: құрал «бағдаршам» картасын, қазақша бейнесабақтарға сілтемелері бар 4 апталық жеке жоспарды бірден құрады. ▶ белгісі — тақырыпқа арналған бейнесабақ. Әр тақырыптың барлық сабақтары — <a href="../sabaqtar/" style="color:#fff;font-weight:700">Бейнесабақтар кітапханасында</a>.</p>
 </div></header>
 <main>
   <section class="card noprint">
@@ -113,7 +113,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
 var V="https://www.youtube.com/watch?v=";
 var MODES={
  ubt:{name:"ҰБТ (11-сынып)",max:140,now:72,goal:100,
-  topics:[["Сандар жиыны",""],["Арифметикалық амалдар",""],["Бөлшектер мен рационал сандар",""],["Түбір және дәреже",""],["Санның бөлгіштері (жай, натурал)",""],["Пайыз және пропорция",""],["Сызықтық және квадрат теңдеулер",V+"oGoF0FDca9c"],["Теңсіздіктер",V+"Smm0LwCqUuI"],["Функция және график",""],["Прогрессиялар",""],["Логарифм және көрсеткіштік функция",""],["Тригонометрия",""],["Туынды және интеграл",""],["Планиметрия",""],["Стереометрия",""],["Мәтінді есептер (мат. сауаттылық)",V+"SWqHiIFfnPw"]],
+  topics:[["Сандар жиыны",V+"GrKHL8BWjB8"],["Арифметикалық амалдар",V+"OZX7LSVamI8"],["Бөлшектер мен рационал сандар",V+"GWwLb_9xIL4"],["Түбір және дәреже",V+"NbDSpB_DMjo"],["Санның бөлгіштері (жай, натурал)",V+"CW_QwGXewsc"],["Пайыз және пропорция",V+"iywRJ4_6WrQ"],["Сызықтық және квадрат теңдеулер",V+"oGoF0FDca9c"],["Теңсіздіктер",V+"Smm0LwCqUuI"],["Функция және график",V+"axsx26YAoT0"],["Прогрессиялар",V+"qxReVSzTNfo"],["Логарифм және көрсеткіштік функция",V+"dEw3Ykf_0rY"],["Тригонометрия",V+"3ud58f4qk3o"],["Туынды және интеграл",V+"JENr9T8TcDU"],["Планиметрия",V+"W97JaKhD8aQ"],["Стереометрия",V+"h2JOdcMnjgo"],["Мәтінді есептер (мат. сауаттылық)",V+"SWqHiIFfnPw"]],
   demo:[90,85,38,45,70,55,65,48,72,60,35,52,58,62,41,57]},
  bbzhm:{name:"ББЖМ (9-сынып)",max:100,now:45,goal:75,
   topics:[["Уақытқа байланысты есептер (сағат, күн, апта)",V+"DWAow0fyEmk"],["Өлшем бірліктер және масштаб",V+"K1ad62PQ2dE"],["Арифметикалық орта, мода, медиана",V+"UKHED-jdF6A"],["Эйлер–Венн диаграммасы",V+"q48rpe76EcE"],["Санды ребустар, логикалық есептер",V+"yNvfwXHn1Pw"],["Санның модулі",V+"O6B-QJKJfMA"],["Қысқаша көбейту формулалары",V+"L5-GMllaLPs"],["Айнымалысы бар өрнектер",V+"aSS0YrZn4-0"],["Екі айнымалысы бар сызықтық теңдеулер",V+"Wx2qa0-ZjzM"],["Квадрат теңдеу және квадрат үшмүше",V+"BfaLIDqwgYU"],["Квадрат теңсіздіктер",V+"Smm0LwCqUuI"],["PISA / ББЖМ кешенді есептері",V+"iBEnh2fHFZY"],["ББЖМ нұсқасын талдау",V+"-zQhIdl13fQ"]],
@@ -125,7 +125,7 @@ function renderTopics(){
   box.innerHTML="";
   TOPICS.forEach(function(t,i){
     var d=document.createElement("div");d.className="tp";
-    d.innerHTML='<span>'+t[0]+(t[1]?' <a class="yt" href="'+t[1]+'" target="_blank" rel="noopener" title="SAURAN BOOK LIFE бейнесабағы">▶</a>':'')+'</span><input type="number" min="0" max="100" placeholder="—" data-i="'+i+'">';
+    d.innerHTML='<span>'+t[0]+(t[1]?' <a class="yt" href="'+t[1]+'" target="_blank" rel="noopener" title="Қазақша бейнесабақ">▶</a>':'')+'</span><input type="number" min="0" max="100" placeholder="—" data-i="'+i+'">';
     box.appendChild(d);
   });
   inputs=[].slice.call(box.querySelectorAll("input"));
@@ -171,7 +171,7 @@ function build(){
     html+='<div class="week"><h3>'+(i+1)+'-апта</h3><ul>';
     ws.forEach(function(x){
       var extra=x.t.indexOf("Бөлшек")===0?" + «Рационал сандар тренажеры»":"";
-      html+='<li><b>'+esc(x.t)+'</b> ('+x.p+'%, '+zname(x.z).toLowerCase()+'): '+(x.u?'<a href="'+x.u+'" target="_blank" rel="noopener">▶ SAURAN BOOK LIFE бейнесабағы</a> → ':'')+'ЖИ құрастырған деңгейлік есептер'+extra+' → тақырыптық тест → қатемен жұмыс</li>';
+      html+='<li><b>'+esc(x.t)+'</b> ('+x.p+'%, '+zname(x.z).toLowerCase()+'): '+(x.u?'<a href="'+x.u+'" target="_blank" rel="noopener">▶ қазақша бейнесабақ</a> → ':'')+'ЖИ құрастырған деңгейлік есептер'+extra+' → тақырыптық тест → қатемен жұмыс</li>';
     });
     if(grn.length)html+='<li>Жасыл тақырыптарды ұмытпау: '+esc(grn.slice(0,2).map(function(x){return x.t;}).join(", "))+' — 5 есептен</li>';
     html+='<li>Математикалық сауаттылық: 1 мәтінді есептер жинағы</li></ul></div>';
