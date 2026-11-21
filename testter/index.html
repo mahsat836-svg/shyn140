@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Тақырыптық тесттер және талдау сабақтары — Шың 140</title>
+<meta name="description" content="Шың 140 — ҰБТ мен ББЖМ-нің 31 тақырыбы бойынша талдау сабақтары, шексіз тақырыптық тесттер, «Жартысы — шекара» ережесі және қатемен жұмыс.">
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#14213d;--mut:#5b6b86;--line:#e2e7f0;--blue:#2f6fdb;--gold:#f5b841;--red:#e5484d;--yel:#f2b300;--grn:#21a067}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+header{background:linear-gradient(120deg,#14213d,#2f6fdb);color:#fff;padding:26px 20px 34px}
+header .in{max-width:1000px;margin:0 auto}
+header a{color:#fff;opacity:.85;font-size:14px;text-decoration:none}
+header small{display:block;margin-top:10px;opacity:.8;letter-spacing:.12em;text-transform:uppercase;font-size:12px;font-weight:700}
+header h1{margin:6px 0;font-size:28px}
+header p{margin:0;opacity:.92;max-width:780px}
+main{max-width:1000px;margin:-20px auto 40px;padding:0 16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:0 6px 18px rgba(20,33,61,.05);margin-bottom:14px}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tab,button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:10px 14px;cursor:pointer;background:#eaf0fb;color:var(--blue)}
+.tab.on,button.pri{background:var(--blue);color:#fff}
+button.gold{background:var(--gold);color:#14213d}
+#name{flex:1;min-width:180px;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.sum{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--mut);margin-top:10px}
+.sum b{color:var(--ink)}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;vertical-align:-1px;margin-right:4px;background:#cfd6e3}
+.r{background:var(--red)}.y{background:var(--yel)}.g{background:var(--grn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+.tp{display:flex;gap:10px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;transition:transform .12s,box-shadow .12s;text-align:left;color:var(--ink);font-weight:600;width:100%}
+.tp:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(20,33,61,.1)}
+.tp .n{background:var(--gold);color:#14213d;border-radius:8px;font-size:12px;padding:2px 7px;margin-right:6px}
+.tp .p{font-size:13px;white-space:nowrap;color:var(--mut)}
+h2{margin:0 0 10px;font-size:20px}
+h3{margin:16px 0 8px;font-size:16px}
+.rules{margin:0;padding-left:20px}.rules li{margin:4px 0}
+.ex{background:#f7f9fd;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:14.5px}
+.ex .ans{margin-top:6px;color:#1d5fd0}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.v{display:block;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fafbfe}
+.v .th{aspect-ratio:16/9;background:#dfe5ef center/cover no-repeat;position:relative}
+.v .th:after{content:"▶";position:absolute;inset:0;margin:auto;width:40px;height:28px;border-radius:8px;background:rgba(229,72,77,.92);color:#fff;font-size:13px;display:grid;place-items:center}
+.v .t{padding:7px 9px;font-size:13px}
+.v .own{display:inline-block;font-size:11px;font-weight:700;background:#fdeec9;border-radius:6px;padding:1px 6px;margin-top:3px}
+.q{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0}
+.q .qt{font-weight:600;margin-bottom:8px}
+.q label{display:block;padding:7px 10px;border:1px solid var(--line);border-radius:9px;margin:5px 0;cursor:pointer}
+.q label:hover{background:#f3f6fc}
+.q input{margin-right:8px}
+.q.ok{border-color:var(--grn);background:#f1fbf6}.q.no{border-color:var(--red);background:#fff5f5}
+.sol{margin-top:8px;font-size:14.5px;background:#fff;border-left:4px solid var(--blue);padding:8px 10px;border-radius:6px}
+.big{font-size:40px;font-weight:800;margin:4px 0}
+.msg{padding:12px 14px;border-radius:12px;margin:10px 0;font-weight:600}
+.msg.r{background:#fdecec;color:#9b1c1f}.msg.y{background:#fff6d9;color:#7a5a00}.msg.g{background:#e4f7ee;color:#0f6b43}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.note{font-size:13.5px;color:var(--mut)}
+.hide{display:none}
+footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 16px 30px}
+footer a{color:var(--blue)}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <a href="../">← «Шың 140» сынағы</a> · <a href="../sabaqtar/">Бейнесабақтар</a> · <a href="../traektoriya/">Траектория құрастырушы →</a>
+  <small>Шың 140 · Ауыл мектебі + ЖИ</small>
+  <h1>Тақырыптық тесттер және талдау сабақтары</h1>
+  <p>Әр тақырып: ереже мен шешілген мысалдар → бейнесабақ → 10 сұрақтық тест. Сұрақтар әр жолы жаңадан құрастырылады, сондықтан жаттап алу мүмкін емес — тек түсіну керек.</p>
+</div></header>
+<main>
+  <section class="card" id="home">
+    <div class="bar">
+      <div id="tabs" style="display:flex;gap:6px"></div>
+      <input id="name" placeholder="Аты-жөнің (нәтижені мұғалімге жіберу үшін)">
+    </div>
+    <div class="sum" id="sum"></div>
+    <h3>Тақырыпты таңда</h3>
+    <div class="grid" id="list"></div>
+    <div class="btns">
+      <button class="gold" id="copyAll">📋 Барлық нәтижені көшіру</button>
+      <a href="../traektoriya/"><button>🧭 Траектория құру</button></a>
+    </div>
+    <p class="note"><span class="dot r"></span>50%-дан төмен · <span class="dot y"></span>50–79% · <span class="dot g"></span>80% және жоғары · <span class="dot"></span>әлі тапсырылмаған. Нәтижелер осы құрылғыда сақталады.</p>
+  </section>
+
+  <section class="card hide" id="lesson">
+    <button id="back1">← Тақырыптар</button>
+    <h2 id="lTitle" style="margin-top:12px"></h2>
+    <h3>📘 Талдау сабағы: негізгі ережелер</h3>
+    <ul class="rules" id="lRules"></ul>
+    <h3>✍️ Шешілген мысалдар</h3>
+    <div id="lEx"></div>
+    <button id="moreEx">Тағы мысал</button>
+    <h3>▶ Бейнесабақтар</h3>
+    <div class="vids" id="lVids"></div>
+    <div class="btns"><button class="pri" id="start">Тестті бастау (10 сұрақ)</button></div>
+  </section>
+
+  <section class="card hide" id="test">
+    <button id="back2">← Талдау сабағына</button>
+    <h2 id="tTitle" style="margin-top:12px"></h2>
+    <p class="note">Әр сұраққа бір жауап таңда. Барлығын белгілеген соң «Тапсыру» бас.</p>
+    <div id="qs"></div>
+    <div class="btns"><button class="pri" id="submit">Тапсыру</button></div>
+  </section>
+
+  <section class="card hide" id="res">
+    <h2 id="rTitle"></h2>
+    <div class="big" id="rScore"></div>
+    <div class="msg" id="rMsg"></div>
+    <div id="review"></div>
+    <div class="btns">
+      <button class="pri" id="again">🔁 Жаңа нұсқа</button>
+      <button id="toLesson">📘 Талдау сабағы</button>
+      <button class="gold" id="copyOne">📋 Нәтижені көшіру</button>
+      <button id="home2">Тақырыптар</button>
+    </div>
+  </section>
+</main>
+<footer>Құрастырған: Юлдашев Кадыржан, математика пәні мұғалімі · Ө.Жәнібеков атындағы ЖББМ, Сауран ауданы · Бейнесабақтар: <a href="https://www.youtube.com/@LIFEMATH-d3v" target="_blank" rel="noopener">SAURAN BOOK LIFE</a> және YouTube авторлары · ЖИ көмегімен жасалған</footer>
+
+<script src="../assets/videos.js"></script>
+<script src="gen.js"></script>
+<script>
+(function(){
+var DATA=window.VIDEO_DATA, S=window.SHYN_GEN, KEY="shyn140_progress";
+var mode="ubt", topic=null, cur=[], last=null;
+function $(id){return document.getElementById(id);}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||{};}catch(e){return {};}}
+function save(p){try{localStorage.setItem(KEY,JSON.stringify(p));}catch(e){}}
+function zone(p){return p==null?"":(p<50?"r":(p<80?"y":"g"));}
+function show(id){["home","lesson","test","res"].forEach(function(s){$(s).classList.toggle("hide",s!==id);});window.scrollTo(0,0);}
+try{$("name").value=localStorage.getItem("shyn140_name")||"";}catch(e){}
+$("name").oninput=function(){try{localStorage.setItem("shyn140_name",this.value);}catch(e){}};
+
+function tabs(){
+  $("tabs").innerHTML="";
+  ["ubt","bbzhm"].forEach(function(m){
+    var b=document.createElement("button");b.className="tab"+(m===mode?" on":"");b.textContent=DATA[m].name;
+    b.onclick=function(){mode=m;home();};$("tabs").appendChild(b);
+  });
+}
+function home(){
+  tabs();var p=load()[mode]||{},L=$("list");L.innerHTML="";var c={r:0,y:0,g:0,n:0};
+  DATA[mode].topics.forEach(function(t,i){
+    var v=p[t[0]],z=zone(v);c[z||"n"]++;
+    var b=document.createElement("button");b.className="tp";
+    b.innerHTML='<span><span class="n">'+(i+1)+'</span>'+t[0]+'</span><span class="p"><span class="dot '+z+'"></span>'+(v==null?"—":v+"%")+'</span>';
+    b.onclick=function(){openLesson(t);};L.appendChild(b);
+  });
+  $("sum").innerHTML='<span><span class="dot g"></span>Жасыл: <b>'+c.g+'</b></span><span><span class="dot y"></span>Сары: <b>'+c.y+'</b></span><span><span class="dot r"></span>Қызыл: <b>'+c.r+'</b></span><span><span class="dot"></span>Тапсырылмаған: <b>'+c.n+'</b></span>';
+  show("home");
+}
+function exHtml(it){return '<div class="ex"><div>'+it.q+'</div><div class="ans"><b>Шешуі:</b> '+it.s+' <b>Жауабы: '+it.a+'</b></div></div>';}
+function openLesson(t){
+  topic=t;var k=S.genKey(mode,t[0]);
+  $("lTitle").textContent=t[0];
+  $("lRules").innerHTML=(S.T[k]||[]).map(function(r){return "<li>"+r+"</li>";}).join("");
+  $("lEx").innerHTML=S.makeTest(mode,t[0],2).map(exHtml).join("");
+  $("lVids").innerHTML=(t[2]||[]).slice(0,6).map(function(v){
+    var pl=String(v[0]).indexOf("PL:")===0,id=pl?v[0].slice(3):v[0];
+    var url=pl?"https://www.youtube.com/playlist?list="+id:"https://www.youtube.com/watch?v="+id;
+    var th=pl?"":"background-image:url(https://i.ytimg.com/vi/"+id+"/mqdefault.jpg)";
+    return '<a class="v" href="'+url+'" target="_blank" rel="noopener"><div class="th" style="'+th+'"></div><div class="t">'+v[1]+(v[2]?'<br><span class="own">⭐ SAURAN BOOK LIFE</span>':'')+'</div></a>';
+  }).join("")||'<p class="note">Бұл тақырыпқа бейнесабақ әлі қосылмаған.</p>';
+  show("lesson");
+}
+$("moreEx").onclick=function(){$("lEx").insertAdjacentHTML("beforeend",exHtml(S.makeTest(mode,topic[0],1)[0]));};
+function startTest(){
+  cur=S.makeTest(mode,topic[0],10);$("tTitle").textContent=topic[0]+" — тест";
+  $("qs").innerHTML=cur.map(function(it,i){
+    return '<div class="q" id="q'+i+'"><div class="qt">'+(i+1)+'. '+it.q+'</div>'+it.o.map(function(o,j){
+      return '<label><input type="radio" name="a'+i+'" value="'+j+'">'+String.fromCharCode(65+j)+') '+o+'</label>';}).join("")+'</div>';
+  }).join("");
+  show("test");
+}
+$("start").onclick=startTest;$("again").onclick=startTest;
+$("back1").onclick=home;$("home2").onclick=home;
+$("back2").onclick=function(){show("lesson");};$("toLesson").onclick=function(){openLesson(topic);};
+$("submit").onclick=function(){
+  var ans=cur.map(function(it,i){var c=document.querySelector('input[name="a'+i+'"]:checked');return c?it.o[+c.value]:null;});
+  var empty=ans.filter(function(a){return a===null;}).length;
+  if(empty&&!confirmSoft(empty))return;
+  var ok=0;cur.forEach(function(it,i){if(ans[i]===it.a)ok++;});
+  var pct=Math.round(ok/cur.length*100),z=zone(pct);
+  var p=load();p[mode]=p[mode]||{};p[mode][topic[0]]=pct;save(p);
+  last={ok:ok,n:cur.length,pct:pct};
+  $("rTitle").textContent=topic[0];
+  $("rScore").innerHTML='<span class="dot '+z+'" style="width:22px;height:22px"></span> '+ok+' / '+cur.length+' ('+pct+'%)';
+  var rv=$("review");rv.innerHTML="";
+  if(ok*2<cur.length){
+    $("rMsg").className="msg r";
+    $("rMsg").innerHTML="«Жартысы — шекара»: жартысынан азы дұрыс. Жауаптар әзірге көрсетілмейді. Талдау сабағын және бейнесабақты қайта көріп, жаңа нұсқаны тапсыр — сен міндетті түрде үлгересің!";
+  }else{
+    $("rMsg").className="msg "+z;
+    $("rMsg").innerHTML=z==="g"?"Керемет! Тақырып меңгерілді. Қате болса, төменде талдап шық.":"Жақсы! Жартысынан көбі дұрыс — енді қатемен жұмыс: әр қатені шешу жолымен талдап, дәптерге қайта шығар.";
+    var wrong=0;
+    cur.forEach(function(it,i){
+      if(ans[i]===it.a)return;wrong++;
+      rv.insertAdjacentHTML("beforeend",'<div class="q no"><div class="qt">'+(i+1)+'. '+it.q+'</div><div>Сенің жауабың: <b>'+(ans[i]==null?"белгіленбеген":ans[i])+'</b> · Дұрыс жауап: <b>'+it.a+'</b></div><div class="sol"><b>Шешу жолы:</b> '+it.s+'</div></div>');
+    });
+    if(wrong)rv.insertAdjacentHTML("afterbegin","<h3>🔍 Қатемен жұмыс ("+wrong+")</h3>");
+  }
+  show("res");
+};
+function confirmSoft(n){
+  var b=$("submit");
+  if(b.dataset.warn==="1"){b.dataset.warn="";b.textContent="Тапсыру";return true;}
+  b.dataset.warn="1";b.textContent=n+" сұрақ белгіленбеген — бәрібір тапсыру";return false;
+}
+function copy(t,btn){
+  var done=function(){var o=btn.textContent;btn.textContent="✔ Көшірілді";setTimeout(function(){btn.textContent=o;},1500);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(done,function(){fallback(t);done();});}else{fallback(t);done();}
+}
+function fallback(t){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");}catch(e){}a.remove();}
+function who(){return ($("name").value||"Оқушы").trim();}
+$("copyOne").onclick=function(){copy(who()+" · "+DATA[mode].name+" · "+topic[0]+": "+last.ok+"/"+last.n+" ("+last.pct+"%) · "+new Date().toLocaleDateString("ru-RU"),this);};
+$("copyAll").onclick=function(){
+  var p=load()[mode]||{},lines=[who()+" · "+DATA[mode].name+" · "+new Date().toLocaleDateString("ru-RU")];
+  DATA[mode].topics.forEach(function(t){lines.push(t[0]+"\t"+(p[t[0]]==null?"—":p[t[0]]+"%"));});
+  copy(lines.join("\n"),this);
+};
+var h=location.hash.replace("#","");if(h==="bbzhm")mode="bbzhm";
+home();
+})();
+</script>
+</body>
+</html>

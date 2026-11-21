@@ -55,7 +55,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
 </head>
 <body>
 <header><div class="in">
-  <a href="../" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">← «Шың 140» сынағына оралу</a> · <a href="../sabaqtar/" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">Бейнесабақтар кітапханасы →</a><br><small>Шың 140 · Ауыл мектебі + ЖИ</small>
+  <a href="../" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">← «Шың 140» сынағына оралу</a> · <a href="../testter/" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">Тақырыптық тесттер</a> · <a href="../sabaqtar/" style="color:#fff;opacity:.85;font-size:14px;text-decoration:none">Бейнесабақтар кітапханасы →</a><br><small>Шың 140 · Ауыл мектебі + ЖИ</small>
   <h1>ББЖМ мен ҰБТ-ға жеке траектория құрастырушы</h1>
   <p>Оқушының тақырыптық нәтижесін енгізіңіз: құрал «бағдаршам» картасын, қазақша бейнесабақтарға сілтемелері бар 4 апталық жеке жоспарды бірден құрады. ▶ белгісі — тақырыпқа арналған бейнесабақ. Әр тақырыптың барлық сабақтары — <a href="../sabaqtar/" style="color:#fff;font-weight:700">Бейнесабақтар кітапханасында</a>.</p>
 </div></header>
@@ -79,6 +79,7 @@ footer{text-align:center;color:var(--mut);font-size:13px;padding:10px 0 30px}
     </div>
     <div class="btns">
       <button id="build">Траектория құру</button>
+      <button class="sec" id="imp">📥 Тест нәтижелерімді қою</button>
       <button class="sec" id="demo">Мысал толтыру</button>
       <button class="sec" id="print">Басып шығару</button>
     </div>
@@ -138,6 +139,12 @@ document.getElementById("mode").onchange=function(){
   renderTopics();document.getElementById("out").style.display="none";
 };
 var inputs=[];renderTopics();
+document.getElementById("imp").onclick=function(){
+  var p={};try{p=(JSON.parse(localStorage.getItem("shyn140_progress"))||{})[mode]||{};}catch(e){}
+  var n=0;TOPICS.forEach(function(t,i){for(var k in p){if(t[0].indexOf(k)===0||k.indexOf(t[0])===0){inputs[i].value=p[k];n++;break;}}});
+  if(!n){alert2("Бұл құрылғыда тақырыптық тест нәтижелері әлі жоқ. Алдымен «Тақырыптық тесттер» бөлімінде тест тапсырыңыз.");return;}
+  document.getElementById("build").click();
+};
 function zone(p){return p<50?"r":(p<80?"y":"g");}
 function zname(z){return z==="r"?"Қызыл":(z==="y"?"Сары":"Жасыл");}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
