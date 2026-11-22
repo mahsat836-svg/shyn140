@@ -37,8 +37,9 @@ function doGet(e) {
   if (p.key !== TEACHER_KEY) return out_({ ok: false, error: 'Кілт қате' });
   const since = Number(p.since || 0);
   const v = sheet_().getDataRange().getValues(); v.shift();
-  const rows = v.filter(r => r[0] instanceof Date && r[0].getTime() >= since).map(r => [r[0].getTime()].concat(r.slice(1)));
-  return out_({ ok: true, rows: rows });
+  const rows = [];
+  v.forEach(r => { const t = new Date(r[0]).getTime(); if (t && t >= since) rows.push([t].concat(r.slice(1).map(x => x instanceof Date ? x.getTime() : x))); });
+  return out_({ ok: true, n: v.length, rows: rows });
 }
 function out_(o) {
   return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
