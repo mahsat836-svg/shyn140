@@ -122,7 +122,8 @@ ol.steps li{margin:6px 0}
 const $ = s => document.querySelector(s);
 const SK = 'bq-teacher';
 let cfg = (() => { try { return JSON.parse(localStorage.getItem(SK) || '{}'); } catch (e) { return {}; } })();
-if (!cfg.url && window.BQ_URL) cfg.url = window.BQ_URL;
+if (window.BQ_URL) cfg.url = cfg.url || window.BQ_URL;
+if (window.BQ_KEY) cfg.key = cfg.key || window.BQ_KEY;
 let rows = [], atts = [], timer = null;
 
 /* ---------- баптау ---------- */

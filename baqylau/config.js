@@ -5,3 +5,4 @@ window.BQ_URL = 'https://script.google.com/macros/s/AKfycbwsFMoKIjyXCNE_gCcmKxRU
 window.BQ_PIN = '2026';
 window.BQ_COUNT = 10;        // сұрақ саны
 window.BQ_MINUTES = 15;      // тестке берілетін уақыт (минут)
+window.BQ_KEY = 'Shyn140-xWSziKYF';   // мұғалім панелі нәтижелерді оқитын кілт (Apps Script-тегі TEACHER_KEY)
