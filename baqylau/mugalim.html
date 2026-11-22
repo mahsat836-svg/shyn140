@@ -99,10 +99,11 @@ ol.steps li{margin:6px 0}
   <tbody id="tb"><tr><td colspan="9" class="muted">Баптау жасалғаннан кейін нәтижелер осында шығады.</td></tr></tbody>
 </table></div>
 
-<h2>Апта үздіктері — Instagram үшін</h2>
+<h2>Апта үздіктері және сынып үздіктері — Instagram үшін</h2>
 <div class="two">
   <div class="box">
     <div class="flex">
+      <select class="in" id="wMode"><option value="all">Жалпы рейтинг</option><option value="cls">Әр сыныптың үздігі</option></select>
       <select class="in" id="wPer"><option value="week">Осы апта</option><option value="prev">Өткен апта</option></select>
       <select class="in" id="wLv"><option value="">Барлық деңгей</option><option>1–4 сынып</option><option>5–6 сынып</option><option>7–9 · ББЖМ</option><option>10–11 · ҰБТ</option></select>
       <select class="in" id="wSub"><option value="">Барлық пән</option></select>
@@ -117,7 +118,7 @@ ol.steps li{margin:6px 0}
 </div>
 </div>
 
-<script src="config.js?v=3"></script>
+<script src="config.js?v=4"></script>
 <script>
 const $ = s => document.querySelector(s);
 const SK = 'bq-teacher';
@@ -216,22 +217,24 @@ function shortName(n) {
   return p[1] + ' ' + p[0][0] + '.';   // «Тегі Аты» → «Аты Т.»
 }
 function topList() {
-  const p = $('#wPer').value, lv = $('#wLv').value, s = $('#wSub').value, n = +$('#wN').value;
+  const p = $('#wPer').value, lv = $('#wLv').value, s = $('#wSub').value, byCls = $('#wMode').value === 'cls', n = byCls ? 99 : +$('#wN').value;
   const best = new Map();
   for (const a of atts) {
     if (a.status !== 'Аяқталды' || !inPer(a.t0, p) || (lv && a.lv !== lv) || (s && a.subj !== s)) continue;
-    const pct = Number(a.score) / (Number(a.total) || 10), k = String(a.name).toLowerCase() + '|' + a.cls;
+    const pct = Number(a.score) / (Number(a.total) || 10), k = byCls ? a.cls : String(a.name).toLowerCase() + '|' + a.cls;
     const b = best.get(k);
     if (!b || pct > b.pct || (pct === b.pct && Number(a.sec) < Number(b.sec))) best.set(k, { ...a, pct });
   }
-  return [...best.values()].sort((a, b) => b.pct - a.pct || Number(a.sec) - Number(b.sec)).slice(0, n);
+  const L = [...best.values()];
+  if (byCls) return L.sort((a, b) => parseInt(a.cls) - parseInt(b.cls) || String(a.cls).localeCompare(b.cls)).slice(0, 15);
+  return L.sort((a, b) => b.pct - a.pct || Number(a.sec) - Number(b.sec)).slice(0, n);
 }
 function renderTop() {
   const L = topList();
-  $('#wList').innerHTML = L.length ? L.map(a => `<li><b>${esc(shortName(a.name))}</b> — ${esc(a.cls)}, ${esc(a.subj)}: ${esc(a.score)}/${esc(a.total)}${a.grade ? ' · баға ' + esc(a.grade) : ''} <span class="muted">(${dur(Number(a.sec))})</span></li>`).join('') : '<span class="muted">Бұл аптада аяқталған тест жоқ.</span>';
+  $('#wList').innerHTML = L.length ? L.map(a => `<li>${$('#wMode').value === 'cls' ? '<b style="color:var(--gold)">' + esc(a.cls) + ' сынып үздігі:</b> ' : ''}<b>${esc(shortName(a.name))}</b> — ${esc(a.cls)}, ${esc(a.subj)}: ${esc(a.score)}/${esc(a.total)}${a.grade ? ' · баға ' + esc(a.grade) : ''} <span class="muted">(${dur(Number(a.sec))})</span></li>`).join('') : '<span class="muted">Бұл аптада аяқталған тест жоқ.</span>';
   draw(L);
 }
-['#wPer', '#wLv', '#wSub', '#wN', '#wShort'].forEach(s => $(s).onchange = renderTop);
+['#wMode', '#wPer', '#wLv', '#wSub', '#wN', '#wShort'].forEach(s => $(s).onchange = renderTop);
 function rangeText() {
   const off = $('#wPer').value === 'prev' ? 1 : 0, a = new Date(weekStart(off)), b = new Date(weekStart(off) + 6 * 864e5);
   const f = d => d.toLocaleDateString('ru', { day: '2-digit', month: '2-digit' });
@@ -246,7 +249,7 @@ function draw(L) {
   x.textAlign = 'center';
   x.fillStyle = '#9aa6d1'; x.font = F(600, 30); x.fillText('Ө. Жәнібеков атындағы ЖББМ · Білім Арена', W / 2, 90);
   const tg = x.createLinearGradient(200, 0, 880, 0); tg.addColorStop(0, '#ffb000'); tg.addColorStop(.5, '#ff7ad9'); tg.addColorStop(1, '#5ce1e6');
-  x.fillStyle = tg; x.font = F(900, 92); x.fillText('АПТА ҮЗДІКТЕРІ', W / 2, 200);
+  x.fillStyle = tg; x.font = F(900, 92); x.fillText($('#wMode').value === 'cls' ? 'СЫНЫП ҮЗДІКТЕРІ' : 'АПТА ҮЗДІКТЕРІ', W / 2, 200);
   x.fillStyle = '#eef2ff'; x.font = F(600, 34);
   const sub = [$('#wLv').value, $('#wSub').value].filter(Boolean).join(' · ');
   x.fillText((sub ? sub + ' · ' : '') + rangeText(), W / 2, 260);
@@ -257,7 +260,7 @@ function draw(L) {
     rr(x, 70, y, W - 140, rh - 12, 20); x.fill();
     const mid = y + (rh - 12) / 2 + Math.min(14, rh / 6);
     x.textAlign = 'left'; x.font = F(900, Math.min(44, rh * .5));
-    x.fillStyle = '#ffc94d'; x.fillText(i < 3 ? ['🥇', '🥈', '🥉'][i] : String(i + 1), 100, mid);
+    x.fillStyle = '#ffc94d'; x.fillText($('#wMode').value === 'cls' ? '🏅' : i < 3 ? ['🥇', '🥈', '🥉'][i] : String(i + 1), 100, mid);
     x.fillStyle = '#fff'; x.font = F(700, Math.min(40, rh * .42)); x.fillText(fit(x, shortName(a.name), 420), 180, mid);
     x.fillStyle = '#9aa6d1'; x.font = F(500, Math.min(28, rh * .3)); x.fillText(fit(x, a.cls + ' · ' + a.subj, 250), 620, mid);
     x.textAlign = 'right'; x.fillStyle = '#3ddc84'; x.font = F(900, Math.min(40, rh * .42)); x.fillText(a.score + '/' + a.total, W - 100, mid);

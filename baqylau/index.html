@@ -24,7 +24,7 @@ input.t,select.t{width:100%;background:#0f1730;border:2px solid var(--line);bord
 input.t:focus,select.t:focus{outline:none;border-color:var(--acc)}
 .row{display:flex;gap:10px}
 .row>*{flex:1}
-.subs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.subs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
 @media(max-width:640px){.subs{grid-template-columns:repeat(2,1fr)}}
 .sub{background:#0f1730;border:2px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
 .sub b{display:block;font-size:28px}
@@ -119,8 +119,8 @@ footer a{color:var(--mute)}
 <footer>© Юлдашев Кадыржан Фазылович · <a href="../oiyndar/">Білім Арена</a> · <a href="mugalim.html">Мұғалім</a></footer>
 </div>
 
-<script src="config.js?v=3"></script>
-<script src="gen.js?v=3"></script>
+<script src="config.js?v=4"></script>
+<script src="gen.js?v=4"></script>
 <script>
 const URLX = (() => {
   const u = new URLSearchParams(location.search).get('u');
@@ -163,7 +163,7 @@ flush(); addEventListener('online', flush);
 for (let i = 1; i <= 11; i++) $('#cn').insertAdjacentHTML('beforeend', `<option value="${i}">${i}-сынып</option>`);
 let subj = null;
 const subsEl = $('#subs');
-for (const k of ['mat', 'inf', 'phy', 'che', 'geo']) {
+for (const k of Object.keys(GEN)) {
   const b = document.createElement('button'); b.className = 'sub'; b.dataset.k = k;
   b.innerHTML = `<b>${SUBJ[k].ic}</b>${SUBJ[k].name}`;
   b.onclick = () => { subj = k; subsEl.querySelectorAll('.sub').forEach(x => x.classList.toggle('sel', x === b)); check(); };
