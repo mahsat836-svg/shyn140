@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Мұғалім панелі · Бақылау тесті · Шың 140</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0d1326;--bg2:#141c36;--panel:#1b2547;--line:#2e3c6e;--ink:#eef2ff;--mute:#9aa6d1;--acc:#7c8cff;--ok:#3ddc84;--bad:#ff4d5e;--gold:#ffc94d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Segoe UI",system-ui,sans-serif}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.wrap{max-width:1280px;margin:0 auto;padding:18px}
+header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+h1{font-size:24px;margin:0 auto 0 0}
+h1 small{display:block;font-size:13px;color:var(--mute);font-weight:500}
+h2{font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:22px 0 10px}
+.box{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:14px;padding:16px}
+.btn{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;white-space:nowrap}
+.btn:hover{border-color:var(--acc)}
+.btn.pri{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:700}
+.in{background:#0f1730;border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.flex{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}}
+.st{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.st b{display:block;font-size:28px}
+.st span{color:var(--mute);font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600;position:sticky;top:0;background:var(--bg2)}
+.tbl{max-height:520px;overflow:auto;border:1px solid var(--line);border-radius:12px}
+.pill{display:inline-block;border-radius:99px;padding:1px 9px;font-size:12px;font-weight:700}
+.p-run{background:#26407a;color:#bcd0ff}.p-ok{background:#164a33;color:#8ff0bd}.p-bad{background:#5a1a26;color:#ffb3bd}
+.g{font-weight:900;font-size:17px}.g5{color:var(--ok)}.g4{color:#8fd3ff}.g3{color:var(--gold)}.g2{color:var(--bad)}
+.muted{color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 420px;gap:16px}
+@media(max-width:1000px){.two{grid-template-columns:1fr}}
+canvas{width:100%;max-width:420px;border-radius:12px;border:1px solid var(--line)}
+ol.top{margin:0;padding-left:26px}
+ol.top li{padding:4px 0}
+pre{background:#0a1022;border:1px solid var(--line);border-radius:10px;padding:12px;max-height:300px;overflow:auto;font-size:12px;white-space:pre-wrap}
+.msg{margin-left:6px;font-size:14px}
+details summary{cursor:pointer;font-weight:700}
+ol.steps li{margin:6px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Мұғалім панелі <small>Бақылау тесті · Білім Арена · Шың 140</small></h1>
+  <span class="muted" id="upd"></span>
+  <button class="btn" id="refresh">↻ Жаңарту</button>
+  <button class="btn" id="setBtn">⚙ Баптау</button>
+</header>
+
+<section id="setup" class="box" hidden>
+  <div class="flex">
+    <input class="in" id="sUrl" style="flex:3;min-width:280px" placeholder="Apps Script сілтемесі: https://script.google.com/macros/s/…/exec">
+    <input class="in" id="sKey" style="flex:1;min-width:160px" placeholder="Құпия кілт (TEACHER_KEY)" type="password">
+    <button class="btn pri" id="sSave">Сақтау және тексеру</button><span class="msg" id="sMsg"></span>
+  </div>
+  <p class="muted" style="margin:10px 0 0">Оқушы сілтемесі (әр компьютерде бір рет ашылса жеткілікті): <a id="sLink" href="#" target="_blank" style="color:#bcd0ff;word-break:break-all"></a> <button class="btn" id="sCopy">Көшіру</button></p>
+  <details style="margin-top:12px"><summary>Google Sheets-ті бір рет баптау нұсқаулығы (5 минут)</summary>
+    <ol class="steps">
+      <li>Google Drive-та жаңа <b>Google Кесте</b> ашыңыз, атауы: «Бақылау тесті».</li>
+      <li>Мәзірден <b>Кеңейтімдер → Apps Script</b>. Ішіндегі кодты өшіріп, төмендегі кодты қойыңыз.</li>
+      <li>Кодтағы <code>TEACHER_KEY</code> мәнін өз құпия кілтіңізге ауыстырыңыз. Сақтаңыз (💾).</li>
+      <li><b>Іске қосу (Deploy) → Жаңа іске қосу</b> → түрі: <b>Веб-қосымша</b>. «Орындаушы: Мен», «Кімге қолжетімді: <b>Барлығы</b>». Рұқсаттарды растаңыз.</li>
+      <li>Шыққан <b>…/exec</b> сілтемесін көшіріп, жоғарыдағы өріске қойыңыз, кілтті жазып, «Сақтау және тексеру» басыңыз.</li>
+      <li>Оқушы сілтемесін әр компьютерде бір рет ашыңыз (немесе сілтемені Claude-қа жіберіңіз — сайтқа біржола жазып береді).</li>
+    </ol>
+    <button class="btn" id="cCopy">Кодты көшіру</button>
+    <pre id="code">Жүктелуде…</pre>
+  </details>
+</section>
+
+<h2>Қазір</h2>
+<div class="stats">
+  <div class="st"><b id="kRun">0</b><span>тапсырып жатыр</span></div>
+  <div class="st"><b id="kOk">0</b><span>аяқтады</span></div>
+  <div class="st"><b id="kBad" style="color:var(--bad)">0</b><span>өшірілді (сайттан шықты)</span></div>
+  <div class="st"><b id="kAvg">—</b><span>орташа балл</span></div>
+  <div class="st"><b id="kG">—</b><span>бағалар 5/4/3/2</span></div>
+</div>
+
+<h2>Нәтижелер</h2>
+<div class="flex" style="margin-bottom:10px">
+  <select class="in" id="fPer"><option value="today">Бүгін</option><option value="week">Осы апта</option><option value="prev">Өткен апта</option><option value="all">Барлығы</option></select>
+  <select class="in" id="fCls"><option value="">Барлық сынып</option></select>
+  <select class="in" id="fSub"><option value="">Барлық пән</option></select>
+  <input class="in" id="fQ" placeholder="Аты-жөні бойынша іздеу">
+  <button class="btn" id="csv">⬇ Excel (CSV)</button>
+</div>
+<div class="tbl"><table>
+  <thead><tr><th>Уақыт</th><th>Аты-жөні</th><th>Сынып</th><th>Пән</th><th>Балл</th><th>Баға</th><th>Күйі</th><th>Ұзақтығы</th><th>Жауаптар</th></tr></thead>
+  <tbody id="tb"><tr><td colspan="9" class="muted">Баптау жасалғаннан кейін нәтижелер осында шығады.</td></tr></tbody>
+</table></div>
+
+<h2>Апта үздіктері — Instagram үшін</h2>
+<div class="two">
+  <div class="box">
+    <div class="flex">
+      <select class="in" id="wPer"><option value="week">Осы апта</option><option value="prev">Өткен апта</option></select>
+      <select class="in" id="wLv"><option value="">Барлық деңгей</option><option>1–4 сынып</option><option>5–6 сынып</option><option>7–9 · ББЖМ</option><option>10–11 · ҰБТ</option></select>
+      <select class="in" id="wSub"><option value="">Барлық пән</option></select>
+      <select class="in" id="wN"><option>5</option><option selected>10</option><option>15</option></select>
+      <label><input type="checkbox" id="wShort" checked> Тегін қысқарту (Нұрсұлтан Ә.)</label>
+    </div>
+    <p class="muted" style="margin:10px 0">Әр оқушының аптадағы ең жақсы нәтижесі алынады; балл тең болса — тезірек орындаған жоғары. Өшірілген тесттер есептелмейді.</p>
+    <ol class="top" id="wList"></ol>
+    <div class="flex" style="margin-top:12px"><button class="btn pri" id="wPng">⬇ Instagram суреті (PNG)</button></div>
+  </div>
+  <canvas id="cv" width="1080" height="1350"></canvas>
+</div>
+</div>
+
+<script src="config.js"></script>
+<script>
+const $ = s => document.querySelector(s);
+const SK = 'bq-teacher';
+let cfg = (() => { try { return JSON.parse(localStorage.getItem(SK) || '{}'); } catch (e) { return {}; } })();
+if (!cfg.url && window.BQ_URL) cfg.url = window.BQ_URL;
+let rows = [], atts = [], timer = null;
+
+/* ---------- баптау ---------- */
+function studentLink() { return cfg.url ? new URL('./?u=' + encodeURIComponent(cfg.url), location.href).href : ''; }
+function fillSetup() { $('#sUrl').value = cfg.url || ''; $('#sKey').value = cfg.key || ''; const l = studentLink(); $('#sLink').textContent = l || '— (алдымен сілтемені сақтаңыз)'; $('#sLink').href = l || '#'; }
+$('#setBtn').onclick = () => { $('#setup').hidden = !$('#setup').hidden; fillSetup(); };
+$('#sSave').onclick = async () => {
+  cfg = { url: $('#sUrl').value.trim(), key: $('#sKey').value.trim() };
+  localStorage.setItem(SK, JSON.stringify(cfg)); fillSetup();
+  $('#sMsg').textContent = 'Тексерілуде…';
+  const r = await load(); $('#sMsg').textContent = r === true ? '✓ Байланыс бар' : '✗ ' + r;
+};
+$('#sCopy').onclick = () => navigator.clipboard.writeText(studentLink());
+fetch('Code.gs').then(r => r.text()).then(t => $('#code').textContent = t).catch(() => $('#code').textContent = 'Code.gs файлын ашу мүмкін болмады.');
+$('#cCopy').onclick = () => navigator.clipboard.writeText($('#code').textContent);
+
+/* ---------- деректер ---------- */
+async function load() {
+  if (!cfg.url || !cfg.key) { $('#setup').hidden = false; fillSetup(); return 'Сілтеме мен кілтті енгізіңіз'; }
+  try {
+    const since = Date.now() - 70 * 864e5;
+    const r = await fetch(cfg.url + '?key=' + encodeURIComponent(cfg.key) + '&since=' + since + '&t=' + Date.now());
+    const j = await r.json();
+    if (!j.ok) return j.error || 'Қате';
+    rows = j.rows; build(); $('#upd').textContent = 'Жаңартылды: ' + new Date().toLocaleTimeString('ru');
+    return true;
+  } catch (e) { $('#upd').textContent = 'Байланыс жоқ'; return 'Байланыс жоқ (сілтемені тексеріңіз)'; }
+}
+// жол: [t, id, name, cls, lv, subj, score, total, grade, status, reason, sec, detail]
+function build() {
+  const m = new Map();
+  for (const r of rows) {
+    const [t, id, name, cls, lv, subj, score, total, grade, status, reason, sec, detail] = r;
+    const a = m.get(id) || { id, t0: t, name, cls, lv, subj, status: 'Басталды' };
+    a.t0 = Math.min(a.t0, t);
+    if (status !== 'Басталды' && a.status === 'Басталды' || status === 'Өшірілді') Object.assign(a, { status, score, total, grade, reason, sec, detail, t1: t });
+    if (!a.total && total) a.total = total;
+    m.set(id, a);
+  }
+  atts = [...m.values()].sort((a, b) => b.t0 - a.t0);
+  for (const a of atts) if (a.status === 'Басталды' && Date.now() - a.t0 > 40 * 60e3) a.status = 'Аяқталмады';
+  const cl = new Set(atts.map(a => a.cls)), sb = new Set(atts.map(a => a.subj));
+  syncSel('#fCls', cl, 'Барлық сынып'); syncSel('#fSub', sb, 'Барлық пән'); syncSel('#wSub', sb, 'Барлық пән');
+  table(); renderTop();
+}
+function syncSel(sel, set, all) {
+  const el = $(sel), v = el.value, list = [...set].filter(Boolean).sort((a, b) => parseInt(a) - parseInt(b) || String(a).localeCompare(b));
+  el.innerHTML = `<option value="">${all}</option>` + list.map(x => `<option>${esc(x)}</option>`).join(''); el.value = list.includes(v) ? v : '';
+}
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+function weekStart(off = 0) { const d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7) - 7 * off); return d.getTime(); }
+function inPer(t, p) {
+  if (p === 'all') return true;
+  if (p === 'today') { const d = new Date(); d.setHours(0, 0, 0, 0); return t >= d.getTime(); }
+  if (p === 'week') return t >= weekStart(0);
+  if (p === 'prev') return t >= weekStart(1) && t < weekStart(0);
+}
+function filtered() {
+  const p = $('#fPer').value, c = $('#fCls').value, s = $('#fSub').value, q = $('#fQ').value.trim().toLowerCase();
+  return atts.filter(a => inPer(a.t0, p) && (!c || a.cls === c) && (!s || a.subj === s) && (!q || String(a.name).toLowerCase().includes(q)));
+}
+const hm = t => new Date(t).toLocaleString('ru', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+const dur = s => s ? Math.floor(s / 60) + ' мин ' + (s % 60) + ' с' : '';
+function table() {
+  const f = filtered();
+  const run = f.filter(a => a.status === 'Басталды'), ok = f.filter(a => a.status === 'Аяқталды'), bad = f.filter(a => a.status === 'Өшірілді');
+  $('#kRun').textContent = run.length; $('#kOk').textContent = ok.length; $('#kBad').textContent = bad.length;
+  $('#kAvg').textContent = ok.length ? (ok.reduce((x, a) => x + Number(a.score) * 10 / (Number(a.total) || 10), 0) / ok.length).toFixed(1) : '—';
+  const gc = g => ok.filter(a => String(a.grade) === g).length;
+  $('#kG').textContent = ok.some(a => a.grade) ? `${gc('5')}/${gc('4')}/${gc('3')}/${gc('2')}` : '—';
+  $('#tb').innerHTML = f.length ? f.map(a => {
+    const st = a.status === 'Аяқталды' ? '<span class="pill p-ok">Аяқталды</span>' : a.status === 'Өшірілді' ? `<span class="pill p-bad">Өшірілді</span><div class="muted" style="font-size:12px">${esc(a.reason)}</div>` : a.status === 'Басталды' ? '<span class="pill p-run">Тапсырып жатыр…</span>' : '<span class="pill p-bad">Аяқталмады</span>';
+    const sc = a.status === 'Аяқталды' ? `<b>${esc(a.score)}</b> / ${esc(a.total)}` : a.status === 'Өшірілді' ? `<s class="muted">${esc(a.score)} / ${esc(a.total)}</s>` : '';
+    return `<tr><td>${hm(a.t0)}</td><td><b>${esc(a.name)}</b></td><td>${esc(a.cls)}</td><td>${esc(a.subj)}</td><td>${sc}</td><td class="g g${esc(a.grade)}">${a.status === 'Аяқталды' ? esc(a.grade) : ''}</td><td>${st}</td><td>${dur(Number(a.sec))}</td><td class="muted" style="font-size:12px">${esc(a.detail)}</td></tr>`;
+  }).join('') : '<tr><td colspan="9" class="muted">Бұл кезеңде нәтиже жоқ.</td></tr>';
+}
+['#fPer', '#fCls', '#fSub'].forEach(s => $(s).onchange = table); $('#fQ').oninput = table;
+$('#csv').onclick = () => {
+  const head = ['Күні', 'Аты-жөні', 'Сынып', 'Деңгей', 'Пән', 'Балл', 'Сұрақ саны', 'Баға', 'Күйі', 'Себебі', 'Секунд', 'Жауаптар'];
+  const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+  const lines = [head, ...filtered().map(a => [new Date(a.t0).toLocaleString('ru'), a.name, a.cls, a.lv, a.subj, a.score, a.total, a.grade, a.status, a.reason, a.sec, a.detail])].map(r => r.map(q).join(';'));
+  const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  const el = document.createElement('a'); el.href = URL.createObjectURL(blob); el.download = 'baqylau-natizheler.csv'; el.click();
+};
+
+/* ---------- апта үздіктері ---------- */
+function shortName(n) {
+  if (!$('#wShort').checked) return n;
+  const p = String(n).trim().split(/\s+/); if (p.length < 2) return n;
+  return p[1] + ' ' + p[0][0] + '.';   // «Тегі Аты» → «Аты Т.»
+}
+function topList() {
+  const p = $('#wPer').value, lv = $('#wLv').value, s = $('#wSub').value, n = +$('#wN').value;
+  const best = new Map();
+  for (const a of atts) {
+    if (a.status !== 'Аяқталды' || !inPer(a.t0, p) || (lv && a.lv !== lv) || (s && a.subj !== s)) continue;
+    const pct = Number(a.score) / (Number(a.total) || 10), k = String(a.name).toLowerCase() + '|' + a.cls;
+    const b = best.get(k);
+    if (!b || pct > b.pct || (pct === b.pct && Number(a.sec) < Number(b.sec))) best.set(k, { ...a, pct });
+  }
+  return [...best.values()].sort((a, b) => b.pct - a.pct || Number(a.sec) - Number(b.sec)).slice(0, n);
+}
+function renderTop() {
+  const L = topList();
+  $('#wList').innerHTML = L.length ? L.map(a => `<li><b>${esc(shortName(a.name))}</b> — ${esc(a.cls)}, ${esc(a.subj)}: ${esc(a.score)}/${esc(a.total)}${a.grade ? ' · баға ' + esc(a.grade) : ''} <span class="muted">(${dur(Number(a.sec))})</span></li>`).join('') : '<span class="muted">Бұл аптада аяқталған тест жоқ.</span>';
+  draw(L);
+}
+['#wPer', '#wLv', '#wSub', '#wN', '#wShort'].forEach(s => $(s).onchange = renderTop);
+function rangeText() {
+  const off = $('#wPer').value === 'prev' ? 1 : 0, a = new Date(weekStart(off)), b = new Date(weekStart(off) + 6 * 864e5);
+  const f = d => d.toLocaleDateString('ru', { day: '2-digit', month: '2-digit' });
+  return f(a) + ' – ' + f(b) + '.' + b.getFullYear();
+}
+function draw(L) {
+  const c = $('#cv'), x = c.getContext('2d'), W = 1080, H = 1350;
+  const g = x.createLinearGradient(0, 0, W, H); g.addColorStop(0, '#1c2a5e'); g.addColorStop(.55, '#0d1326'); g.addColorStop(1, '#3a1f5c');
+  x.fillStyle = g; x.fillRect(0, 0, W, H);
+  x.globalAlpha = .06; x.fillStyle = '#fff'; x.font = '900 220px Segoe UI, sans-serif'; x.fillText('π √ ∑', 40, 1300); x.globalAlpha = 1;
+  const F = (w, s) => `${w} ${s}px "Segoe UI", Arial, sans-serif`;
+  x.textAlign = 'center';
+  x.fillStyle = '#9aa6d1'; x.font = F(600, 30); x.fillText('Ө. Жәнібеков атындағы ЖББМ · Білім Арена', W / 2, 90);
+  const tg = x.createLinearGradient(200, 0, 880, 0); tg.addColorStop(0, '#ffb000'); tg.addColorStop(.5, '#ff7ad9'); tg.addColorStop(1, '#5ce1e6');
+  x.fillStyle = tg; x.font = F(900, 92); x.fillText('АПТА ҮЗДІКТЕРІ', W / 2, 200);
+  x.fillStyle = '#eef2ff'; x.font = F(600, 34);
+  const sub = [$('#wLv').value, $('#wSub').value].filter(Boolean).join(' · ');
+  x.fillText((sub ? sub + ' · ' : '') + rangeText(), W / 2, 260);
+  const n = Math.max(L.length, 1), top0 = 320, avail = 880, rh = Math.min(100, avail / n);
+  L.forEach((a, i) => {
+    const y = top0 + i * rh;
+    x.fillStyle = i < 3 ? ['rgba(255,201,77,.18)', 'rgba(200,210,230,.14)', 'rgba(205,127,50,.16)'][i] : 'rgba(255,255,255,.06)';
+    rr(x, 70, y, W - 140, rh - 12, 20); x.fill();
+    const mid = y + (rh - 12) / 2 + Math.min(14, rh / 6);
+    x.textAlign = 'left'; x.font = F(900, Math.min(44, rh * .5));
+    x.fillStyle = '#ffc94d'; x.fillText(i < 3 ? ['🥇', '🥈', '🥉'][i] : String(i + 1), 100, mid);
+    x.fillStyle = '#fff'; x.font = F(700, Math.min(40, rh * .42)); x.fillText(fit(x, shortName(a.name), 420), 180, mid);
+    x.fillStyle = '#9aa6d1'; x.font = F(500, Math.min(28, rh * .3)); x.fillText(fit(x, a.cls + ' · ' + a.subj, 250), 620, mid);
+    x.textAlign = 'right'; x.fillStyle = '#3ddc84'; x.font = F(900, Math.min(40, rh * .42)); x.fillText(a.score + '/' + a.total, W - 100, mid);
+  });
+  if (!L.length) { x.textAlign = 'center'; x.fillStyle = '#9aa6d1'; x.font = F(600, 36); x.fillText('Нәтижелер әлі жоқ', W / 2, 650); }
+  x.textAlign = 'center'; x.fillStyle = '#eef2ff'; x.font = F(700, 34); x.fillText('Құттықтаймыз! Келесі аптада сен де осында бол! 🏆', W / 2, 1255);
+  x.fillStyle = '#9aa6d1'; x.font = F(500, 26); x.fillText('Шың 140 · mahsat836-svg.github.io/shyn140', W / 2, 1305);
+}
+function fit(x, t, w) { while (x.measureText(t).width > w && t.length > 3) t = t.slice(0, -2) + '…'; return t; }
+function rr(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+$('#wPng').onclick = () => { const el = document.createElement('a'); el.href = $('#cv').toDataURL('image/png'); el.download = 'apta-uzdikteri.png'; el.click(); };
+
+$('#refresh').onclick = load;
+draw([]);
+load(); timer = setInterval(load, 10000);
+</script>
+</body>
+</html>

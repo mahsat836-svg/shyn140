@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Бақылау тесті · Білім Арена · Шың 140</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#0d1326;--bg2:#141c36;--panel:#1b2547;--line:#2e3c6e;--ink:#eef2ff;--mute:#9aa6d1;--acc:#7c8cff;--ok:#3ddc84;--bad:#ff4d5e;--gold:#ffc94d;--r:14px}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(1100px 600px at 85% -10%,#25336b 0,transparent 60%),radial-gradient(900px 600px at -10% 110%,#3a1f5c 0,transparent 55%),var(--bg);color:var(--ink);font:17px/1.5 "Segoe UI","Trebuchet MS",system-ui,sans-serif;-webkit-user-select:none;user-select:none}
+input,select{-webkit-user-select:text;user-select:text}
+button{font:inherit;color:inherit;cursor:pointer}
+[hidden]{display:none!important}
+.wrap{max-width:880px;margin:0 auto;padding:20px 18px 40px}
+header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.brand{font-weight:800;font-size:28px;margin-right:auto}
+.brand span{background:linear-gradient(90deg,#ffb000,#ff7ad9,#5ce1e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font-size:13px;font-weight:500;color:var(--mute)}
+.box{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:18px;padding:22px}
+label.f{display:block;font-weight:700;margin:14px 0 6px}
+input.t,select.t{width:100%;background:#0f1730;border:2px solid var(--line);border-radius:12px;color:var(--ink);padding:12px 14px;font-size:18px}
+input.t:focus,select.t:focus{outline:none;border-color:var(--acc)}
+.row{display:flex;gap:10px}
+.row>*{flex:1}
+.subs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:640px){.subs{grid-template-columns:repeat(2,1fr)}}
+.sub{background:#0f1730;border:2px solid var(--line);border-radius:12px;padding:12px 8px;text-align:center}
+.sub b{display:block;font-size:28px}
+.sub.sel{border-color:var(--acc);box-shadow:0 0 0 3px #7c8cff44}
+.sub.off{opacity:.3;pointer-events:none}
+.rules{margin-top:18px;background:#2a1830;border:1px solid #7a3550;border-radius:12px;padding:12px 16px;font-size:15px}
+.rules b{color:#ff9db0}
+.rules ul{margin:6px 0 0;padding-left:20px}
+.big{display:block;width:100%;margin-top:18px;border:0;border-radius:14px;padding:16px;font-size:20px;font-weight:800;background:linear-gradient(90deg,#7c8cff,#b06bff);color:#fff}
+.big:disabled{opacity:.4;cursor:not-allowed}
+.warn{margin-top:12px;color:#ffb3bd;font-size:14px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.who{font-weight:700;margin-right:auto}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700}
+.chip.low{border-color:var(--bad);color:#ffb3bd}
+.bar{height:8px;background:#0f1730;border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#7c8cff,#3ddc84);width:0;transition:width .3s}
+.q{font-size:clamp(22px,3.2vw,30px);font-weight:700;margin:6px 0 22px;min-height:2.6em}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.opts{grid-template-columns:1fr}}
+.opt{background:#0f1730;border:2px solid var(--line);border-radius:14px;padding:16px;font-size:20px;text-align:left;display:flex;gap:12px;align-items:center}
+.opt:hover{border-color:var(--acc)}
+.opt span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--panel);font-weight:800;flex:none}
+.center{text-align:center}
+.grade{font-size:120px;font-weight:900;line-height:1;margin:10px 0}
+.g5{color:var(--ok)}.g4{color:#8fd3ff}.g3{color:var(--gold)}.g2{color:var(--bad)}
+.score{font-size:24px;font-weight:700}
+.sent{margin-top:14px;color:var(--mute);font-size:15px}
+.lockic{font-size:70px}
+.pin{display:flex;gap:10px;max-width:360px;margin:16px auto 0}
+.pin button{border:0;border-radius:12px;background:var(--acc);color:#fff;font-weight:800;padding:0 18px}
+footer{margin-top:22px;text-align:center;color:var(--mute);font-size:13px}
+footer a{color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><span>БАҚЫЛАУ ТЕСТІ</span><small>Білім Арена · Шың 140 · Ө. Жәнібеков атындағы мектеп</small></div>
+</header>
+
+<!-- 1. Кіру -->
+<section id="login" class="box">
+  <label class="f" for="nm">Аты-жөнің (тегі мен аты)</label>
+  <input id="nm" class="t" maxlength="60" autocomplete="off" placeholder="Мысалы: Әлиев Нұрсұлтан">
+  <div class="row">
+    <div><label class="f" for="cn">Сыныбың</label>
+      <select id="cn" class="t"><option value="">—</option></select></div>
+    <div><label class="f" for="cl">Литер</label>
+      <select id="cl" class="t"><option>А</option><option>Ә</option><option>Б</option><option>В</option><option>Г</option><option value="">жоқ</option></select></div>
+  </div>
+  <label class="f">Пән</label>
+  <div class="subs" id="subs"></div>
+  <div class="rules"><b>⚠ Ережелер</b>
+    <ul>
+      <li><span id="rCount">10</span> сұрақ, уақыты — <span id="rMin">15</span> минут. Әр сұраққа бір рет жауап бересің, артқа қайту жоқ.</li>
+      <li>Тест кезінде сайттан шықсаң, басқа бетке немесе бағдарламаға өтсең — <b>тест өшеді</b> және мұғалімге хабар барады.</li>
+      <li>Нәтижең мұғалімнің компьютеріне автоматты түрде жіберіледі.</li>
+    </ul>
+  </div>
+  <button id="go" class="big" disabled>Тестті бастау</button>
+  <div class="warn" id="noUrl" hidden>Мұғалім байланысы бапталмаған: нәтиже мұғалімге жіберілмейді. Мұғалімге айт.</div>
+</section>
+
+<!-- 2. Тест -->
+<section id="quiz" class="box" hidden>
+  <div class="top"><div class="who" id="qWho"></div><div class="chip" id="qNum"></div><div class="chip" id="qTime"></div></div>
+  <div class="bar"><i id="qBar"></i></div>
+  <div class="q" id="qText"></div>
+  <div class="opts" id="qOpts"></div>
+</section>
+
+<!-- 3. Нәтиже -->
+<section id="done" class="box center" hidden>
+  <div id="dName" style="font-weight:700;font-size:20px"></div>
+  <div class="grade" id="dGrade"></div>
+  <div class="score" id="dScore"></div>
+  <div class="sent" id="dSent"></div>
+  <p style="color:var(--mute)">Компьютерді келесі оқушыға дайындау үшін мұғалімді шақыр.</p>
+  <div class="pin"><input id="pin2" class="t" type="password" inputmode="numeric" placeholder="Мұғалім коды"><button data-pin="pin2">Ашу</button></div>
+</section>
+
+<!-- 4. Өшірілді -->
+<section id="lock" class="box center" hidden>
+  <div class="lockic">⛔</div>
+  <h2 style="margin:6px 0">Тест өшірілді</h2>
+  <p id="lWhy" style="color:#ffb3bd"></p>
+  <p style="color:var(--mute)">Тестті қайта бастау үшін мұғалім кодын енгізеді.</p>
+  <div class="pin"><input id="pin1" class="t" type="password" inputmode="numeric" placeholder="Мұғалім коды"><button data-pin="pin1">Ашу</button></div>
+</section>
+
+<footer>© Юлдашев Кадыржан Фазылович · <a href="../oiyndar/">Білім Арена</a> · <a href="mugalim.html">Мұғалім</a></footer>
+</div>
+
+<script src="config.js"></script>
+<script src="gen.js"></script>
+<script>
+const URLX = (() => {
+  const u = new URLSearchParams(location.search).get('u');
+  if (u && /^https:\/\/script\.google\.com\//.test(u)) { try { localStorage.setItem('bq-url', u); } catch (e) {} history.replaceState(null, '', location.pathname); }
+  return ((window.BQ_URL || '').trim() || localStorage.getItem('bq-url') || '').trim();
+})();
+const N = window.BQ_COUNT || 10, MIN = window.BQ_MINUTES || 15;
+const LV = n => n <= 4 ? 'p14' : n <= 6 ? 'p56' : n <= 9 ? 'bbzhm' : 'ubt';
+const LVNAME = { p14: '1–4 сынып', p56: '5–6 сынып', bbzhm: '7–9 · ББЖМ', ubt: '10–11 · ҰБТ' };
+// Баға шкаласы (1–4 және 5–6 сыныптар): 0–2 → 2, 3–5 → 3, 6–7 → 4, 8–10 → 5 (10 сұраққа)
+function grade(score, total, lv) {
+  if (lv !== 'p14' && lv !== 'p56') return '';
+  const s = Math.round(score * 10 / total);
+  return s >= 8 ? '5' : s >= 6 ? '4' : s >= 3 ? '3' : '2';
+}
+$('#rCount').textContent = N; $('#rMin').textContent = MIN;
+if (!URLX) $('#noUrl').hidden = false;
+
+/* ---- жіберу (кезекпен) ---- */
+const QK = 'bq-queue';
+const getQ = () => { try { return JSON.parse(localStorage.getItem(QK) || '[]'); } catch (e) { return []; } };
+const setQ = a => { try { localStorage.setItem(QK, JSON.stringify(a.slice(-50))); } catch (e) {} };
+async function post(d) {
+  if (!URLX) return false;
+  try {
+    await fetch(URLX, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(d) });
+    return true;
+  } catch (e) { return false; }
+}
+async function send(d) { const ok = await post(d); if (!ok) setQ([...getQ(), d]); return ok; }
+async function flush() { const q = getQ(); if (!q.length || !URLX) return; setQ([]); for (const d of q) if (!(await post(d))) setQ([...getQ(), d]); }
+function beacon(d) {
+  if (!URLX) return;
+  try { if (navigator.sendBeacon(URLX, new Blob([JSON.stringify(d)], { type: 'text/plain;charset=utf-8' }))) return; } catch (e) {}
+  setQ([...getQ(), d]);
+}
+flush(); addEventListener('online', flush);
+
+/* ---- кіру формасы ---- */
+for (let i = 1; i <= 11; i++) $('#cn').insertAdjacentHTML('beforeend', `<option value="${i}">${i}-сынып</option>`);
+let subj = null;
+const subsEl = $('#subs');
+for (const k of ['mat', 'inf', 'phy', 'che', 'geo']) {
+  const b = document.createElement('button'); b.className = 'sub'; b.dataset.k = k;
+  b.innerHTML = `<b>${SUBJ[k].ic}</b>${SUBJ[k].name}`;
+  b.onclick = () => { subj = k; subsEl.querySelectorAll('.sub').forEach(x => x.classList.toggle('sel', x === b)); check(); };
+  subsEl.append(b);
+}
+function check() {
+  const n = +$('#cn').value;
+  subsEl.querySelectorAll('.sub').forEach(b => { const ok = !n || GEN[b.dataset.k].some(g => g[0] === LV(n)); b.classList.toggle('off', !ok); if (!ok && subj === b.dataset.k) { subj = null; b.classList.remove('sel'); } });
+  const name = $('#nm').value.trim().replace(/\s+/g, ' ');
+  $('#go').disabled = !(name.split(' ').length >= 2 && name.length >= 5 && n && subj);
+}
+$('#nm').oninput = check; $('#cn').onchange = check;
+check();
+
+/* ---- тест ---- */
+let T = null;
+function makeQs(s, lv) {
+  const gens = GEN[s].filter(g => g[0] === lv), out = [], seen = new Set();
+  for (let tries = 0; out.length < N && tries < 400; tries++) {
+    const q = pick(gens)[1]();
+    if (!q || !q.o || q.o.length < 3 || seen.has(q.q)) continue;
+    seen.add(q.q); out.push({ q: q.q, a: q.a, opts: shuffle([q.a, ...q.o.slice(0, 3)]) });
+  }
+  return out;
+}
+$('#go').onclick = () => {
+  const n = +$('#cn').value, lv = LV(n);
+  const name = $('#nm').value.trim().replace(/\s+/g, ' ');
+  const cls = n + ($('#cl').value ? ' ' + $('#cl').value : '');
+  T = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), name, cls, lv, subj, qs: makeQs(subj, lv), i: 0, score: 0, marks: [], t0: Date.now(), over: false };
+  const total = T.qs.length;
+  send({ ...base(), status: 'Басталды', total });
+  try { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen().catch(() => {}); } catch (e) {}
+  show('quiz'); $('#qWho').textContent = `${name} · ${cls} · ${SUBJ[subj].name}`;
+  T.timer = setInterval(tick, 500); tick(); render();
+  setTimeout(() => { T && (T.armed = true); }, 800); // толық экранға өту кезіндегі жалған сигналды елемеу
+};
+const base = () => ({ id: T.id, name: T.name, cls: T.cls, lv: LVNAME[T.lv], subj: SUBJ[T.subj].name });
+function tick() {
+  const left = MIN * 60 - Math.floor((Date.now() - T.t0) / 1000);
+  $('#qTime').textContent = '⏱ ' + Math.floor(Math.max(left, 0) / 60) + ':' + String(Math.max(left, 0) % 60).padStart(2, '0');
+  $('#qTime').classList.toggle('low', left <= 60);
+  if (left <= 0) finish();
+}
+function render() {
+  const q = T.qs[T.i];
+  $('#qNum').textContent = `${T.i + 1} / ${T.qs.length}`;
+  $('#qBar').style.width = (T.i / T.qs.length * 100) + '%';
+  $('#qText').textContent = q.q;
+  const box = $('#qOpts'); box.innerHTML = '';
+  q.opts.forEach((o, k) => {
+    const b = document.createElement('button'); b.className = 'opt';
+    b.innerHTML = `<span>${'ABCD'[k]}</span><div></div>`; b.lastChild.textContent = o;
+    b.onclick = () => answer(o);
+    box.append(b);
+  });
+}
+function answer(o) {
+  if (!T || T.over) return;
+  const ok = o === T.qs[T.i].a; if (ok) T.score++;
+  T.marks.push((T.i + 1) + (ok ? '+' : '−'));
+  T.i++;
+  if (T.i >= T.qs.length) finish(); else render();
+}
+function stop() { if (!T) return; T.over = true; clearInterval(T.timer); try { document.fullscreenElement && document.exitFullscreen(); } catch (e) {} }
+function finish() {
+  if (!T || T.over) return; stop();
+  const total = T.qs.length, g = grade(T.score, total, T.lv), sec = Math.round((Date.now() - T.t0) / 1000);
+  const d = { ...base(), status: 'Аяқталды', score: T.score, total, grade: g, sec, detail: T.marks.join(' ') };
+  setLock({ kind: 'done', name: T.name, score: T.score, total, g });
+  show('done'); showDone(T.name, T.score, total, g);
+  $('#dSent').textContent = URLX ? 'Нәтиже жіберілуде…' : 'Нәтиже мұғалімге жіберілмеді (байланыс бапталмаған).';
+  send(d).then(ok => { if (URLX) $('#dSent').textContent = ok ? '✓ Нәтиже мұғалімге жіберілді' : 'Интернет жоқ — нәтиже сақталды, байланыс болғанда жіберіледі.'; });
+  T = null;
+}
+function annul(reason, viaBeacon) {
+  if (!T || T.over || !T.armed) return; stop();
+  const d = { ...base(), status: 'Өшірілді', reason, score: T.score, total: T.qs.length, sec: Math.round((Date.now() - T.t0) / 1000), detail: T.marks.join(' ') };
+  setLock({ kind: 'annul', name: T.name, reason });
+  if (viaBeacon) beacon(d); else send(d);
+  show('lock'); $('#lWhy').textContent = `${T.name}: ${reason}.`;
+  T = null;
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) annul('сайттан шықты (басқа бетке немесе бағдарламаға өтті)', true); });
+addEventListener('blur', () => setTimeout(() => { if (!document.hasFocus()) annul('тест терезесінен шықты'); }, 300));
+addEventListener('pagehide', () => annul('бетті жапты немесе жаңартты', true));
+addEventListener('beforeunload', e => { if (T && !T.over) { e.preventDefault(); e.returnValue = ''; } });
+document.addEventListener('contextmenu', e => { if (T) e.preventDefault(); });
+document.addEventListener('copy', e => { if (T) e.preventDefault(); });
+
+/* ---- құлып және мұғалім коды ---- */
+const LK = 'bq-lock';
+function setLock(o) { try { localStorage.setItem(LK, JSON.stringify(o)); } catch (e) {} }
+function showDone(name, score, total, g) {
+  $('#dName').textContent = name;
+  $('#dGrade').textContent = g || score;
+  $('#dGrade').className = 'grade ' + (g ? 'g' + g : (score / total >= .8 ? 'g5' : score / total >= .5 ? 'g3' : 'g2'));
+  $('#dScore').textContent = `${score} / ${total} балл` + (g ? ` · бағаң: ${g}` : '');
+}
+document.querySelectorAll('[data-pin]').forEach(b => b.onclick = () => {
+  const inp = $('#' + b.dataset.pin);
+  if (inp.value === String(window.BQ_PIN)) { localStorage.removeItem(LK); location.href = location.pathname + location.search; }
+  else { inp.value = ''; inp.placeholder = 'Код қате'; }
+});
+document.querySelectorAll('.pin input').forEach(i => i.onkeydown = e => { if (e.key === 'Enter') i.nextElementSibling.click(); });
+function show(id) { ['login', 'quiz', 'done', 'lock'].forEach(s => $('#' + s).hidden = s !== id); }
+(() => {
+  let l = null; try { l = JSON.parse(localStorage.getItem(LK) || 'null'); } catch (e) {}
+  if (!l) return;
+  if (l.kind === 'annul') { show('lock'); $('#lWhy').textContent = `${l.name}: ${l.reason}.`; }
+  else { show('done'); showDone(l.name, l.score, l.total, l.g); $('#dSent').textContent = ''; }
+})();
+</script>
+</body>
+</html>
