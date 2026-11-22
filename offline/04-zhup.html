@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ойын</title>
+<style>
+:root{--bg:#0d1326;--bg2:#141c36;--panel:#1b2547;--line:#2e3c6e;--ink:#eef2ff;--mute:#9aa6d1;--acc:#7c8cff;--ok:#3ddc84;--bad:#ff4d5e;--gold:#ffc94d;--pink:#ff7ad9;--cyan:#5ce1e6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:radial-gradient(1100px 600px at 85% -10%,#25336b 0,transparent 60%),radial-gradient(900px 600px at -10% 110%,#3a1f5c 0,transparent 55%),var(--bg);color:var(--ink);font:17px/1.45 "Segoe UI","Trebuchet MS",Arial,sans-serif;display:flex;flex-direction:column;overflow:hidden;-webkit-user-select:none;user-select:none}
+button{font:inherit;color:inherit;cursor:pointer}
+[hidden]{display:none!important}
+header.bar{display:flex;align-items:center;gap:10px;padding:10px 16px;background:#0b1022cc;border-bottom:1px solid var(--line);flex:none}
+header.bar h1{font-size:20px;margin:0;white-space:nowrap}
+header.bar .info{color:var(--mute);font-size:14px;margin-right:auto}
+.hud{display:flex;gap:8px;flex-wrap:wrap}
+.hud span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:4px 12px;font-weight:700;white-space:nowrap}
+.tb{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 10px;text-decoration:none;color:var(--ink);font-size:15px}
+.tb:hover{border-color:var(--acc)}
+main#stage{flex:1;position:relative;overflow:hidden}
+.ov{position:fixed;inset:0;background:#070b18e6;display:grid;place-items:center;z-index:50;padding:16px;overflow:auto}
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:20px;padding:24px 28px;max-width:760px;width:100%;box-shadow:0 30px 80px -20px #000}
+.card h2{margin:0 0 6px;font-size:30px}
+.card p{color:var(--mute);margin:0 0 10px}
+.card ul{margin:6px 0 14px;padding-left:20px;color:#d9e0ff}
+.lbl{font-weight:800;margin:14px 0 8px;color:var(--gold);letter-spacing:.05em;font-size:14px;text-transform:uppercase}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.chip{min-width:48px;height:48px;border-radius:12px;border:2px solid var(--line);background:#0f1730;font-weight:800;font-size:19px}
+.chip.wide{padding:0 18px}
+.chip.sel{border-color:var(--acc);background:#2a3a7a;box-shadow:0 0 0 3px #7c8cff44}
+.big{display:block;width:100%;margin-top:20px;border:0;border-radius:14px;padding:16px;font-size:22px;font-weight:900;background:linear-gradient(90deg,#7c8cff,#b06bff);color:#fff;box-shadow:0 10px 30px -10px #b06bff}
+.big:hover{filter:brightness(1.1)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:14px 0}
+.stats div{background:#0f1730;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stats b{display:block;font-size:30px;color:var(--gold)}
+.stats span{color:var(--mute);font-size:13px}
+.mi{background:#0f1730;border-left:4px solid var(--bad);border-radius:8px;padding:6px 10px;margin:6px 0;font-size:15px}
+.mi span{display:block;white-space:pre-wrap}.mi b{color:var(--ok);font-size:14px}
+.two{display:flex;gap:10px}.two .big{flex:1}
+.big.alt{background:var(--panel);border:1px solid var(--line);box-shadow:none}
+#toast{position:fixed;left:50%;top:45%;transform:translate(-50%,-50%);font-size:46px;font-weight:900;pointer-events:none;opacity:0;z-index:60;text-shadow:0 4px 20px #000}
+#toast.show{animation:tst .9s ease-out}
+@keyframes tst{0%{opacity:0;transform:translate(-50%,-30%) scale(.7)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}100%{opacity:0;transform:translate(-50%,-90%) scale(1)}}
+#conf{position:fixed;inset:0;pointer-events:none;z-index:70;overflow:hidden}
+#conf i{position:absolute;top:-20px;width:10px;height:16px;border-radius:3px;animation:cf 3s linear forwards}
+@keyframes cf{to{top:110%;transform:rotate(720deg)}}
+.qbox{background:#0f1730e6;border:2px solid var(--line);border-radius:16px;padding:12px 20px;font-size:clamp(20px,2.6vw,32px);font-weight:800;text-align:center;white-space:pre-wrap}
+
+#mg{position:absolute;inset:0;padding:16px;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(4,1fr);gap:12px;max-width:1100px;margin:0 auto}
+.tile{border:0;border-radius:16px;perspective:600px;background:none;padding:0}
+.tile .in{position:relative;width:100%;height:100%;transition:transform .4s;transform-style:preserve-3d}
+.tile.open .in,.tile.done .in{transform:rotateY(180deg)}
+.tile .f,.tile .bk{position:absolute;inset:0;border-radius:16px;display:grid;place-items:center;backface-visibility:hidden;padding:8px;text-align:center;font-weight:800;white-space:pre-wrap;line-height:1.15}
+.tile .f{background:linear-gradient(135deg,#7c8cff,#b06bff);font-size:42px}
+.tile .bk{background:#fff;color:#0d1326;transform:rotateY(180deg);font-size:clamp(13px,1.5vw,20px);border:3px solid #7c8cff}
+.tile .bk.ans{border-color:#ffb000;background:#fff7e0;font-size:clamp(18px,2.2vw,28px)}
+.tile.done .bk{border-color:#3ddc84;background:#e6ffef;opacity:.75}
+
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="tb" href="index.html">⬅ Мәзір</a>
+  <h1 id="gTitle"></h1>
+  <span class="info" id="gInfo"></span>
+  <div class="hud" id="hud"></div>
+  <button class="tb" id="stopB" title="Тоқтату">⏹</button>
+  <button class="tb" id="sndB">🔊</button>
+  <button class="tb" id="fsB" title="Толық экран">⛶</button>
+</header>
+<main id="stage">
+
+<div id="mg"></div>
+
+</main>
+<div id="setup" class="ov"><div class="card">
+  <h2 id="sTitle"></h2><p id="sDesc"></p><ul id="sRules"></ul>
+  <div class="lbl">Сыныпты таңда</div><div class="row" id="grades"></div>
+  <div id="subjRow"><div class="lbl">Пән</div><div class="row" id="subjs"></div></div>
+  <button class="big" id="goBtn">▶ Бастау</button>
+</div></div>
+<div id="over" class="ov" hidden><div class="card">
+  <h2 id="oTitle"></h2><div class="stats" id="oStats"></div><div id="oMist"></div>
+  <div class="two"><button class="big" id="againBtn">↻ Қайта ойнау</button><button class="big alt" id="setBtn">⚙ Сынып / пән</button></div>
+</div></div>
+<div id="toast"></div><div id="conf"></div>
+<script>
+/* ===== Сұрақ генераторлары: 1–11 сынып, математика және информатика ===== */
+const rnd = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmt = n => String(Math.round(n * 1000) / 1000).replace('.', ',');
+const gcd = (a, b) => b ? gcd(b, a % b) : Math.abs(a);
+const SUBN = s => s.replace(/\d/g, d => '₀₁₂₃₄₅₆₇₈₉'[d]);
+
+// мәтіндік сұрақ: дұрыс жауап + жалған нұсқалар (2–3 дана)
+function tq(q, a, wrong) {
+  const o = [...new Set(wrong.map(String))].filter(x => x !== String(a)).slice(0, 3);
+  return { q, a: String(a), o };
+}
+// сандық сұрақ: жалған нұсқалар автоматты
+function nq(q, ans, extra = [], unit = '') {
+  const u = unit ? ' ' + unit : '';
+  const pool = [...shuffle(extra), ...shuffle([ans + 1, ans - 1, ans + 2, ans - 2, ans + 10, ans - 10, ans * 2, ans + 5])];
+  const o = [];
+  for (const v of pool) {
+    if (o.length >= 3) break;
+    if (!Number.isFinite(v) || v === ans || (ans >= 0 && v < 0) || (Number.isInteger(ans) && !Number.isInteger(v))) continue;
+    const t = fmt(v) + u;
+    if (!o.includes(t)) o.push(t);
+  }
+  return { q, a: fmt(ans) + u, o, n: ans };
+}
+
+const DEV = [['Пернетақта', 'мәтін теру'], ['Тышқан', 'нұсқағышты басқару'], ['Монитор', 'суретті көрсету'], ['Принтер', 'қағазға басып шығару'], ['Колонка', 'дыбыс шығару'], ['Микрофон', 'дыбысты жазу'], ['Сканер', 'қағаздағы суретті компьютерге енгізу'], ['Веб-камера', 'бейнені түсіру']];
+const EXT = [['.docx', 'Мәтін құжаты'], ['.jpg', 'Сурет'], ['.mp3', 'Дыбыс'], ['.mp4', 'Бейне'], ['.pptx', 'Презентация'], ['.xlsx', 'Электрондық кесте'], ['.html', 'Веб-бет']];
+const binStr = (n, w) => n.toString(2).padStart(w || 0, '0');
+const TRIG = { sin: { 0: '0', 30: '1/2', 45: '√2/2', 60: '√3/2', 90: '1' }, cos: { 0: '1', 30: '√3/2', 45: '√2/2', 60: '1/2', 90: '0' }, tg: { 0: '0', 30: '√3/3', 45: '1', 60: '√3' } };
+const TRIGV = ['0', '1/2', '√2/2', '√3/2', '1', '√3', '√3/3'];
+
+const G = { mat: {}, inf: {} };
+const add = (s, grades, fns) => grades.forEach(g => (G[s][g] = G[s][g] || []).push(...fns));
+
+/* ---------- МАТЕМАТИКА ---------- */
+add('mat', [1], [
+  () => { const a = rnd(1, 10), b = rnd(1, 10); return nq(`${a} + ${b} = ?`, a + b); },
+  () => { const a = rnd(5, 20), b = rnd(1, a); return nq(`${a} − ${b} = ?`, a - b); },
+  () => { const n = rnd(1, 18); return nq(`${n}-ден кейін қандай сан келеді?`, n + 1); },
+  () => { const a = rnd(1, 9), d = rnd(1, 3); return nq(`Заңдылықты тап: ${a}, ${a + d}, ${a + 2 * d}, ?`, a + 3 * d); },
+  () => { const n = rnd(2, 9), k = rnd(1, n - 1); return nq(`Себетте ${n} алма бар. ${k} алманы жедік. Неше алма қалды?`, n - k); },
+]);
+add('mat', [2], [
+  () => { const a = rnd(10, 60), b = rnd(5, 39); return nq(`${a} + ${b} = ?`, a + b); },
+  () => { const a = rnd(30, 99), b = rnd(5, a - 10); return nq(`${a} − ${b} = ?`, a - b); },
+  () => { const a = rnd(2, 5), b = rnd(2, 10); return nq(`${a} × ${b} = ?`, a * b); },
+  () => { const m = rnd(1, 9); return nq(`${m} м неше сантиметр?`, m * 100, [m * 10, m * 1000], 'см'); },
+  () => { const n = rnd(2, 9); return nq(`Әр қорапта ${n} қалам бар. 3 қорапта неше қалам?`, n * 3); },
+]);
+add('mat', [3], [
+  () => { const a = rnd(2, 9), b = rnd(2, 9); return nq(`${a} × ${b} = ?`, a * b); },
+  () => { const b = rnd(2, 9), q = rnd(2, 9); return nq(`${b * q} : ${b} = ?`, q); },
+  () => { const a = rnd(2, 9), b = rnd(2, 9), c = rnd(1, 20); return nq(`${a} × ${b} + ${c} = ?`, a * b + c); },
+  () => { const a = rnd(2, 15); return nq(`Шаршының қабырғасы ${a} см. Периметрі қанша?`, 4 * a, [a * a, 2 * a], 'см'); },
+  () => { const a = rnd(100, 500), b = rnd(10, 99); return nq(`${a} + ${b} = ?`, a + b); },
+]);
+add('mat', [4], [
+  () => { const a = rnd(200, 900), b = rnd(100, a - 50); return nq(`${a} − ${b} = ?`, a - b); },
+  () => { const a = rnd(12, 99), b = rnd(2, 9); return nq(`${a} × ${b} = ?`, a * b); },
+  () => { const a = rnd(3, 12), b = rnd(2, 9); return nq(`Тіктөртбұрыштың ұзындығы ${a} см, ені ${b} см. Ауданы қанша?`, a * b, [2 * (a + b)], 'см²'); },
+  () => { const k = pick([2, 3, 4, 5]), n = k * rnd(2, 10); return nq(`${n}-нің 1/${k} бөлігі неге тең?`, n / k, [n * k, n - k]); },
+  () => { const h = rnd(2, 6); return nq(`${h} сағат неше минут?`, h * 60, [h * 100, h * 30], 'мин'); },
+]);
+add('mat', [5], [
+  () => { const a = rnd(11, 59) / 10, b = rnd(11, 49) / 10; return nq(`${fmt(a)} + ${fmt(b)} = ?`, Math.round((a + b) * 10) / 10, [Math.round((a + b + 1) * 10) / 10, Math.round((a + b - 0.1) * 10) / 10, Math.round((a + b + 0.1) * 10) / 10]); },
+  () => { const d = pick([5, 7, 9, 11]), a = rnd(1, 4), b = rnd(1, d - a - 1); return tq(`${a}/${d} + ${b}/${d} = ?`, `${a + b}/${d}`, [`${a + b}/${2 * d}`, `${a * b}/${d}`, `${a + b + 1}/${d}`]); },
+  () => { const p = pick([10, 20, 25, 50]), n = rnd(2, 20) * 20; return nq(`${n}-дің ${p}%-ы неге тең?`, n * p / 100, [n * p / 10]); },
+  () => { const a = rnd(2, 15); return nq(`${a}² = ?`, a * a, [2 * a]); },
+  () => { const a = rnd(2, 20), b = rnd(2, 9), c = rnd(2, 9); return nq(`${a} + ${b} × ${c} = ?`, a + b * c, [(a + b) * c]); },
+]);
+add('mat', [6], [
+  () => { const a = -rnd(2, 15), b = rnd(2, 20); return nq(`(${a}) + ${b} = ?`, a + b, [-(a + b), a - b]); },
+  () => { const a = rnd(2, 9) * pick([1, -1]), b = rnd(2, 9) * pick([1, -1]); return nq(`(${a}) · (${b}) = ?`, a * b, [-a * b, a + b]); },
+  () => { const n = -rnd(3, 40); return nq(`|${n}| = ?`, -n, [n]); },
+  () => { const a = rnd(2, 6), b = rnd(2, 6), k = rnd(2, 6); return nq(`Пропорция: ${a} : ${b} = ${a * k} : x. x = ?`, b * k, [a * k * b, a + b]); },
+  () => { const g = rnd(2, 9), a = g * rnd(2, 7), b = g * rnd(2, 7); const r = gcd(a, b); return nq(`ЕҮОБ(${a}; ${b}) = ?`, r, [a * b / r, r * 2]); },
+]);
+add('mat', [7], [
+  () => { const x = rnd(-9, 9), a = rnd(2, 9), b = rnd(-20, 20); return nq(`${a}x ${b < 0 ? '− ' + -b : '+ ' + b} = ${a * x + b}. x = ?`, x, [-x]); },
+  () => { const m = rnd(2, 6), n = rnd(2, 6); return nq(`2${'⁰¹²³⁴⁵⁶⁷⁸⁹'[m]} · 2${'⁰¹²³⁴⁵⁶⁷⁸⁹'[n]} = 2ˣ. x = ?`, m + n, [m * n]); },
+  () => { const k = rnd(-5, 5) || 2, b = rnd(-9, 9), x = rnd(-5, 5); return nq(`y = ${k}x ${b < 0 ? '− ' + -b : '+ ' + b} функциясы. x = ${x} болғанда y = ?`, k * x + b, [k + x + b]); },
+  () => { const a = rnd(11, 30), b = rnd(1, 9), c = a - b; return nq(`${a}² − ${c}² = ?`, (a - c) * (a + c), [(a - c) * (a - c)]); },
+  () => { const a = rnd(2, 5); return nq(`${a}³ = ?`, a ** 3, [3 * a, a * a]); },
+]);
+add('mat', [8], [
+  () => { const k = rnd(2, 20); return nq(`√${k * k} = ?`, k, [k * k / 2]); },
+  () => { const p = rnd(-6, 6), q = rnd(-6, 6); if (p === q) return null; const s = p + q, m = p * q; return nq(`x² ${-s < 0 ? '− ' + s : '+ ' + -s}x ${m < 0 ? '− ' + -m : '+ ' + m} = 0. Түбірлердің қосындысы x₁ + x₂ = ?`, s, [-s, m]); },
+  () => { const t = pick([[3, 4, 5], [6, 8, 10], [5, 12, 13], [8, 15, 17]]); return nq(`Тікбұрышты үшбұрыштың катеттері ${t[0]} және ${t[1]}. Гипотенуза = ?`, t[2], [t[0] + t[1]]); },
+  () => { const a = rnd(1, 3), b = rnd(-8, 8), c = rnd(-5, 5); return nq(`${a}x² ${b < 0 ? '− ' + -b : '+ ' + b}x ${c < 0 ? '− ' + -c : '+ ' + c} = 0. Дискриминант D = ?`, b * b - 4 * a * c, [b * b + 4 * a * c]); },
+  () => { const a = rnd(2, 9); return nq(`√${a} · √${a} = ?`, a, [a * a]); },
+]);
+add('mat', [9], [
+  () => { const a = rnd(1, 9), d = rnd(2, 7), n = rnd(6, 15); return nq(`Арифметикалық прогрессия: a₁ = ${a}, d = ${d}. a${SUBN(String(n))} = ?`, a + (n - 1) * d, [a + n * d]); },
+  () => { const b = rnd(1, 4), q = rnd(2, 3), n = rnd(3, 5); return nq(`Геометриялық прогрессия: b₁ = ${b}, q = ${q}. b${SUBN(String(n))} = ?`, b * q ** (n - 1), [b * q ** n]); },
+  () => { const n = rnd(5, 20); return nq(`1 + 2 + 3 + … + ${n} = ?`, n * (n + 1) / 2, [n * n]); },
+  () => { const t = rnd(1, 8), a = rnd(1, 9), b = 2 * t - a; return nq(`2x − ${a} > ${b} теңсіздігінің ең кіші бүтін шешімі?`, t + 1, [t]); },
+  () => { const f = pick(['sin', 'cos']), d = pick([30, 45, 60]); return tq(`${f} ${d}° = ?`, TRIG[f][d], TRIGV.filter(v => v !== TRIG[f][d])); },
+]);
+add('mat', [10], [
+  () => { const f = pick(['sin', 'cos', 'tg']), d = pick(Object.keys(TRIG[f])); return tq(`${f} ${d}° = ?`, TRIG[f][d], shuffle(TRIGV.filter(v => v !== TRIG[f][d]))); },
+  () => { const a = rnd(1, 5), n = rnd(2, 4), x = rnd(1, 3); return nq(`f(x) = ${a === 1 ? '' : a}x${'⁰¹²³⁴⁵⁶⁷⁸⁹'[n]}. f′(${x}) = ?`, a * n * x ** (n - 1), [a * x ** n, a * n * x ** n]); },
+  () => { const d = pick([[90, 'π/2'], [60, 'π/3'], [45, 'π/4'], [30, 'π/6'], [180, 'π'], [360, '2π']]); return tq(`${d[0]}° неше радиан?`, d[1], ['π/2', 'π/3', 'π/4', 'π/6', 'π', '2π']); },
+  () => { const k = rnd(2, 9), b = rnd(-9, 9); return nq(`f(x) = ${k}x ${b < 0 ? '− ' + -b : '+ ' + b}. f′(x) = ?`, k, [b, k + b]); },
+  () => { const a = rnd(2, 6), c = rnd(1, 9); return nq(`f(x) = x² + ${a}x + ${c}. f′(0) = ?`, a, [c, 2 * a]); },
+]);
+add('mat', [11], [
+  () => { const b = pick([2, 3, 5, 10]), k = rnd(1, b === 2 ? 6 : 3); return nq(`log${SUBN(String(b))} ${b ** k} = ?`, k, [b ** (k - 1), k + 1]); },
+  () => { const m = rnd(1, 4), n = rnd(1, 4); return nq(`log₂ ${2 ** m} + log₂ ${2 ** n} = ?`, m + n, [m * n, 2 ** (m + n)]); },
+  () => { const a = pick([2, 3, 5]), k = rnd(2, 4); return nq(`${a}ˣ = ${a ** k}. x = ?`, k, [a ** k / a]); },
+  () => { const a = rnd(1, 5); return nq(`∫₀${'⁰¹²³⁴⁵⁶⁷⁸⁹'[a]} 2x dx = ?`, a * a, [2 * a, a]); },
+  () => { const n = rnd(4, 9); return nq(`${n} оқушыдан 2 кезекшіні неше тәсілмен таңдауға болады? (C${SUBN(String(n))}²)`, n * (n - 1) / 2, [n * (n - 1)]); },
+  () => { const n = rnd(3, 6); const f = [1, 1, 2, 6, 24, 120, 720][n]; return nq(`${n}! = ?`, f, [n * n, f / n]); },
+]);
+
+/* ---------- ИНФОРМАТИКА ---------- */
+add('inf', [1, 2], [
+  () => { const d = pick(DEV); return tq(`${d[0]} не үшін керек?`, d[1], DEV.filter(x => x !== d).map(x => x[1])); },
+  () => { const r = rnd(3, 7), l = rnd(1, r - 1); return nq(`Робот ${r} қадам оңға, сосын ${l} қадам солға жүрді. Бастапқы орнынан неше қадам оңда тұр?`, r - l, [r + l]); },
+  () => { const p = pick([['🔴', '🔵'], ['⭐', '🌙'], ['🍎', '🍐'], ['▲', '■']]); return tq(`Заңдылықты жалғастыр: ${p[0]} ${p[1]} ${p[0]} ${p[1]} ${p[0]} ?`, p[1], [p[0], '⚪', '❓']); },
+  () => pick([tq('Интернетте бейтаныс адам мекенжайыңды сұраса не істейсің?', 'Айтпаймын, ата-анама хабарлаймын', ['Айтып беремін', 'Суретін жіберемін']), tq('Құпиясөзді кіммен бөлісуге болады?', 'Ешкіммен (тек ата-анаммен)', ['Досыммен', 'Бейтаныс адаммен']), tq('Компьютерді өшіргенде не істейміз?', '«Пуск → Завершение работы» басамыз', ['Сымын суырамыз', 'Мониторды жабамыз'])]),
+  () => { const n = rnd(2, 6); return nq(`Робот «алға ${n} қадам» командасын 2 рет орындады. Барлығы неше қадам?`, 2 * n, [n + 2]); },
+]);
+add('inf', [3, 4], [
+  () => { const e = pick(EXT); return tq(`${e[0]} кеңейтімі бар файл — бұл не?`, e[1], EXT.filter(x => x !== e).map(x => x[1])); },
+  () => { const n = rnd(1, 7); return nq(`Шамдар: 1 — жанып тұр, 0 — сөніп тұр. ${binStr(n, 3)} — бұл ондық санау жүйесінде неше?`, n); },
+  () => tq('Алгоритм дегеніміз не?', 'Мақсатқа жету үшін орындалатын әрекеттер реті', ['Компьютердің бөлігі', 'Сурет салу бағдарламасы', 'Файлдың атауы']),
+  () => { const k = rnd(2, 5), n = rnd(2, 4); return nq(`«Қайтала ${k} рет [алға ${n} қадам]». Робот барлығы неше қадам жүреді?`, k * n, [k + n]); },
+  () => nq('1 байт неше бит?', 8, [10, 2, 1024]),
+]);
+add('inf', [5, 6], [
+  () => { const k = rnd(2, 9); return nq(`${k} байт неше бит?`, k * 8, [k * 10, k * 2], 'бит'); },
+  () => { const n = rnd(3, 31); return nq(`${binStr(n)}₂ санын ондық жүйеге аудар`, n, [n + 2, parseInt(binStr(n), 10)].filter(v => v < 1e5)); },
+  () => { const n = rnd(3, 15); return tq(`${n} санын екілік жүйеге аудар`, binStr(n), [binStr(n + 1), binStr(n - 1), binStr(n ^ 2)]); },
+  () => { const k = rnd(1, 4); return nq(`${k} Кбайт неше байт?`, k * 1024, [k * 1000, k * 8], 'байт'); },
+  () => { const e = pick(EXT); return tq(`«${e[1]}» файлының кеңейтімі қандай?`, e[0], EXT.filter(x => x !== e).map(x => x[0])); },
+]);
+add('inf', [7], [
+  () => { const n = rnd(32, 255); return nq(`${binStr(n)}₂ = ?₁₀`, n, [n + 1, n - 2]); },
+  () => { const n = rnd(16, 255); return tq(`${n}₁₀ санын он алтылық жүйеге аудар`, n.toString(16).toUpperCase(), [(n + 1).toString(16).toUpperCase(), (n ^ 16).toString(16).toUpperCase(), n.toString(8)]); },
+  () => { const k = rnd(2, 8); return nq(`${k} Мбайт неше Кбайт?`, k * 1024, [k * 1000, k * 8], 'Кбайт'); },
+  () => pick([tq('Компьютердің «миы» — барлық есептеуді орындайтын құрылғы?', 'Процессор', ['Монитор', 'Қатты диск', 'Пернетақта']), tq('Компьютер өшкенде деректер өшетін жады?', 'Жедел жады (ОЗУ)', ['Қатты диск', 'Флешка', 'Тұрақты жады']), tq('Ақпаратты ұзақ сақтайтын құрылғы?', 'Қатты диск', ['Жедел жады', 'Процессор', 'Колонка'])]),
+  () => { const n = rnd(8, 63); return tq(`${n}₁₀ = ?₈`, n.toString(8), [(n + 1).toString(8), n.toString(2), String(n)]); },
+]);
+add('inf', [8], [
+  () => { const A = rnd(0, 1), B = rnd(0, 1); const op = pick(['ЖӘНЕ', 'НЕМЕСЕ']); const r = op === 'ЖӘНЕ' ? A & B : A | B; return tq(`A = ${A}, B = ${B}. A ${op} B = ?`, r, [1 - r]); },
+  () => { const A = rnd(0, 1), B = rnd(0, 1), C = rnd(0, 1); const r = (A | B) & (1 - C); return tq(`A = ${A}, B = ${B}, C = ${C}. (A НЕМЕСЕ B) ЖӘНЕ (ЕМЕС C) = ?`, r, [1 - r]); },
+  () => { const a = rnd(2, 15), b = rnd(2, 15); return tq(`${binStr(a)}₂ + ${binStr(b)}₂ = ?`, binStr(a + b), [binStr(a + b + 1), binStr(a ^ b), binStr(a + b - 1)]); },
+  () => { const i = rnd(2, 8); return nq(`Әліпбиде ${2 ** i} символ бар. Бір символдың ақпараттық салмағы неше бит?`, i, [2 ** i / 2, i * 2], 'бит'); },
+  () => { const n = rnd(64, 255); return nq(`${binStr(n)}₂ = ?₁₀`, n); },
+]);
+add('inf', [9], [
+  () => { const a = rnd(2, 9), b = rnd(2, 9), c = rnd(2, 9); return nq(`print(${a} + ${b} * ${c}) нәтижесі?`, a + b * c, [(a + b) * c]); },
+  () => { const a = rnd(10, 50), b = rnd(3, 9); return nq(`print(${a} // ${b}) нәтижесі?`, Math.floor(a / b), [a % b, Math.round(a / b * 10) / 10]); },
+  () => { const a = rnd(10, 50), b = rnd(3, 9); return nq(`print(${a} % ${b}) нәтижесі?`, a % b, [Math.floor(a / b)]); },
+  () => { const n = rnd(3, 10); return nq(`s = 0\nfor i in range(1, ${n + 1}):\n    s += i\nprint(s)  →  ?`, n * (n + 1) / 2, [n * n, (n - 1) * n / 2]); },
+  () => { const x = [rnd(1, 20), rnd(1, 20), rnd(1, 20)]; return nq(`A1 = ${x[0]}, A2 = ${x[1]}, A3 = ${x[2]}. =SUM(A1:A3) нәтижесі?`, x[0] + x[1] + x[2], [x[0] + x[2]]); },
+]);
+add('inf', [10], [
+  () => { const n = rnd(16, 255); const h = n.toString(16).toUpperCase(); return nq(`${h}₁₆ = ?₁₀`, n, [parseInt(h, 10) || n + 16].filter(v => v !== n)); },
+  () => { const k = pick([100, 200, 256, 512, 1000]); return nq(`Мәтінде ${k} символ бар, әр символ 8 биттен кодталған. Мәтін көлемі неше байт?`, k, [k * 8, k / 8], 'байт'); },
+  () => { const w = pick([16, 32, 64]), c = pick([[2, 1], [16, 4], [256, 8]]); const bits = w * w * c[1]; return nq(`${w}×${w} пиксель сурет, ${c[0]} түсті палитра. Көлемі неше бит?`, bits, [w * w * c[0], w * w], 'бит'); },
+  () => { const n = rnd(1, 15); return tq(`${binStr(n, 4)}₂ = ?₁₆`, n.toString(16).toUpperCase(), [(n + 1).toString(16).toUpperCase(), String(n), (n ^ 1).toString(16).toUpperCase()]); },
+  () => { const A = rnd(0, 1), B = rnd(0, 1); const r = (1 - A) | B; return tq(`A = ${A}, B = ${B}. (ЕМЕС A) НЕМЕСЕ B = ?`, r, [1 - r]); },
+]);
+add('inf', [11], [
+  () => nq('IPv4 адресі неше байттан тұрады?', 4, [8, 32, 6], 'байт'),
+  () => pick([tq('Веб-беттерді жіберу хаттамасы?', 'HTTP', ['FTP', 'SMTP', 'USB']), tq('Электрондық поштаны жіберу хаттамасы?', 'SMTP', ['HTTP', 'HTML', 'IP']), tq('Бір ғимарат ішіндегі жергілікті желі?', 'LAN', ['WAN', 'URL', 'DNS']), tq('Домен атауын IP-адреске айналдыратын қызмет?', 'DNS', ['HTTP', 'LAN', 'SMTP'])]),
+  () => { const w = pick(['informatika', 'python', 'mektep', 'Qazaqstan', 'algoritm']); return nq(`s = '${w}'\nprint(len(s))  →  ?`, w.length, [w.length - 1, w.length + 1]); },
+  () => { const w = pick(['python', 'kompiuter', 'derekqor']); const i = rnd(0, 3); return tq(`s = '${w}'\nprint(s[${i}])  →  ?`, w[i], [w[i + 1], w[w.length - 1 - i], w[0] === w[i] ? w[2] : w[0]]); },
+  () => pick([tq('Дерекқор кестесіндегі жол қалай аталады?', 'Жазба', ['Өріс', 'Кілт', 'Сұраныс']), tq('Дерекқор кестесіндегі баған қалай аталады?', 'Өріс', ['Жазба', 'Формула', 'Ұяшық']), tq('Жазбаны бірегей анықтайтын өріс?', 'Бастапқы кілт', ['Сұраныс', 'Сүзгі', 'Есеп'])]),
+  () => { const a = [rnd(1, 9), rnd(1, 9), rnd(1, 9), rnd(1, 9)]; return nq(`a = [${a.join(', ')}]\nprint(sum(a))  →  ?`, a.reduce((x, y) => x + y), [a.length, Math.max(...a)]); },
+]);
+
+/* бір сұрақ алу: сынып пулы + алдыңғы сыныптан аздап */
+const QG = {
+  recent: [],
+  next(grade, subj, numericOnly) {
+    for (let t = 0; t < 120; t++) {
+      const s = subj === 'mix' ? pick(['mat', 'inf']) : subj;
+      let g = grade;
+      if (grade > 1 && Math.random() < 0.2) g = grade - 1;
+      const pool = G[s][g] || G[s][grade];
+      let q = pick(pool)();
+      if (!q || q.o.length < 1) continue;
+      if (numericOnly && q.n === undefined) continue;
+      if (this.recent.includes(q.q) && t < 100) continue;
+      this.recent.push(q.q); if (this.recent.length > 15) this.recent.shift();
+      q.s = s; q.opts = shuffle([q.a, ...q.o]);
+      return q;
+    }
+    return null;
+  }
+};
+
+/* ===== Ортақ интерфейс: сынып/пән таңдау, есеп, дыбыс ===== */
+const $ = s => document.querySelector(s);
+const LS = { get(k, d) { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+const ST = { grade: +LS.get('og-grade', 5), subj: LS.get('og-subj', 'mat'), playing: false };
+const SUBJ_NAME = { mat: 'Математика', inf: 'Информатика', mix: 'Аралас' };
+
+let AC = null, SOUND = LS.get('og-snd', '1') === '1';
+function beep(f, d = .12, type = 'sine', v = .07, delay = 0) {
+  if (!SOUND) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const o = AC.createOscillator(), g = AC.createGain(), t = AC.currentTime + delay;
+    o.type = type; o.frequency.value = f; g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + d + .02);
+  } catch (e) {}
+}
+const SFX = {
+  good: () => { beep(660, .1, 'triangle'); beep(880, .12, 'triangle', .07, .08); },
+  bad: () => beep(150, .3, 'sawtooth', .05),
+  win: () => [523, 659, 784, 1046].forEach((f, i) => beep(f, .2, 'triangle', .08, i * .12)),
+  tick: () => beep(1200, .03, 'square', .02),
+  boom: () => beep(90, .25, 'square', .06),
+};
+
+const UI = {
+  cfg: null,
+  init(cfg) {
+    this.cfg = cfg;
+    document.title = cfg.title + ' · Офлайн ойындар';
+    $('#gTitle').textContent = cfg.icon + ' ' + cfg.title;
+    $('#sTitle').textContent = cfg.icon + ' ' + cfg.title;
+    $('#sDesc').innerHTML = cfg.desc;
+    $('#sRules').innerHTML = cfg.rules.map(r => `<li>${r}</li>`).join('');
+    const gb = $('#grades');
+    for (let g = 1; g <= 11; g++) {
+      const b = document.createElement('button'); b.textContent = g; b.className = 'chip' + (g === ST.grade ? ' sel' : '');
+      b.onclick = () => { ST.grade = g; LS.set('og-grade', g); gb.querySelectorAll('.chip').forEach(x => x.classList.toggle('sel', x === b)); };
+      gb.append(b);
+    }
+    if (cfg.subjFixed) { $('#subjRow').hidden = true; ST.subj = cfg.subjFixed; }
+    else {
+      const sb = $('#subjs');
+      for (const k of ['mat', 'inf', 'mix']) {
+        const b = document.createElement('button'); b.textContent = SUBJ_NAME[k]; b.className = 'chip wide' + (k === ST.subj ? ' sel' : '');
+        b.onclick = () => { ST.subj = k; LS.set('og-subj', k); sb.querySelectorAll('.chip').forEach(x => x.classList.toggle('sel', x === b)); };
+        sb.append(b);
+      }
+    }
+    $('#goBtn').onclick = () => this.begin();
+    $('#againBtn').onclick = () => this.begin();
+    $('#setBtn').onclick = () => { $('#over').hidden = true; $('#setup').hidden = false; };
+    $('#sndB').onclick = () => { SOUND = !SOUND; LS.set('og-snd', SOUND ? '1' : '0'); $('#sndB').textContent = SOUND ? '🔊' : '🔇'; };
+    $('#sndB').textContent = SOUND ? '🔊' : '🔇';
+    $('#fsB').onclick = () => { try { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); } catch (e) {} };
+    $('#stopB').onclick = () => { if (ST.playing) { cfg.stop && cfg.stop(); ST.playing = false; $('#setup').hidden = false; } };
+  },
+  begin() {
+    $('#setup').hidden = true; $('#over').hidden = true;
+    $('#gInfo').textContent = `${ST.grade}-сынып · ${SUBJ_NAME[ST.subj] || ''}`;
+    ST.playing = true; QG.recent = [];
+    this.cfg.start();
+  },
+  hud(html) { $('#hud').innerHTML = html; },
+  end(title, stats, mistakes = []) {
+    ST.playing = false; this.cfg.stop && this.cfg.stop();
+    $('#oTitle').textContent = title;
+    $('#oStats').innerHTML = stats.map(([k, v]) => `<div><b>${v}</b><span>${k}</span></div>`).join('');
+    const seen = new Set(), m = mistakes.filter(x => !seen.has(x.q) && seen.add(x.q)).slice(0, 8);
+    $('#oMist').innerHTML = m.length ? '<h3>Қатемен жұмыс</h3>' + m.map(x => `<div class="mi"><span>${esc(x.q)}</span><b>Дұрыс жауап: ${esc(x.a)}</b></div>`).join('') : '';
+    $('#over').hidden = false; SFX.win(); confetti();
+  },
+  toast(t, c) { const e = $('#toast'); e.textContent = t; e.style.color = c || '#fff'; e.classList.remove('show'); void e.offsetWidth; e.classList.add('show'); },
+};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+function confetti() {
+  const box = $('#conf'); box.innerHTML = '';
+  for (let i = 0; i < 70; i++) {
+    const p = document.createElement('i');
+    p.style.left = Math.random() * 100 + '%'; p.style.background = pick(['#ffb000', '#ff7ad9', '#5ce1e6', '#3ddc84', '#7c8cff']);
+    p.style.animationDelay = Math.random() * .6 + 's'; p.style.transform = `rotate(${rnd(0, 360)}deg)`;
+    box.append(p);
+  }
+  setTimeout(() => box.innerHTML = '', 3500);
+}
+
+
+let G4, T4;
+function hud() { UI.hud(`<span>👣 ${G4.moves} қадам</span><span>✅ ${G4.done}/8</span><span>⏱ ${G4.sec} с</span>`); }
+function start() {
+  const pairs = [], ans = new Set();
+  for (let t = 0; pairs.length < 8 && t < 300; t++) {
+    const q = QG.next(ST.grade, ST.subj); if (!q || ans.has(q.a) || q.q.length > 110) continue;
+    ans.add(q.a); pairs.push(q);
+  }
+  G4 = { moves: 0, done: 0, sec: 0, open: [], busy: false, pairs, mist: [] };
+  const cards = shuffle(pairs.flatMap((q, i) => [{ id: i, t: q.q, a: false }, { id: i, t: q.a, a: true }]));
+  const g = $('#mg'); g.innerHTML = '';
+  cards.forEach(c => {
+    const b = document.createElement('button'); b.className = 'tile';
+    b.innerHTML = `<div class="in"><div class="f">?</div><div class="bk ${c.a ? 'ans' : ''}"></div></div>`;
+    b.querySelector('.bk').textContent = c.t; b.onclick = () => flip(b, c); g.append(b);
+  });
+  hud(); clearInterval(T4); T4 = setInterval(() => { G4.sec++; hud(); }, 1000);
+}
+function flip(b, c) {
+  if (!ST.playing || G4.busy || b.classList.contains('open') || b.classList.contains('done')) return;
+  b.classList.add('open'); G4.open.push({ b, c }); beep(500, .05);
+  if (G4.open.length < 2) return;
+  G4.moves++; const [x, y] = G4.open; G4.open = [];
+  if (x.c.id === y.c.id && x.c.a !== y.c.a) {
+    setTimeout(() => { x.b.classList.add('done'); y.b.classList.add('done'); }, 300); G4.done++; SFX.good();
+    if (G4.done === 8) setTimeout(() => UI.end('Барлық жұп табылды! 🎉', [['Қадам', G4.moves], ['Уақыт', G4.sec + ' с'], ['Дәлдік', Math.round(8 / G4.moves * 100) + '%']], []), 700);
+  } else { G4.busy = true; setTimeout(() => { x.b.classList.remove('open'); y.b.classList.remove('open'); G4.busy = false; }, 1000); }
+  hud();
+}
+function stop() { clearInterval(T4); }
+UI.init({ title: 'Жұбын тап', icon: '🃏', start, stop, desc: 'Сұрақ картасын оның жауабымен жұпта. 16 карта — 8 жұп.',
+  rules: ['Екі картаны аш: ақ карта — сұрақ, сары карта — жауап.', 'Сұрақ пен оның дұрыс жауабы кездессе — жұп табылды.', 'Аз қадаммен және тез аяқтауға тырыс!'] });
+
+</script>
+</body>
+</html>
