@@ -117,13 +117,13 @@ ol.steps li{margin:6px 0}
 </div>
 </div>
 
-<script src="config.js"></script>
+<script src="config.js?v=3"></script>
 <script>
 const $ = s => document.querySelector(s);
 const SK = 'bq-teacher';
 let cfg = (() => { try { return JSON.parse(localStorage.getItem(SK) || '{}'); } catch (e) { return {}; } })();
-if (window.BQ_URL) cfg.url = cfg.url || window.BQ_URL;
-if (window.BQ_KEY) cfg.key = cfg.key || window.BQ_KEY;
+if (window.BQ_URL) cfg.url = window.BQ_URL;
+if (window.BQ_KEY) cfg.key = window.BQ_KEY;
 let rows = [], atts = [], timer = null;
 
 /* ---------- баптау ---------- */
