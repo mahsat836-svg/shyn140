@@ -21,7 +21,7 @@
 function tjPin_() { return String(PropertiesService.getScriptProperties().getProperty('T_PIN') || ''); }
 function tjOut_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function tjNorm_(s) { return String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim(); }
-function tjCls_(s) { return tjNorm_(s).replace(/[\s\-«»"']/g, ''); }          // «5 А», «5А», «5-а» — бірдей
+function tjCls_(s) { return tjNorm_(s).replace(/[\s\-«»\x22\x27]/g, ''); }          // «5 А», «5А», «5-а» — бірдей
 function tjClean_(x, n) { let s = String(x == null ? '' : x).slice(0, n || 200); if (/^[=+\-@]/.test(s)) s = "'" + s; return s; }
 function tjSheet_(name, head) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
