@@ -223,6 +223,7 @@ footer{color:var(--mute);font-size:13px;text-align:center;margin-top:28px}
     <div class="toolbar">
       <span class="pill" id="kStat">—</span>
       <button class="tbtn" id="kReload">↻ Жаңарту</button>
+      <button class="tbtn" id="kMail">📧 PDF тізілімді поштаға</button>
       <button class="tbtn" id="kPrint">🖨 Басып шығару</button>
       <button class="tbtn" id="kBack">← Артқа</button>
     </div>
@@ -294,7 +295,7 @@ footer{color:var(--mute);font-size:13px;text-align:center;margin-top:28px}
 /* ======================= БАПТАУ ======================= */
 // Google Apps Script веб-қосымшасының сілтемесін осында қойыңыз (нұсқаулықты қараңыз).
 // Бос тұрса — демо режим: нәтижелер тек осы құрылғыда сақталады.
-const API = (window.BQ_URL || "").trim();   // Бақылау тестінің Apps Script сілтемесі (baqylau/config.js)
+const API = /^(localhost|127\.)/.test(location.hostname) ? (window.BQ_URL || "").trim() : ((window.BQ_URL || "").trim() || "https://script.google.com/macros/s/AKfycbwsFMoKIjyXCNE_gCcmKxRUsegsNbwqwx9f8_hO4hU4CJqpHAITeQbFsxIj3DbfxT8/exec");   // Бақылау тестінің Apps Script сілтемесі (baqylau/config.js)
 const TEACHER = "Юлдашев К.Ф.";
 const SCHOOL = "Ө. Жәнібеков атындағы мектеп";
 
@@ -424,11 +425,12 @@ $("#goStudent").onclick = ()=>{ $("#codeStep").hidden=false; $("#nameStep").hidd
 if(DEMO) $("#demoNote").hidden=false;
 
 /* ======================= АТА-АНА КЕЛІСІМДЕРІ ======================= */
-let CONS = [];
+let CONS = [], CONS_ERR = "";
 const clsN = s => norm(s).replace(/[\s\-«»"']/g,"");
 async function loadConsents(){
   if(DEMO){ CONS = load("ba_demo_cons", []); return CONS; }
-  try{ const d = await apiGet({a:"consents", pin:T.pin}); if(d && d.ok) CONS = d.rows||[]; }catch(e){}
+  CONS_ERR = "";
+  try{ const d = await apiGet({a:"consents", pin:T.pin}); if(d && d.ok) CONS = d.rows||[]; else CONS_ERR = d&&d.error==="pin" ? "PIN қате" : "Сервер жауап бермеді"; }catch(e){ CONS_ERR = "Байланыс жоқ"; }
   return CONS;
 }
 function consFor(name, cls){
@@ -518,15 +520,23 @@ function drawCons(){
   const c=clsN($("#kCls").value);
   const rows = CONS.filter(x=>!c||clsN(x.cls)===c).sort((a,b)=>String(a.child).localeCompare(String(b.child),"kk"));
   const act = rows.filter(x=>!x.revoked);
-  $("#kStat").textContent = DEMO ? "Демо режим" : (!T.pin ? "PIN енгізілмеген" : `${act.length} келісім · 📷 ${act.filter(x=>x.c3).length} · WA ${act.filter(x=>x.c2).length}`);
+  $("#kStat").textContent = DEMO ? "Демо режим" : (!T.pin ? "PIN енгізілмеген" : CONS_ERR ? "⚠️ "+CONS_ERR : `${act.length} келісім · 📷 ${act.filter(x=>x.c3).length} · WA ${act.filter(x=>x.c2).length}`);
+  $("#kStat").style.color = CONS_ERR ? "var(--bad)" : "";
   const y = v => v ? "✅" : "✖";
-  $("#kTable").innerHTML = rows.length ? "<tr><th>Оқушы</th><th>Сынып</th><th>Ата-анасы</th><th>Тест</th><th>WA</th><th>📷</th><th>📢</th><th>Күні</th><th>Қолы</th></tr>" + rows.map(x=>`<tr${x.revoked?' style="opacity:.5"':''}><td><b>${esc(x.child)}</b>${x.revoked?'<br><span class="hint">қайтарып алды</span>':''}</td><td>${esc(x.cls)}</td><td>${esc(x.parent)}<br><span class="hint">${esc(x.phone)}</span></td><td>${y(x.c1&&!x.revoked)}</td><td>${y(x.c2&&!x.revoked)}</td><td>${y(x.c3&&!x.revoked)}</td><td>${y(x.c4&&!x.revoked)}</td><td>${x.t?new Date(x.t).toLocaleDateString("ru-RU"):""}</td><td>${x.sig?"✍️":"—"}</td></tr>`).join("") : `<tr><td class="hint">${!T.pin&&!DEMO?"Келісімдерді көру үшін алдыңғы бетте PIN енгізіңіз.":"Әзірге келісім жоқ. Сілтемені ата-аналарға жіберіңіз."}</td></tr>`;
+  $("#kTable").innerHTML = rows.length ? "<tr><th>Оқушы</th><th>Сынып</th><th>Ата-анасы</th><th>Тест</th><th>WA</th><th>📷</th><th>📢</th><th>Күні</th><th>Қолы</th><th>PDF</th></tr>" + rows.map(x=>`<tr${x.revoked?' style="opacity:.5"':''}><td><b>${esc(x.child)}</b>${x.revoked?'<br><span class="hint">қайтарып алды</span>':''}</td><td>${esc(x.cls)}</td><td>${esc(x.parent)}<br><span class="hint">${esc(x.phone)}</span></td><td>${y(x.c1&&!x.revoked)}</td><td>${y(x.c2&&!x.revoked)}</td><td>${y(x.c3&&!x.revoked)}</td><td>${y(x.c4&&!x.revoked)}</td><td>${x.t?new Date(x.t).toLocaleDateString("ru-RU"):""}</td><td>${x.sig?"✍️":"—"}</td><td title="${esc(x.mail||"")}">${String(x.mail||"").startsWith("жіберілді")?"✉️":String(x.mail||"").startsWith("қате")?"⚠️":""}<br><span class="hint">${esc(x.no||"")}</span></td></tr>`).join("") : `<tr><td class="hint">${!T.pin&&!DEMO?"Келісімдерді көру үшін алдыңғы бетте PIN енгізіңіз.":"Әзірге келісім жоқ. Сілтемені ата-аналарға жіберіңіз."}</td></tr>`;
 }
 $("#tConsBtn").onclick = ()=>openCons("tSetup");
 $("#kCls").oninput = drawCons;
 $("#kReload").onclick = async ()=>{ await loadConsents(); drawCons(); };
 $("#kBack").onclick = ()=>show(consBack);
 $("#kPrint").onclick = ()=>window.print();
+$("#kMail").onclick = async ()=>{
+  if(DEMO){ modal("<h3>Демо режим</h3><p>Нақты сайтта PDF тізілім поштаға жіберіледі.</p>",[["Жарайды","big"]]); return; }
+  const b=$("#kMail"); b.disabled=true; b.textContent="⏳ Жіберілуде…";
+  let d=null; try{ d=await apiGet({a:"mailreg", c:$("#kCls").value.trim(), pin:T.pin}); }catch(e){}
+  b.disabled=false; b.textContent="📧 PDF тізілімді поштаға";
+  modal(d&&d.ok ? `<h3>📧 Жіберілді</h3><p>${d.n} келісім бір PDF құжат болып <b>${esc(d.to)}</b> поштасына кетті.</p>` : `<h3>Жіберілмеді</h3><p class="hint">${esc((d&&d.error)||"Байланыс жоқ")}</p>`,[["Жарайды","big"]]);
+};
 $("#kCopy").onclick = async ()=>{ try{ await navigator.clipboard.writeText(kText()); $("#kCopy").textContent="✔ Көшірілді"; }catch(e){ modal(`<h3>Көшіріп алыңыз</h3><textarea class="in" rows="6">${esc(kText())}</textarea>`,[["Жабу","tbtn"]]); } };
 $("#kShare").onclick = ()=>{ const url="https://wa.me/?text="+encodeURIComponent(kText()); let w=null; try{w=window.open(url,"_blank")}catch(e){} if(!w) modal(`<h3>WhatsApp</h3><p><a href="${url}" target="_blank" rel="noopener" style="color:var(--wa);font-weight:800">📲 Чатты таңдап жіберу</a></p>`,[["Жабу","tbtn"]]); };
 

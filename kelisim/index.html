@@ -51,6 +51,7 @@ label.f{display:block;margin:12px 0 6px;font-weight:700}
 .sum div{padding:3px 0}
 .sum img{max-width:220px;background:#fff;border-radius:8px;margin-top:6px}
 footer{color:var(--mute);font-size:13px;text-align:center}
+@media print{body{background:#fff;color:#000}.top .lang,#prt,#again,footer{display:none}.card{border:1px solid #999;background:none}.sum{background:none;border-color:#999}}
 </style>
 </head>
 <body>
@@ -95,7 +96,7 @@ footer{color:var(--mute);font-size:13px;text-align:center}
     <p data-t="okP"></p>
     <div class="sum" id="sum"></div>
     <p class="hint" data-t="okShot"></p>
-    <button class="tbtn" id="again" data-t="again"></button>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="tbtn" id="prt" data-t="print"></button><button class="tbtn" id="again" data-t="again"></button></div>
   </div>
 
   <footer>Шың 140 · Білім Арена · Юлдашев К.Ф.</footer>
@@ -104,7 +105,8 @@ footer{color:var(--mute);font-size:13px;text-align:center}
 <script src="../baqylau/config.js"></script>
 <script>
 {
-const API = (window.BQ_URL || "").trim();
+const LOCAL = /^(localhost|127\.)/.test(location.hostname);
+const API = LOCAL ? (window.BQ_URL || "").trim() : ((window.BQ_URL || "").trim() || "https://script.google.com/macros/s/AKfycbwsFMoKIjyXCNE_gCcmKxRUsegsNbwqwx9f8_hO4hU4CJqpHAITeQbFsxIj3DbfxT8/exec");
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const load = (k,d) => { try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } };
@@ -127,7 +129,7 @@ const TX = {
   submit:"✅ Келісім беру", revoke:"Келісімді толық қайтарып алу",
   errFill:"Барлық жолды толтырыңыз.", errPhone:"Телефон нөмірін тексеріңіз.", errYN:"Әр сұраққа «Иә» не «Жоқ» деп жауап беріңіз.", errIam:"Ата-анасы екеніңізді белгілеңіз.", errSig:"Қол қойыңыз.",
   okH:"Рахмет! Келісіміңіз қабылданды", okHr:"Келісім қайтарылып алынды", okP:"Мұғалім мұны өз кестесінде көреді.",
-  okShot:"Қаласаңыз, осы экранды скриншот етіп сақтап қойыңыз.", again:"Өзгерту", prev:"Сіз бұл телефоннан бұрын келісім бергенсіз: ",
+  okShot:"Қаласаңыз, осы экранды скриншот етіп сақтап қойыңыз.", sending:"⏳ Жіберілуде…", errNet:"Жіберілмеді. Интернетті тексеріп, қайта басыңыз.", docNo:"Құжат №", pdfSent:"📄 Қолыңыз қойылған PDF құжат мұғалімнің поштасына жіберілді.", print:"🖨 Сақтау / басып шығару", again:"Өзгерту", prev:"Сіз бұл телефоннан бұрын келісім бергенсіз: ",
   date:"Күні", sAll:"Ата-анасы"
  },
  uz:{
@@ -146,7 +148,7 @@ const TX = {
   submit:"✅ Розилик бериш", revoke:"Розиликни тўлиқ қайтариб олиш",
   errFill:"Барча майдонларни тўлдиринг.", errPhone:"Телефон рақамини текширинг.", errYN:"Ҳар бир саволга «Ҳа» ёки «Йўқ» деб жавоб беринг.", errIam:"Ота-онаси эканингизни белгиланг.", errSig:"Имзо қўйинг.",
   okH:"Раҳмат! Розилигингиз қабул қилинди", okHr:"Розилик қайтариб олинди", okP:"Ўқитувчи буни ўз жадвалида кўради.",
-  okShot:"Хоҳласангиз, шу экранни скриншот қилиб сақлаб қўйинг.", again:"Ўзгартириш", prev:"Сиз бу телефондан аввал розилик бергансиз: ",
+  okShot:"Хоҳласангиз, шу экранни скриншот қилиб сақлаб қўйинг.", sending:"⏳ Юборилмоқда…", errNet:"Юборилмади. Интернетни текшириб, қайта босинг.", docNo:"Ҳужжат №", pdfSent:"📄 Имзоланган PDF ҳужжат ўқитувчининг почтасига юборилди.", print:"🖨 Сақлаш / чоп этиш", again:"Ўзгартириш", prev:"Сиз бу телефондан аввал розилик бергансиз: ",
   date:"Сана", sAll:"Ота-онаси"
  }
 };
@@ -180,19 +182,25 @@ cv.addEventListener("pointermove", e => { if(!drawing) return; const [x,y]=pos(e
 $("#sigClr").onclick = () => { cx.clearRect(0,0,cv.width,cv.height); inked=false; $("#sigPh").hidden=false; };
 
 /* --- жіберу --- */
+// Қолтаңбаны ықшам PNG етіп береміз (кестеге сыйсын)
+function sigData(){ const c=document.createElement("canvas"); c.width=240; c.height=100; const x=c.getContext("2d"); x.fillStyle="#fff"; x.fillRect(0,0,240,100); x.drawImage(cv,0,0,240,100); let d=c.toDataURL("image/png"); if(d.length>44000){ c.width=180;c.height=75; x.fillStyle="#fff"; x.fillRect(0,0,180,75); x.drawImage(cv,0,0,180,75); d=c.toDataURL("image/png"); } return d; }
 const phoneOk = p => { let d=p.replace(/\D/g,""); if(d.length===11&&d[0]==="8") d="7"+d.slice(1); if(d.length===10) d="7"+d; return d.length===11 ? "+"+d : ""; };
-function post(o){
-  if(!API){ const a=load("ba_demo_cons",[]); a.push(Object.assign({t:Date.now(), revoked:!!o.revoke, sig:o.sig?1:0}, o)); store("ba_demo_cons",a); return Promise.resolve(); }
-  return fetch(API, {method:"POST", mode:"no-cors", body:JSON.stringify(o)}).catch(()=>{});
+async function post(o){
+  if(!API){ const a=load("ba_demo_cons",[]); a.push(Object.assign({t:Date.now(), revoked:!!o.revoke, sig:o.sig?1:0, no:"ДЕМО-"+(a.length+1)}, o)); store("ba_demo_cons",a); return {ok:true, no:"ДЕМО-"+a.length, mailed:false}; }
+  try{
+    const r = await fetch(API, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(o)});
+    const j = await r.json();
+    return j && j.ok ? j : {ok:false};
+  }catch(e){ return {ok:false, net:true}; }
 }
-function finish(o){
+function finish(o, res){
   const t=TX[L];
   store("ba_consent", {child:o.child, cls:o.cls, parent:o.parent, phone:o.phone, t:Date.now(), revoke:!!o.revoke});
   $("#okH").textContent = o.revoke ? t.okHr : t.okH;
   const y = v => v ? "✅ "+t.yes : "✖ "+t.no;
   $("#sum").innerHTML = `<div><b>${esc(o.child)}</b> · ${esc(o.cls)}</div><div>${esc(t.sAll)}: ${esc(o.parent)} · ${esc(o.phone)}</div>` +
     ["c1","c2","c3","c4"].map(k=>`<div>${esc(t[k][0])}: ${y(o[k])}</div>`).join("") +
-    `<div>${esc(t.date)}: ${new Date().toLocaleString("ru-RU")}</div>` + (o.sig?`<img src="${o.sig}" alt="">`:"");
+    `<div>${esc(t.date)}: ${new Date().toLocaleString("ru-RU")}</div>` + (res&&res.no?`<div>${esc(t.docNo)} <b>${esc(res.no)}</b></div>`:"") + (o.sig?`<img src="${o.sig}" alt="">`:"") + (res&&res.mailed?`<div style="margin-top:8px;color:var(--ok);font-weight:700">${esc(t.pdfSent)}</div>`:"");
   $("#form").hidden=true; $("#ok").hidden=false; window.scrollTo(0,0);
 }
 function collect(){
@@ -209,15 +217,19 @@ $("#form").onsubmit = async ev => {
   if(Object.values(val).some(v=>v===null)){ e.textContent=t.errYN; return; }
   if(!$("#iam").checked){ e.textContent=t.errIam; return; }
   if(!inked){ e.textContent=t.errSig; return; }
-  Object.assign(o, val, {sig: cv.toDataURL("image/png")});
-  $("#send").disabled=true; await post(o); $("#send").disabled=false;
-  finish(o);
+  Object.assign(o, val, {sig: sigData()});
+  const b=$("#send"); b.disabled=true; b.textContent=t.sending;
+  const res = await post(o);
+  b.disabled=false; b.textContent=t.submit;
+  if(!res.ok){ e.textContent=t.errNet; return; }
+  finish(o, res);
 };
 $("#revoke").onclick = async () => {
   const prev=load("ba_consent",null); if(!prev) return;
   const o = {a:"consent", child:prev.child, cls:prev.cls, parent:prev.parent, phone:prev.phone, lang:L, c1:false,c2:false,c3:false,c4:false, revoke:true, sig:""};
-  await post(o); finish(o);
+  const res = await post(o); if(!res.ok){ $("#err").textContent=TX[L].errNet; return; } finish(o, res);
 };
+$("#prt").onclick = () => window.print();
 $("#again").onclick = () => { $("#ok").hidden=true; $("#form").hidden=false; render(); };
 
 /* бастапқы мәндер */
