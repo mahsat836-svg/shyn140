@@ -21,7 +21,7 @@ function clean_(x) {
 }
 function doPost(e) {
   const d0 = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-  if (d0.a === 'live' || d0.a === 'room' || d0.a === 'consent') return tjPost_(d0);   // TelefonJarys.gs
+  if (d0.a === 'live' || d0.a === 'room' || d0.a === 'consent' || d0.a === 'mailreg') return tjPost_(d0);   // TelefonJarys.gs
   const lock = LockService.getScriptLock();
   lock.waitLock(15000);
   try {

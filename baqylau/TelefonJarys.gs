@@ -87,6 +87,7 @@ function tjMailConsent_(r) {
 
 /* ---------------- POST ---------------- */
 function tjPost_(d) {
+  if (d.a === 'mailreg') return tjGet_({ a: 'mailreg', c: d.c, pin: d.pin });   // PDF тізілім (POST арқылы)
   const lock = LockService.getScriptLock();
   lock.waitLock(15000);
   let rec = null, row = 0;

@@ -533,7 +533,7 @@ $("#kPrint").onclick = ()=>window.print();
 $("#kMail").onclick = async ()=>{
   if(DEMO){ modal("<h3>Демо режим</h3><p>Нақты сайтта PDF тізілім поштаға жіберіледі.</p>",[["Жарайды","big"]]); return; }
   const b=$("#kMail"); b.disabled=true; b.textContent="⏳ Жіберілуде…";
-  let d=null; try{ d=await apiGet({a:"mailreg", c:$("#kCls").value.trim(), pin:T.pin}); }catch(e){}
+  let d=null; try{ const r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({a:"mailreg", c:$("#kCls").value.trim(), pin:T.pin})}); d=await r.json(); }catch(e){}
   b.disabled=false; b.textContent="📧 PDF тізілімді поштаға";
   modal(d&&d.ok ? `<h3>📧 Жіберілді</h3><p>${d.n} келісім бір PDF құжат болып <b>${esc(d.to)}</b> поштасына кетті.</p>` : `<h3>Жіберілмеді</h3><p class="hint">${esc((d&&d.error)||"Байланыс жоқ")}</p>`,[["Жарайды","big"]]);
 };
