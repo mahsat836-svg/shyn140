@@ -467,7 +467,7 @@ function openLive(){
   $("#tBots").hidden = !DEMO;
   $("#podiumBox").hidden = true;
   clockStart = (load("ba_room",{}).started)||Date.now();
-  show("tLive"); startPoll();
+  show("tLive"); loadConsents().then(()=>drawTrack(lastRows)); startPoll();
 }
 function startPoll(){ stopPoll(); poll(); pollId=setInterval(poll, 4000); }
 function stopPoll(){ if(pollId) clearInterval(pollId); pollId=null; if(botId) {clearInterval(botId); botId=null;} }
