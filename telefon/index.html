@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Білім Арена · Телефон жарысы — Шың 140</title>
+<meta name="author" content="Юлдашев Кадыржан Фазылович">
+<meta name="description" content="Білім Арена: телефонмен ББЖМ форматындағы тест, сыныптағы жарыс, ата-аналарға WhatsApp арқылы нәтиже.">
+<style>
+:root{
+  --bg:#0d1326; --bg2:#141c36; --panel:#1b2547; --line:#2e3c6e; --ink:#eef2ff; --mute:#9aa6d1;
+  --inf:#ffb000; --phy:#5ce1e6; --mat:#ff7ad9; --ok:#3ddc84; --bad:#ff4d5e; --acc:#7c8cff; --wa:#25d366;
+  --r:14px; --display:"Segoe UI","Trebuchet MS",system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(1200px 700px at 80% -10%,#25336b 0,transparent 60%),radial-gradient(900px 600px at -10% 110%,#3a1f5c 0,transparent 55%),var(--bg);
+  color:var(--ink);font:17px/1.5 var(--display);overflow-x:hidden}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:16px max(14px,3vw) 40px}
+header.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.brand{font-weight:800;font-size:clamp(22px,3.2vw,34px);margin-right:auto;line-height:1.15}
+.brand span{background:linear-gradient(90deg,var(--inf),var(--mat),var(--phy));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font-size:13px;font-weight:500;color:var(--mute)}
+.tbtn{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+.tbtn:hover{border-color:var(--acc)}
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:2px solid var(--line);border-radius:18px;padding:18px}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:10px}
+@media(max-width:640px){.roles{grid-template-columns:1fr}}
+.role{text-align:left;cursor:pointer;transition:transform .15s,border-color .15s}
+.role:hover{transform:translateY(-3px);border-color:var(--acc)}
+.role .ic{font-size:46px}
+.role b{display:block;font-size:24px;margin:6px 0 4px}
+.role em{font-style:normal;color:var(--mute);font-size:15px}
+.big{background:linear-gradient(90deg,var(--acc),#a66bff);border:0;border-radius:14px;padding:14px 26px;font-size:20px;font-weight:800;color:#fff;box-shadow:0 10px 30px -10px #7c8cff}
+.big:disabled{opacity:.4;cursor:not-allowed}
+.big.green{background:linear-gradient(90deg,#1fbf6b,var(--ok));box-shadow:0 10px 30px -10px var(--ok)}
+.big.wa{background:var(--wa);box-shadow:0 10px 30px -10px var(--wa)}
+.hint{color:var(--mute);font-size:15px}
+label.f{display:block;margin:12px 0 6px;font-weight:700}
+input.in,select.in,textarea.in{width:100%;background:#0f1734;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-size:18px}
+input.in:focus,select.in:focus,textarea.in:focus{outline:none;border-color:var(--acc)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg button{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:10px 16px;font-weight:700;min-width:56px}
+.seg button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.warnbox{border:2px dashed var(--inf);color:#ffe0a3;border-radius:14px;padding:12px 14px;margin:12px 0;font-size:15px}
+/* ---------- student ---------- */
+.stu{max-width:640px;margin:0 auto}
+.namelist{display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:46vh;overflow:auto;margin-top:8px}
+.namelist button{background:var(--panel);border:2px solid var(--line);border-radius:12px;padding:12px;text-align:left;font-weight:600}
+.namelist button.on{border-color:var(--ok);background:#173b33}
+.tut{text-align:center}
+.tut .pic{font-size:64px;line-height:1;margin:8px 0}
+.tut h3{font-size:24px;margin:6px 0}
+.tut p{font-size:19px;margin:6px 0 14px}
+.dots{display:flex;justify-content:center;gap:8px;margin:10px 0}
+.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}
+.dots i.on{background:var(--acc)}
+.tbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.pill{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:800;font-variant-numeric:tabular-nums}
+.pill.low{border-color:var(--bad);color:var(--bad)}
+.qcard{background:linear-gradient(180deg,var(--panel),var(--bg2));border:2px solid var(--line);border-radius:20px;padding:20px;margin-bottom:12px}
+.qtag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.08em;padding:3px 10px;border-radius:99px;background:#2a2f5c;color:var(--phy);margin-bottom:8px;text-transform:uppercase}
+.qtext{font-size:clamp(21px,5vw,28px);font-weight:700;line-height:1.35}
+.opts{display:grid;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;background:#111a3a;border:3px solid var(--line);border-radius:16px;padding:12px 14px;min-height:66px;text-align:left;font-size:22px;font-weight:700;transition:border-color .1s,background .1s}
+.opt .L{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--line);font-size:20px}
+.opt.on{border-color:var(--acc);background:#232c63}
+.opt.on .L{background:var(--acc);color:#fff}
+.nav{display:flex;gap:10px;margin-top:12px}
+.nav button{flex:1;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:14px;font-size:19px;font-weight:800}
+.nav button:disabled{opacity:.35}
+.qnums{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin-top:14px}
+.qnums button{background:var(--panel);border:2px solid var(--line);border-radius:10px;padding:8px 0;font-weight:800}
+.qnums button.ans{background:#1c4a3a;border-color:#2e7d5b}
+.qnums button.cur{border-color:var(--inf);box-shadow:0 0 0 2px var(--inf)}
+.finish{width:100%;margin-top:14px}
+.modal{position:fixed;inset:0;background:#0008;display:grid;place-items:center;z-index:50;padding:16px}
+.modal .card{max-width:460px;width:100%;text-align:center}
+.modal h3{font-size:24px;margin:4px 0 8px}
+.modal .acts{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.res{text-align:center}
+.res .score{font-size:72px;font-weight:900;line-height:1;margin:10px 0}
+.res .stars{font-size:40px;letter-spacing:6px}
+.wrong{text-align:left;background:#111a3a;border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0}
+.wrong b{color:var(--ok)}
+.wrong s{color:var(--bad)}
+/* ---------- teacher ---------- */
+.live{display:grid;grid-template-columns:300px 1fr;gap:16px}
+@media(max-width:900px){.live{grid-template-columns:1fr}}
+.joinbox{text-align:center}
+.joinbox img{width:100%;max-width:260px;background:#fff;border-radius:14px;padding:10px}
+.code{font-size:46px;font-weight:900;letter-spacing:.12em;color:var(--inf);margin:6px 0}
+.lnk{word-break:break-all;font-size:13px;color:var(--mute)}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.track{display:grid;gap:7px}
+.lane{display:grid;grid-template-columns:34px minmax(110px,210px) 1fr 70px;align-items:center;gap:10px;background:#111a3a;border:1px solid var(--line);border-radius:12px;padding:6px 10px}
+.lane .pl{font-weight:900;text-align:center;font-size:18px}
+.lane .nm{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lane .nm small{display:block;font-weight:500;color:var(--mute);font-size:12px}
+.road{position:relative;height:34px;background:repeating-linear-gradient(90deg,#1b2a55 0 18px,#182449 18px 36px);border-radius:8px;overflow:hidden}
+.road .fin{position:absolute;right:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(0deg,#fff 0 6px,#000 6px 12px)}
+.road .h{position:absolute;top:1px;font-size:28px;line-height:1;transition:left .8s ease;transform:scaleX(-1)}
+.lane .sc{font-weight:900;text-align:right;font-variant-numeric:tabular-nums}
+.lane.done{border-color:#2e7d5b}
+.lane.out{border-color:var(--bad)}
+.empty{color:var(--mute);text-align:center;padding:40px 10px;border:2px dashed var(--line);border-radius:14px}
+.podium{display:flex;justify-content:center;align-items:flex-end;gap:14px;margin:18px 0}
+.podium div{background:linear-gradient(180deg,var(--panel),var(--bg2));border:2px solid var(--line);border-radius:14px 14px 0 0;width:min(30%,220px);text-align:center;padding:10px 6px}
+.podium .p1{height:230px;border-color:var(--inf)}
+.podium .p2{height:180px}
+.podium .p3{height:150px}
+.podium .m{font-size:46px}
+.podium b{display:block;font-size:19px}
+table.pt{width:100%;border-collapse:collapse;font-size:16px}
+table.pt th,table.pt td{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:middle}
+table.pt th{color:var(--mute);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.wabtn{background:var(--wa);border:0;color:#062b14;font-weight:800;border-radius:10px;padding:8px 12px;white-space:nowrap}
+.wabtn.sent{background:#2e7d5b;color:#d7ffe8}
+.ph{width:150px;background:#0f1734;border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:15px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
+@media print{body{background:#fff;color:#000}header,.toolbar,#kShare,#kCopy,.row2,footer,.lnk{display:none!important}.card{border:0;background:none}table.pt th,table.pt td{border-color:#999;color:#000}.hint{color:#444}}
+footer{color:var(--mute);font-size:13px;text-align:center;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand"><span>Білім Арена</span> · Телефон жарысы<small>Шың 140 · Ө. Жәнібеков атындағы ЖББМ · ББЖМ-ге телефонмен дайындық</small></div>
+  <button class="tbtn" id="homeBtn" hidden>⌂ Басты бет</button>
+</header>
+
+<!-- ============ HOME ============ -->
+<section id="home">
+  <div class="roles">
+    <div class="card role" id="goTeacher"><div class="ic">👨‍🏫</div><b>Мұғалім</b><em>Жарыс ашу, теледидарда бәйге көрсету, ата-аналарға WhatsApp арқылы нәтиже жіберу</em></div>
+    <div class="card role" id="goStudent"><div class="ic">🎒</div><b>Оқушы</b><em>Жарыс кодын енгізіп, телефоннан тест тапсыру</em></div>
+  </div>
+  <div id="demoNote" class="warnbox" hidden>⚙️ <b>Демо режим.</b> Сайт әлі Google кестеге қосылмаған: нәтижелер тек осы құрылғыда сақталады. baqylau/config.js файлында BQ_URL жоқ.</div>
+</section>
+
+<!-- ============ TEACHER SETUP ============ -->
+<section id="tSetup" hidden>
+  <div class="card" style="max-width:720px;margin:0 auto">
+    <h2 style="margin:0 0 6px">Жаңа жарыс ашу</h2>
+    <p class="hint" style="margin:0">Сұрақтар сынып деңгейіне сай автоматты құралады, барлық оқушыға бірдей, тек жауап нұсқаларының реті әртүрлі.</p>
+    <label class="f">Сынып</label>
+    <div class="row2">
+      <select class="in" id="tGrade"></select>
+      <input class="in" id="tClass" placeholder="Мысалы: 5 А" list="classList">
+      <datalist id="classList"></datalist>
+    </div>
+    <label class="f">Сұрақ саны</label>
+    <div class="seg" id="tCount"></div>
+    <label class="f">Уақыт (минут)</label>
+    <div class="seg" id="tTime"></div>
+    <label class="f">Мұғалім PIN-коды <span class="hint">(ата-ана нөмірлерін көру үшін)</span></label>
+    <input class="in" id="tPin" type="password" inputmode="numeric" placeholder="Apps Script-тегі PIN">
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px"><button class="tbtn" id="tConsBtn">📋 Ата-ана келісімдері</button><button class="big green" id="tStart">🏁 Жарысты ашу</button></div>
+  </div>
+</section>
+
+<!-- ============ TEACHER LIVE (TV) ============ -->
+<section id="tLive" hidden>
+  <div class="live">
+    <div class="card joinbox">
+      <div class="hint">Телефонмен сканерлеңдер</div>
+      <img id="qr" alt="Жарысқа кіру QR-коды" onerror="this.hidden=true">
+      <div class="hint" style="margin-top:8px">немесе кодты енгізіңдер:</div>
+      <div class="code" id="roomCode">0000</div>
+      <div class="lnk" id="roomLink"></div>
+      <div class="hint" style="margin-top:8px" id="roomInfo"></div>
+    </div>
+    <div>
+      <div class="stats">
+        <span class="pill" id="stJoined">👥 0 кірді</span>
+        <span class="pill" id="stDone">✅ 0 бітірді</span>
+        <span class="pill" id="stClock">⏱ 00:00</span>
+        <span class="pill" id="stConn" title="Байланыс">●</span>
+      </div>
+      <div class="track" id="track"><div class="empty">Оқушылар кіргенде осы жерде бәйге басталады 🏇</div></div>
+      <div class="toolbar">
+        <button class="big" id="tPodium">🏆 Нәтиже</button>
+        <button class="big wa" id="tParents">📲 Ата-аналарға</button>
+        <button class="tbtn" id="tBots" hidden>🤖 Демо: 8 оқушы қосу</button>
+        <button class="tbtn" id="tConsLive">📋 Келісімдер</button>
+        <button class="tbtn" id="tNew">↺ Жаңа жарыс</button>
+      </div>
+    </div>
+  </div>
+  <div id="podiumBox" hidden></div>
+</section>
+
+<!-- ============ TEACHER PARENTS ============ -->
+<section id="tPar" hidden>
+  <div class="card">
+    <h2 style="margin:0 0 4px">📲 Ата-аналарға нәтиже жіберу</h2>
+    <p class="hint" style="margin:0 0 8px">Хат тек онлайн келісімінде WhatsApp-қа «иә» деген ата-анаға жіберіледі. Батырманы басқанда WhatsApp дайын хатпен ашылады — тек «Жіберу» басасыз. «Кезекпен жіберу» келесі ата-анаға өзі өтеді.</p>
+    <label class="f">Хат үлгісі <span class="hint">({ата-ана} {аты} {сынып} {балл} {саны} {пайыз} {орын} {тақырып} {күн})</span></label>
+    <textarea class="in" id="waTpl" rows="4"></textarea>
+    <div class="toolbar">
+      <button class="big wa" id="waNext">▶ Кезекпен жіберу</button>
+      <button class="tbtn" id="waBack">← Бәйгеге қайту</button>
+      <span class="hint" id="waCount"></span>
+    </div>
+    <div style="overflow:auto"><table class="pt" id="parTable"></table></div>
+  </div>
+</section>
+
+<!-- ============ TEACHER CONSENTS ============ -->
+<section id="tCons" hidden>
+  <div class="card">
+    <h2 style="margin:0 0 4px">📋 Ата-ана келісімдері — қағаздың орнына</h2>
+    <p class="hint" style="margin:0">Сілтемені сыныптың ата-аналар чатына жіберіңіз. Ата-ана телефонынан 1 минутта толтырып, саусағымен қол қояды. Келісім осы жерде және Google кестеде сақталады.</p>
+    <div class="row2" style="margin-top:12px;align-items:end">
+      <div><label class="f">Сынып</label><input class="in" id="kCls" placeholder="Мысалы: 5 А" list="classList"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="big wa" id="kShare">📲 Чатқа жіберу</button><button class="tbtn" id="kCopy">⧉ Сілтемені көшіру</button></div>
+    </div>
+    <div class="lnk" id="kLink" style="margin-top:8px"></div>
+    <div class="toolbar">
+      <span class="pill" id="kStat">—</span>
+      <button class="tbtn" id="kReload">↻ Жаңарту</button>
+      <button class="tbtn" id="kPrint">🖨 Басып шығару</button>
+      <button class="tbtn" id="kBack">← Артқа</button>
+    </div>
+    <div style="overflow:auto"><table class="pt" id="kTable"></table></div>
+    <p class="hint">✅ — келісім бар · ✖ — жоқ. «Тест» — платформада тест тапсыру, «WA» — WhatsApp хабарлама, «📷» — фото/бейнеге түсіру, «📢» — мектеп парақшаларында жариялау.</p>
+  </div>
+</section>
+
+<!-- ============ STUDENT JOIN ============ -->
+<section id="sJoin" hidden>
+  <div class="stu card">
+    <h2 style="margin:0 0 6px">🎒 Жарысқа кіру</h2>
+    <div id="codeStep">
+      <label class="f">Жарыс коды (теледидарда)</label>
+      <input class="in" id="sCode" inputmode="numeric" maxlength="4" placeholder="4 сан" style="font-size:30px;letter-spacing:.3em;text-align:center">
+      <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="big" id="sCodeGo">Әрі қарай ▶</button></div>
+    </div>
+    <div id="nameStep" hidden>
+      <div class="hint" id="sRoomInfo"></div>
+      <label class="f">Атыңды тап та, бас</label>
+      <div class="namelist" id="nameList"></div>
+      <label class="f" id="nameLbl">Немесе аты-жөніңді жаз</label>
+      <input class="in" id="sName" placeholder="Аты-жөні" autocomplete="off">
+      <div style="display:flex;justify-content:flex-end;margin-top:14px"><button class="big" id="sNameGo" disabled>Бастау ▶</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STUDENT TUTORIAL ============ -->
+<section id="sTut" hidden>
+  <div class="stu card tut">
+    <div id="tutBody"></div>
+    <div class="dots" id="tutDots"></div>
+    <div class="nav"><button id="tutPrev">◀ Артқа</button><button id="tutNext">Түсіндім ▶</button></div>
+  </div>
+</section>
+
+<!-- ============ STUDENT TEST ============ -->
+<section id="sTest" hidden>
+  <div class="stu">
+    <div class="tbar"><span class="pill" id="qNo">1 / 10</span><span style="flex:1"></span><span class="pill" id="qTime">⏱ 10:00</span></div>
+    <div class="qcard"><span class="qtag" id="qTag"></span><div class="qtext" id="qText"></div></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="nav"><button id="qPrev">◀ Алдыңғы</button><button id="qNext">Келесі ▶</button></div>
+    <div class="qnums" id="qNums"></div>
+    <button class="big green finish" id="qFinish">✅ Аяқтау</button>
+  </div>
+</section>
+
+<!-- ============ STUDENT RESULT ============ -->
+<section id="sRes" hidden>
+  <div class="stu card res">
+    <div class="hint" id="rWho"></div>
+    <div class="stars" id="rStars"></div>
+    <div class="score" id="rScore"></div>
+    <div id="rMsg" style="font-size:20px;font-weight:700"></div>
+    <p class="hint">Телефоныңды мұғаліміңе көрсет. Төменде — қатемен жұмыс.</p>
+    <div id="rWrong"></div>
+  </div>
+</section>
+
+<div class="modal" id="modal" hidden><div class="card"><div id="mBody"></div><div class="acts" id="mActs"></div></div></div>
+
+<footer>Шың 140 · Білім Арена · Юлдашев К.Ф. · Нәтижелер тек мұғалімге көрінеді</footer>
+</div>
+
+<script src="../baqylau/config.js"></script>
+<script>
+/* ======================= БАПТАУ ======================= */
+// Google Apps Script веб-қосымшасының сілтемесін осында қойыңыз (нұсқаулықты қараңыз).
+// Бос тұрса — демо режим: нәтижелер тек осы құрылғыда сақталады.
+const API = (window.BQ_URL || "").trim();   // Бақылау тестінің Apps Script сілтемесі (baqylau/config.js)
+const TEACHER = "Юлдашев К.Ф.";
+const SCHOOL = "Ө. Жәнібеков атындағы мектеп";
+
+/* ======================= КӨМЕКШІЛЕР ======================= */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function hash(s){let h=2166136261;for(const ch of String(s)){h^=ch.codePointAt(0);h=Math.imul(h,16777619)}return h>>>0}
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+const ri = (r,a,b) => a + Math.floor(r()*(b-a+1));
+const pick = (r,arr) => arr[Math.floor(r()*arr.length)];
+function shuffle(r,a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const gcd = (a,b) => b ? gcd(b, a%b) : Math.abs(a);
+const M = n => n<0 ? "−"+Math.abs(n) : String(n);            // минус таңбасы
+const P = n => n<0 ? "("+M(n)+")" : String(n);              // теріс санды жақшаға
+function fmt(x){ if(typeof x==="string") return x; if(Number.isInteger(x)) return M(x); return M(+x.toFixed(2)).replace(".",","); }
+function frac(a,b){const g=gcd(a,b);a/=g;b/=g;return b===1?String(a):a+"/"+b}
+function mmss(s){s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function store(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function load(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}}
+const norm = s => String(s||"").toLowerCase().replace(/ё/g,"е").replace(/\s+/g," ").trim();
+
+/* ======================= СҰРАҚ ГЕНЕРАТОРЛАРЫ ======================= */
+function hm(t){t=((t%1440)+1440)%1440;return Math.floor(t/60)+":"+String(t%60).padStart(2,"0")}
+const G = {
+4:[
+ r=>{const a=ri(r,120,899),b=ri(r,105,899);return{t:"Қосу",q:`${a} + ${b} = ?`,a:a+b,d:[a+b+10,a+b-100,a+b-1]}},
+ r=>{const a=ri(r,500,999),b=ri(r,101,a-50);return{t:"Азайту",q:`${a} − ${b} = ?`,a:a-b,d:[a-b+10,a+b,a-b-1]}},
+ r=>{const a=ri(r,12,98),b=ri(r,3,9);return{t:"Көбейту",q:`${a} · ${b} = ?`,a:a*b,d:[a*b+b,a*b-10,a+b]}},
+ r=>{const b=ri(r,3,9),q=ri(r,12,40);return{t:"Бөлу",q:`${b*q} : ${b} = ?`,a:q,d:[q+1,q-1,q*2]}},
+ r=>{const p=ri(r,3,12)*10,k=ri(r,3,9);return{t:"Мәтінді есеп",q:`Бір дәптер ${p} теңге. ${k} дәптер неше теңге тұрады?`,a:p*k,d:[p+k,p*k+p,p*k-p]}},
+ r=>{const a=ri(r,4,15),b=ri(r,2,a-1);return{t:"Периметр",q:`Ұзындығы ${a} см, ені ${b} см тіктөртбұрыштың периметрі неше см?`,a:2*(a+b),d:[a*b,a+b,2*a+b]}},
+ r=>{const s=8*60+ri(r,0,11)*5,d=ri(r,7,15)*5;return{t:"Уақыт",q:`Сабақ ${hm(s)}-да басталып, ${d} минутқа созылады. Қашан бітеді?`,a:hm(s+d),d:[hm(s+d+10),hm(s+d-10),hm(s+d+60),hm(s+d-5)]}},
+],
+5:[
+ r=>{const a=ri(r,10,60),b=ri(r,2,9),c=ri(r,2,9);return{t:"Амалдар реті",q:`${a} + ${b} · ${c} = ?`,a:a+b*c,d:[(a+b)*c,a+b+c,a*b+c]}},
+ r=>{const q=ri(r,5,12),p=ri(r,1,q-2),s=ri(r,1,q-p-1);return{t:"Жай бөлшек",q:`${p}/${q} + ${s}/${q} = ?`,a:`${p+s}/${q}`,d:[`${p+s}/${2*q}`,`${p*s}/${q}`,`${p+s+1}/${q}`,`${p+s-1}/${q}`]}},
+ r=>{const a=ri(r,11,99)/10,b=ri(r,105,995)/100;return{t:"Ондық бөлшек",q:`${fmt(a)} + ${fmt(b)} = ?`,a:+(a+b).toFixed(2),d:[+(a+b+1).toFixed(2),+(a+b-0.1).toFixed(2),+(a+b+0.01).toFixed(2)]}},
+ r=>{const a=ri(r,4,14),b=ri(r,3,a-1);return{t:"Аудан",q:`Ұзындығы ${a} м, ені ${b} м бөлменің ауданы неше м²?`,a:a*b,d:[2*(a+b),a+b,a*b+a]}},
+ r=>{const v=ri(r,3,12)*5,t=ri(r,2,5);return{t:"Қозғалыс",q:`Велосипедші сағатына ${v} км жүреді. ${t} сағатта неше км жүреді?`,a:v*t,d:[v+t,v*t+v,v*(t-1)]}},
+ r=>{const a=ri(r,2,9)*10,b=ri(r,2,9);return{t:"Мәтінді есеп",q:`Бақшада ${a} түп алма ағашы бар. Алмұрт ағашы одан ${b} есе аз. Алмұрт неше түп?`,a:a/b%1===0?a/b:Math.round(a/b),d:[a*b,a-b,a+b],chk:a%b===0}},
+],
+6:[
+ r=>{const n=ri(r,1,10)*20,p=pick(r,[10,20,25,30,50,75]);return{t:"Пайыз",q:`${n} санының ${p}%-ын табыңыз.`,a:n*p/100,d:[n*p/10,n-p,n*p/100+n/10]}},
+ r=>{const a=-ri(r,2,20),b=ri(r,3,25);return{t:"Рационал сандар",q:`${P(a)} + ${b} = ?`,a:a+b,d:[-(a+b),a-b,b-a+1]}},
+ r=>{const a=-ri(r,2,9),b=ri(r,2,9);return{t:"Рационал сандар",q:`${P(a)} · ${b} = ?`,a:a*b,d:[-a*b,a+b,a*b-1]}},
+ r=>{const a=ri(r,2,9),k=ri(r,2,6),c=ri(r,2,9);return{t:"Пропорция",q:`x : ${a} = ${c*k} : ${c}. x = ?`,a:a*k,d:[a+k,c*k,a*k+a]}},
+ r=>{let m,n;do{m=ri(r,2,7);n=ri(r,2,9)}while(gcd(m,n)!==1||m===n);const g=ri(r,2,9);return{t:"ЕҮОБ",q:`ЕҮОБ(${g*m}; ${g*n}) = ?`,a:g,d:[g*m,g*m*n,g*2]}},
+ r=>{let m,n;do{m=ri(r,2,6);n=ri(r,2,7)}while(gcd(m,n)!==1||m===n);const g=ri(r,2,4);return{t:"ЕКОЕ",q:`ЕКОЕ(${g*m}; ${g*n}) = ?`,a:g*m*n,d:[g*m*g*n,g,g*m+g*n]}},
+],
+7:[
+ r=>{const x=ri(r,-6,12),a=ri(r,2,9);let b=ri(r,-20,20);if(b===0)b=5;const c=a*x+b;return{t:"Сызықтық теңдеу",q:`${a}x ${b<0?"−":"+"} ${Math.abs(b)} = ${M(c)}. x = ?`,a:x,d:[c-b,-x||x+2,x+1]}},
+ r=>{const b=ri(r,2,5),e=ri(r,2,4);return{t:"Дәреже",q:`${b}^${e} = ?`.replace("^"+e,["","","²","³","⁴"][e]),a:b**e,d:[b*e,b**e+b,b+e]}},
+ r=>{let a,b,c;do{a=ri(r,2,9);b=ri(r,2,9);c=ri(r,1,12)}while(a+b-c===0||a+b-c===1);return{t:"Ұқсас мүшелер",q:`${a}x + ${b}x − ${c}x = ?`,a:`${M(a+b-c)}x`,d:[`${a+b+c}x`,`${M(a-b-c)}x`,`${M(a+b-c)}x²`]}},
+ r=>{const pr=ri(r,2,20)*500,p=pick(r,[10,20,25,50]);return{t:"Пайыз",q:`Тауар бағасы ${pr} теңге еді, ${p}%-ға қымбаттады. Жаңа бағасы қанша?`,a:pr*(100+p)/100,d:[pr+p,pr*p/100,pr*(100-p)/100]}},
+ r=>{const avg=ri(r,4,9),a=ri(r,1,avg),b=ri(r,1,avg),c=ri(r,avg,avg+4);const d=4*avg-a-b-c;return{t:"Арифметикалық орта",q:`${a}, ${b}, ${c}, ${d} сандарының арифметикалық ортасы?`,a:avg,d:[a+b+c+d,avg+1,Math.round((a+b+c+d)/3)]}},
+],
+8:[
+ r=>{const n=ri(r,4,25);return{t:"Квадрат түбір",q:`√${n*n} = ?`,a:n,d:[n*2,n+1,n*n/2|0]}},
+ r=>{const t=pick(r,[[3,4,5],[6,8,10],[5,12,13],[8,15,17],[9,12,15]]);return{t:"Пифагор теоремасы",q:`Катеттері ${t[0]} см және ${t[1]} см тікбұрышты үшбұрыштың гипотенузасы неше см?`,a:t[2],d:[t[0]+t[1],t[2]+1,t[1]+1]}},
+ r=>{const x=ri(r,2,12);return{t:"Квадрат теңдеу",q:`x² = ${x*x} теңдеуінің оң түбірі?`,a:x,d:[x*x/2|0,x*2,x+1]}},
+ r=>{let p,q;do{p=ri(r,1,9);q=ri(r,1,9)}while(p===q);return{t:"Виет теоремасы",q:`x² − ${p+q}x + ${p*q} = 0 теңдеуі түбірлерінің қосындысы?`,a:p+q,d:[p*q,-(p+q),p+q+1]}},
+ r=>{const k=ri(r,-5,6)||2,b=ri(r,-9,9),x=ri(r,-4,5);return{t:"Сызықтық функция",q:`y = ${M(k)}x ${b<0?"−":"+"} ${Math.abs(b)} функциясының x = ${M(x)} болғандағы мәні?`,a:k*x+b,d:[k*x-b,k+x+b,k*x]}},
+],
+9:[
+ r=>{const a=ri(r,1,9),d=ri(r,2,7),n=ri(r,6,15);return{t:"Арифметикалық прогрессия",q:`Арифметикалық прогрессияда a₁ = ${a}, d = ${d}. Оның ${n}-мүшесін табыңыз.`,a:a+(n-1)*d,d:[a+n*d,a*n,a+(n-2)*d]}},
+ r=>{const b=ri(r,1,5),q=ri(r,2,3),n=ri(r,3,6);return{t:"Геометриялық прогрессия",q:`Геометриялық прогрессияда b₁ = ${b}, q = ${q}. Оның ${n}-мүшесін табыңыз.`,a:b*q**(n-1),d:[b*q**n,b*q*(n-1),b+q*(n-1)]}},
+ r=>{const x=ri(r,2,15),y=ri(r,1,x-1);return{t:"Теңдеулер жүйесі",q:`x + y = ${x+y}, x − y = ${x-y}. x = ?`,a:x,d:[y,x+y,x-y]}},
+ r=>{let a,b;do{a=ri(r,1,7);b=ri(r,1,7)}while(a===b);return{t:"Ықтималдық",q:`Қорапта ${a} қызыл және ${b} көк шар бар. Кездейсоқ алынған шардың қызыл болу ықтималдығы?`,a:frac(a,a+b),d:[frac(b,a+b),frac(a,b),frac(1,a+b),frac(b,a),frac(a+1,a+b)]}},
+ r=>{let p,q;do{p=ri(r,1,9);q=ri(r,1,9)}while(p===q);return{t:"Виет теоремасы",q:`x² − ${p+q}x + ${p*q} = 0 теңдеуі түбірлерінің көбейтіндісі?`,a:p*q,d:[p+q,-p*q,p*q+1]}},
+]};
+function gensFor(g){g=Math.max(4,Math.min(11,+g||5));if(g>=10)return G[9].concat(G[8]);return G[g].concat(G[g-1]||[])}
+
+function numDistr(a, r){
+  const step = Number.isInteger(a) ? 1 : 0.1;
+  const c = shuffle(r,[a+step,a-step,a+2*step,a+10*step,a-10*step,a*2,a+5*step,-a]).map(v=>+v.toFixed(2));
+  return c;
+}
+function buildQuestions(room, grade, n){
+  const r = mulberry(hash(room+"|"+grade));
+  const gens = gensFor(grade);
+  let order = [];
+  while(order.length < n) order = order.concat(shuffle(r, gens.map((_,i)=>i)));
+  const out = [];
+  for(let i=0;i<n;i++){
+    let q, tries=0;
+    do{ q = gens[order[i]](r); tries++; }while(q.chk===false && tries<20);
+    const ans = fmt(q.a);
+    const set = [];
+    for(const d of (q.d||[]).concat(typeof q.a==="number"?numDistr(q.a,r):[])){
+      const s = fmt(d); if(s!==ans && !set.includes(s) && s!=="NaN") set.push(s);
+      if(set.length===3) break;
+    }
+    let k=2; while(set.length<3){ const s=typeof q.a==="number"?fmt(q.a+k*7):(k===2?"Дұрыс жауап жоқ":"Анықтау мүмкін емес"); if(!set.includes(s)&&s!==ans) set.push(s); k++; }
+    out.push({t:q.t, q:q.q, ans, opts:[ans].concat(set)});
+  }
+  return out;
+}
+
+/* ======================= БАЙЛАНЫС (API / ДЕМО) ======================= */
+const DEMO = !API;
+const liveKey = room => "ba_live_"+room;
+async function apiGet(params){
+  if(DEMO) return null;
+  const u = API + "?" + new URLSearchParams(params).toString();
+  const res = await fetch(u); return res.json();
+}
+function apiPost(obj){
+  if(DEMO){
+    const all = load(liveKey(obj.r), {});
+    all[norm(obj.c)+"|"+norm(obj.name)] = Object.assign({}, all[norm(obj.c)+"|"+norm(obj.name)]||{}, obj, {ts:Date.now()});
+    store(liveKey(obj.r), all); return Promise.resolve();
+  }
+  return fetch(API, {method:"POST", mode:"no-cors", body: JSON.stringify(obj)}).catch(()=>{});
+}
+
+/* ======================= ЭКРАНДАР ======================= */
+const screens = ["home","tSetup","tLive","tPar","tCons","sJoin","sTut","sTest","sRes"];
+function show(id){ screens.forEach(s=>$("#"+s).hidden = s!==id); $("#homeBtn").hidden = id==="home" || id==="sTest"; window.scrollTo(0,0); }
+function modal(html, acts){
+  $("#mBody").innerHTML = html; const box=$("#mActs"); box.innerHTML="";
+  acts.forEach(([txt,cls,fn])=>{const b=document.createElement("button");b.className=cls;b.textContent=txt;b.onclick=()=>{$("#modal").hidden=true;fn&&fn()};box.appendChild(b)});
+  $("#modal").hidden=false;
+}
+$("#homeBtn").onclick = ()=>{ stopPoll(); show("home"); };
+$("#goTeacher").onclick = ()=>{ setupTeacher(); show("tSetup"); };
+$("#goStudent").onclick = ()=>{ $("#codeStep").hidden=false; $("#nameStep").hidden=true; show("sJoin"); setTimeout(()=>$("#sCode").focus(),50); };
+if(DEMO) $("#demoNote").hidden=false;
+
+/* ======================= АТА-АНА КЕЛІСІМДЕРІ ======================= */
+let CONS = [];
+const clsN = s => norm(s).replace(/[\s\-«»"']/g,"");
+async function loadConsents(){
+  if(DEMO){ CONS = load("ba_demo_cons", []); return CONS; }
+  try{ const d = await apiGet({a:"consents", pin:T.pin}); if(d && d.ok) CONS = d.rows||[]; }catch(e){}
+  return CONS;
+}
+function consFor(name, cls){
+  const n=norm(name), c=clsN(cls||"");
+  return CONS.find(x=>norm(x.child)===n && (!c || clsN(x.cls)===c)) || CONS.find(x=>norm(x.child)===n) || null;
+}
+/* ======================= МҰҒАЛІМ ======================= */
+let T = load("ba_teacher", {grade:5, cls:"", n:10, m:15, pin:""});
+let room = null, pollId = null, lastRows = [], clockStart = 0;
+function segFill(el, vals, cur, on){ el.innerHTML=""; vals.forEach(v=>{const b=document.createElement("button");b.textContent=v;if(v==cur)b.className="on";b.onclick=()=>{[...el.children].forEach(x=>x.className="");b.className="on";on(v)};el.appendChild(b)}); }
+async function setupTeacher(){
+  const g=$("#tGrade"); g.innerHTML=""; for(let i=4;i<=11;i++){const o=document.createElement("option");o.value=i;o.textContent=i+"-сынып"+(i===4||i===9?" (ББЖМ)":"");if(i==T.grade)o.selected=true;g.appendChild(o)}
+  $("#tClass").value=T.cls; $("#tPin").value=T.pin;
+  segFill($("#tCount"),[5,10,15,20],T.n,v=>T.n=v);
+  segFill($("#tTime"),[5,10,15,20,30],T.m,v=>T.m=v);
+  if(!DEMO && T.pin){ loadConsents().then(()=>{ const cl=[...new Set(CONS.map(c=>String(c.cls).trim()))].filter(Boolean).sort(); $("#classList").innerHTML=cl.map(c=>`<option value="${esc(c)}">`).join(""); }); }
+}
+$("#tGrade").onchange = e => { T.grade=+e.target.value; if(!$("#tClass").value) $("#tClass").value = T.grade+" "; };
+$("#tStart").onclick = ()=>{
+  T.grade=+$("#tGrade").value; T.cls=$("#tClass").value.trim()||(T.grade+"-сынып"); T.pin=$("#tPin").value.trim();
+  store("ba_teacher", T);
+  room = String(ri(Math.random,1000,9999));
+  store("ba_room", {room, ...T, started:Date.now()});
+  if(!DEMO){ apiPost({a:"room", r:room, c:T.cls, pin:T.pin}); loadConsents(); }
+  openLive();
+};
+function roomUrl(){ const u=new URL(location.href.split("#")[0]); u.search=""; u.searchParams.set("r",room); u.searchParams.set("g",T.grade); u.searchParams.set("c",T.cls); u.searchParams.set("n",T.n); u.searchParams.set("m",T.m); return u.toString(); }
+function openLive(){
+  const url = roomUrl();
+  $("#roomCode").textContent = room;
+  $("#roomLink").textContent = url;
+  $("#roomInfo").textContent = `${T.cls} · ${T.n} сұрақ · ${T.m} минут`;
+  $("#qr").hidden = false; $("#qr").src = "https://api.qrserver.com/v1/create-qr-code/?size=400x400&margin=0&data="+encodeURIComponent(url);
+  $("#tBots").hidden = !DEMO;
+  $("#podiumBox").hidden = true;
+  clockStart = (load("ba_room",{}).started)||Date.now();
+  show("tLive"); startPoll();
+}
+function startPoll(){ stopPoll(); poll(); pollId=setInterval(poll, 4000); }
+function stopPoll(){ if(pollId) clearInterval(pollId); pollId=null; if(botId) {clearInterval(botId); botId=null;} }
+async function poll(){
+  $("#stClock").textContent = "⏱ "+mmss((Date.now()-clockStart)/1000);
+  let rows=[];
+  try{
+    if(DEMO){ rows = Object.values(load(liveKey(room),{})); $("#stConn").textContent="● демо"; $("#stConn").style.color="var(--inf)"; }
+    else { const d = await apiGet({a:"live", r:room, pin:T.pin}); rows = (d&&d.rows)||[]; $("#stConn").textContent = d&&d.error==="pin" ? "● PIN қате" : "● байланыс бар"; $("#stConn").style.color = d&&d.error ? "var(--bad)" : "var(--ok)"; }
+  }catch(e){ $("#stConn").textContent="● байланыс жоқ"; $("#stConn").style.color="var(--bad)"; return; }
+  rows.sort((a,b)=> (b.correct-a.correct) || ((a.status==="done"?a.secs:9e9)-(b.status==="done"?b.secs:9e9)) || (b.answered-a.answered));
+  lastRows = rows; drawTrack(rows);
+}
+function photoBadge(r){ const c=consFor(r.name, r.c); if(DEMO&&!CONS.length) return ""; return (!c||c.revoked||!c.c3) ? ' <span title="Фото/бейнеге түсіруге келісім жоқ">🚫📷</span>' : ""; }
+function drawTrack(rows){
+  $("#stJoined").textContent = `👥 ${rows.length} кірді`;
+  $("#stDone").textContent = `✅ ${rows.filter(r=>r.status!=="test").length} бітірді`;
+  const tr=$("#track");
+  if(!rows.length){ tr.innerHTML='<div class="empty">Оқушылар кіргенде осы жерде бәйге басталады 🏇</div>'; return; }
+  const horses=["🏇","🐎","🦄","🐪","🐆","🐅","🐫","🦓"];
+  tr.innerHTML = rows.map((r,i)=>{
+    const pct = r.total ? r.correct/r.total : 0;
+    const st = r.status==="done" ? "✅ бітірді" : r.status==="out" ? "⚠️ сайттан шықты" : `✍️ ${r.answered}/${r.total}`;
+    const pl = i<3 ? ["🥇","🥈","🥉"][i] : (i+1);
+    return `<div class="lane ${r.status==="done"?"done":r.status==="out"?"out":""}"><div class="pl">${pl}</div><div class="nm">${esc(r.name)}${photoBadge(r)}<small>${st}</small></div><div class="road"><div class="fin"></div><div class="h" style="left:calc(${(pct*100).toFixed(1)}% * .93)">${horses[hash(r.name)%horses.length]}</div></div><div class="sc">${r.correct}/${r.total}</div></div>`;
+  }).join("");
+}
+$("#tPodium").onclick = ()=>{
+  const box=$("#podiumBox"); const r=lastRows.filter(x=>x.status!=="test");
+  if(!r.length){ modal("<h3>Әзірге ешкім бітірмеді</h3><p class='hint'>Бірнеше оқушы аяқтаған соң басыңыз.</p>",[["Жарайды","big"]]); return; }
+  const top=[r[1],r[0],r[2]]; const cls=["p2","p1","p3"], med=["🥈","🥇","🥉"];
+  box.innerHTML = `<div class="card" style="margin-top:16px"><h2 style="text-align:center;margin:0">🏆 Жарыс жеңімпаздары</h2><div class="podium">${top.map((x,i)=>x?`<div class="${cls[i]}"><div class="m">${med[i]}</div><b>${esc(x.name)}</b><span>${x.correct}/${x.total} · ${mmss(x.secs)}</span></div>`:"<div style='visibility:hidden'></div>").join("")}</div></div>`;
+  box.hidden=false; box.scrollIntoView({behavior:"smooth"});
+};
+$("#tConsLive").onclick = ()=>openCons("tLive");
+$("#tNew").onclick = ()=>{ stopPoll(); setupTeacher(); show("tSetup"); };
+
+/* --- келісімдер экраны --- */
+let consBack = "tSetup";
+function kUrl(){ const u=new URL("../kelisim/", location.href); const c=$("#kCls").value.trim(); if(c) u.searchParams.set("c",c); return u.toString(); }
+function kText(){ const c=$("#kCls").value.trim(); return `Құрметті ата-аналар! ${c?c+" сыныбы. ":""}Балаларымыз Білім Арена мен Шың 140 платформасында тест, жарыс, олимпиадаға дайындалады. Қағаздың орнына онлайн келісім беріңізші (1 минут): ${kUrl()}\nҲурматли ота-оналар! Илтимос, онлайн розилик беринг: ${kUrl()}\n— ${TEACHER}`; }
+async function openCons(back){
+  consBack = back||"tSetup";
+  T.pin = T.pin || $("#tPin").value.trim();
+  if(!$("#kCls").value) $("#kCls").value = T.cls||"";
+  show("tCons"); drawCons(); await loadConsents(); drawCons();
+}
+function drawCons(){
+  $("#kLink").textContent = kUrl();
+  const c=clsN($("#kCls").value);
+  const rows = CONS.filter(x=>!c||clsN(x.cls)===c).sort((a,b)=>String(a.child).localeCompare(String(b.child),"kk"));
+  const act = rows.filter(x=>!x.revoked);
+  $("#kStat").textContent = DEMO ? "Демо режим" : (!T.pin ? "PIN енгізілмеген" : `${act.length} келісім · 📷 ${act.filter(x=>x.c3).length} · WA ${act.filter(x=>x.c2).length}`);
+  const y = v => v ? "✅" : "✖";
+  $("#kTable").innerHTML = rows.length ? "<tr><th>Оқушы</th><th>Сынып</th><th>Ата-анасы</th><th>Тест</th><th>WA</th><th>📷</th><th>📢</th><th>Күні</th><th>Қолы</th></tr>" + rows.map(x=>`<tr${x.revoked?' style="opacity:.5"':''}><td><b>${esc(x.child)}</b>${x.revoked?'<br><span class="hint">қайтарып алды</span>':''}</td><td>${esc(x.cls)}</td><td>${esc(x.parent)}<br><span class="hint">${esc(x.phone)}</span></td><td>${y(x.c1&&!x.revoked)}</td><td>${y(x.c2&&!x.revoked)}</td><td>${y(x.c3&&!x.revoked)}</td><td>${y(x.c4&&!x.revoked)}</td><td>${x.t?new Date(x.t).toLocaleDateString("ru-RU"):""}</td><td>${x.sig?"✍️":"—"}</td></tr>`).join("") : `<tr><td class="hint">${!T.pin&&!DEMO?"Келісімдерді көру үшін алдыңғы бетте PIN енгізіңіз.":"Әзірге келісім жоқ. Сілтемені ата-аналарға жіберіңіз."}</td></tr>`;
+}
+$("#tConsBtn").onclick = ()=>openCons("tSetup");
+$("#kCls").oninput = drawCons;
+$("#kReload").onclick = async ()=>{ await loadConsents(); drawCons(); };
+$("#kBack").onclick = ()=>show(consBack);
+$("#kPrint").onclick = ()=>window.print();
+$("#kCopy").onclick = async ()=>{ try{ await navigator.clipboard.writeText(kText()); $("#kCopy").textContent="✔ Көшірілді"; }catch(e){ modal(`<h3>Көшіріп алыңыз</h3><textarea class="in" rows="6">${esc(kText())}</textarea>`,[["Жабу","tbtn"]]); } };
+$("#kShare").onclick = ()=>{ const url="https://wa.me/?text="+encodeURIComponent(kText()); let w=null; try{w=window.open(url,"_blank")}catch(e){} if(!w) modal(`<h3>WhatsApp</h3><p><a href="${url}" target="_blank" rel="noopener" style="color:var(--wa);font-weight:800">📲 Чатты таңдап жіберу</a></p>`,[["Жабу","tbtn"]]); };
+
+/* демо боттар — экранды тексеру үшін */
+let botId=null;
+$("#tBots").onclick = ()=>{
+  const names=["Айгерім С.","Нұрислам Т.","Дилноза Қ.","Азамат Ж.","Мадина Е.","Бекзат О.","Сабина Р.","Ерасыл М."];
+  const bots = names.map((nm,i)=>({name:nm, skill:.45+((i*37)%50)/100, answered:0, correct:0, t0:Date.now()}));
+  if(botId) clearInterval(botId);
+  botId=setInterval(()=>{
+    let left=0;
+    bots.forEach(b=>{ if(b.answered>=T.n) return; left++; if(Math.random()<.55){ b.answered++; if(Math.random()<b.skill) b.correct++; }
+      const done=b.answered>=T.n;
+      apiPost({a:"live", r:room, c:T.cls, name:b.name, correct:b.correct, answered:b.answered, total:T.n, status:done?"done":"test", secs:Math.round((Date.now()-b.t0)/1000)*4, weak:pick(Math.random,["Пайыз","Жай бөлшек","Амалдар реті",""]), leaves:0}); });
+    if(!left){clearInterval(botId);botId=null}
+    poll();
+  },1200);
+};
+
+/* ======================= АТА-АНАЛАРҒА ======================= */
+const TPL_DEFAULT = "Құрметті {ата-ана}! {аты} бүгін ({күн}) математикадан тест тапсырды: {балл}/{саны} ({пайыз}%), сыныпта {орын}-орын. {тақырып}\nМұғалімі: "+TEACHER+", "+SCHOOL+".";
+$("#waTpl").value = load("ba_tpl", TPL_DEFAULT);
+$("#waTpl").oninput = e => store("ba_tpl", e.target.value);
+let sent = {};
+function phoneNorm(p){ let d=String(p||"").replace(/\D/g,""); if(d.length===11&&d[0]==="8") d="7"+d.slice(1); if(d.length===10) d="7"+d; return d.length>=11?d:""; }
+function waText(r, place){
+  const pct = r.total? Math.round(100*r.correct/r.total):0;
+  const tema = r.correct===r.total ? "Барлық сұраққа дұрыс жауап берді — жарайсың!" : (r.weak? `Қайталайтын тақырып: ${r.weak}.` : "");
+  const out = r.status==="out" ? " (Тест кезінде сайттан шығып кетті.)" : "";
+  const d = new Date().toLocaleDateString("ru-RU");
+  const cs=consFor(r.name,r.c); return $("#waTpl").value.replace(/{ата-ана}/g,(cs&&cs.parent)||"ата-ана").replace(/{аты}/g,r.name).replace(/{сынып}/g,r.c||T.cls).replace(/{балл}/g,r.correct).replace(/{саны}/g,r.total).replace(/{пайыз}/g,pct).replace(/{орын}/g,place).replace(/{тақырып}/g,tema+out).replace(/{күн}/g,d);
+}
+function parRows(){ return lastRows.filter(r=>r.status!=="test"); }
+function drawPar(){
+  const rows=parRows();
+  $("#waCount").textContent = `${Object.keys(sent).length} / ${rows.length} жіберілді`;
+  if(!rows.length){ $("#parTable").innerHTML="<tr><td class='hint'>Тест аяқтаған оқушы әзірге жоқ.</td></tr>"; return; }
+  $("#parTable").innerHTML = "<tr><th>#</th><th>Оқушы</th><th>Нәтиже</th><th>Ата-ана телефоны</th><th></th></tr>" + rows.map((r,i)=>{
+    const key=norm(r.name); const cs=consFor(r.name,r.c); const ok=cs&&!cs.revoked&&cs.c2; const ph=ok?phoneNorm(cs.phone):"";
+    return `<tr><td>${i+1}</td><td><b>${esc(r.name)}</b>${r.weak?`<br><span class="hint">${esc(r.weak)}</span>`:""}</td><td>${r.correct}/${r.total}${r.status==="out"?" ⚠️":""}</td>
+    <td>${ok?`+${esc(ph)}<br><span class="hint">${esc(cs.parent)}</span>`:`<span class="hint">${cs&&!cs.revoked?"WhatsApp-қа келісім бермеген":"Онлайн келісім жоқ"}</span>`}</td>
+    <td>${ok?`<button class="wabtn ${sent[key]?"sent":""}" data-i="${i}">${sent[key]?"✔ Жіберілді":"📲 WhatsApp"}</button>`:""}</td></tr>`;
+  }).join("");
+  $("#parTable").querySelectorAll(".wabtn").forEach(b=>b.onclick=()=>sendWa(+b.dataset.i));
+}
+function sendWa(i){
+  const rows=parRows(), r=rows[i]; if(!r) return;
+  const key=norm(r.name); const cs=consFor(r.name,r.c); const ph=cs&&!cs.revoked&&cs.c2?phoneNorm(cs.phone):"";
+  if(!ph){ sent[key]=true; drawPar(); return; }
+  const url="https://wa.me/"+ph+"?text="+encodeURIComponent(waText(r, i+1));
+  let w=null; try{ w=window.open(url,"_blank"); }catch(e){}
+  if(!w) modal(`<h3>WhatsApp-қа өту</h3><p><a href="${url}" target="_blank" rel="noopener" style="color:var(--wa);font-weight:800;font-size:20px">📲 ${esc(r.name)} — ата-анасына жіберу</a></p>`,[["Жабу","tbtn"]]);
+  sent[key]=true; drawPar();
+}
+$("#tParents").onclick = async ()=>{ show("tPar"); drawPar(); await loadConsents(); drawPar(); };
+$("#waBack").onclick = ()=>{ show("tLive"); };
+$("#waNext").onclick = ()=>{
+  const rows=parRows(); const i=rows.findIndex(r=>{const cs=consFor(r.name,r.c);return !sent[norm(r.name)]&&cs&&!cs.revoked&&cs.c2;});
+  if(i<0){ modal("<h3>Барлығына жіберілді ✔</h3>",[["Жарайды","big"]]); return; }
+  sendWa(i);
+};
+
+/* ======================= ОҚУШЫ ======================= */
+let S = null; // {room, grade, cls, n, m, name, qs, ans[], cur, t0, leaves}
+async function joinRoom(params){
+  S = {room:params.r, grade:+params.g||5, cls:params.c||"", n:+params.n||10, m:+params.m||15};
+  $("#codeStep").hidden=true; $("#nameStep").hidden=false;
+  $("#sRoomInfo").textContent = `Жарыс ${S.room} · ${S.cls||S.grade+"-сынып"} · ${S.n} сұрақ · ${S.m} минут`;
+  const list=$("#nameList"); list.innerHTML=""; $("#sName").value=load("ba_myname","");
+  $("#sNameGo").disabled = !$("#sName").value.trim();
+  let names=[];
+  if(!DEMO){ try{ const d=await apiGet({a:"roster", r:S.room}); names=(d&&d.names)||[]; if(d&&d.cls&&!S.cls) S.cls=d.cls; }catch(e){} }
+  list.hidden = !names.length; $("#nameLbl").textContent = names.length ? "Тізімде жоқ болсаң — аты-жөніңді жаз" : "Аты-жөніңді жаз";
+  names.forEach(nm=>{ const b=document.createElement("button"); b.textContent=nm; b.onclick=()=>{ list.querySelectorAll("button").forEach(x=>x.className=""); b.className="on"; $("#sName").value=nm; $("#sNameGo").disabled=false; }; list.appendChild(b); });
+  show("sJoin");
+}
+$("#sCode").oninput = e => { e.target.value = e.target.value.replace(/\D/g,"").slice(0,4); };
+$("#sCodeGo").onclick = ()=>{
+  const code=$("#sCode").value; if(code.length!==4){ modal("<h3>Кодты тексер</h3><p>Теледидардағы 4 санды жаз.</p>",[["Жарайды","big"]]); return; }
+  // Код арқылы кірсе — сынып деңгейін мұғалім сілтемесінен білмейміз, сондықтан ең жақсысы QR немесе сілтеме.
+  const saved = load("ba_room",{});
+  if(saved.room===code) joinRoom({r:code,g:saved.grade,c:saved.cls,n:saved.n,m:saved.m});
+  else pickGrade(code);
+};
+function pickGrade(code){
+  modal(`<h3>Нешінші сыныпсың?</h3><div class="seg" style="justify-content:center" id="gPick">${[4,5,6,7,8,9,10,11].map(g=>`<button data-g="${g}">${g}</button>`).join("")}</div><p class="hint">Келесі жолы QR-кодты сканерлесең, бұл сұрақ болмайды.</p>`,[["Болдырмау","tbtn"]]);
+  $("#gPick").querySelectorAll("button").forEach(b=>b.onclick=()=>{ $("#modal").hidden=true; joinRoom({r:code,g:b.dataset.g,c:"",n:10,m:15}); });
+}
+$("#sName").oninput = e => { $("#sNameGo").disabled = !e.target.value.trim(); $("#nameList").querySelectorAll("button").forEach(x=>x.className=""); };
+$("#sNameGo").onclick = ()=>{
+  S.name = $("#sName").value.trim().replace(/\s+/g," "); store("ba_myname", S.name);
+  const resumeKey = "ba_s_"+S.room+"_"+norm(S.name);
+  const prev = load(resumeKey, null);
+  if(prev && prev.done){ S=prev; showResult(); return; }
+  if(prev){ S=prev; startTest(true); return; }
+  tutStep=0; drawTut(); show("sTut");
+};
+
+/* --- үйрету (тест тапсыруды алғаш көретіндерге) --- */
+let tutStep=0, tutPicked=null;
+const TUT = [
+  {pic:"👆", h:"Жауапты таңда", p:"Әр сұрақтың 4 жауабы бар: A, B, C, D. Дұрыс деп ойлаған жауапқа <b>бір рет</b> бас — ол көк түске боялады."},
+  {pic:"▶️", h:"Келесі сұраққа өт", p:"Төмендегі <b>«Келесі ▶»</b> батырмасы келесі сұрақты ашады. <b>«◀ Алдыңғы»</b> — артқа қайтарады."},
+  {pic:"🔢", h:"Нөмірлер — сұрақтар картасы", p:"Төмендегі нөмірлерді басып, кез келген сұраққа ораласың. <b>Жасыл</b> нөмір — жауап берілген."},
+  {pic:"⏱️", h:"Уақытты бақыла", p:"Жоғарғы оң жақта қалған уақыт тұр. Уақыт біткенде тест өзі аяқталады. Барлығын шешіп болған соң <b>«✅ Аяқтау»</b>."},
+  {pic:"🚫", h:"Сайттан шықпа!", p:"Тест кезінде басқа бағдарламаға өтпе. Бір рет шықсаң — ескерту, екінші рет — тест аяқталады."},
+  {pic:"✏️", h:"Жаттығу", p:"Енді байқап көр: <b>2 + 3 = ?</b>", practice:true},
+];
+function drawTut(){
+  const s=TUT[tutStep];
+  let html = `<div class="pic">${s.pic}</div><h3>${s.h}</h3><p>${s.p}</p>`;
+  if(s.practice){ html += `<div class="opts" id="pOpts">${["4","5","6","23"].map((o,i)=>`<button class="opt ${tutPicked===i?"on":""}" data-i="${i}"><span class="L">${"ABCD"[i]}</span>${o}</button>`).join("")}</div><p id="pMsg" style="min-height:28px;font-weight:700"></p>`; }
+  $("#tutBody").innerHTML = html;
+  $("#tutDots").innerHTML = TUT.map((_,i)=>`<i class="${i===tutStep?"on":""}"></i>`).join("");
+  $("#tutPrev").disabled = tutStep===0;
+  $("#tutNext").textContent = s.practice ? "Тестті бастау 🚀" : "Түсіндім ▶";
+  $("#tutNext").disabled = !!s.practice && tutPicked!==1;
+  if(s.practice){
+    $("#pOpts").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ tutPicked=+b.dataset.i; drawTut(); $("#pMsg").textContent = tutPicked===1 ? "✅ Дұрыс! Жауап осылай белгіленеді." : "Тағы ойлан: 2 + 3 неге тең?"; $("#pMsg").style.color = tutPicked===1?"var(--ok)":"var(--inf)"; });
+  }
+}
+$("#tutPrev").onclick = ()=>{ if(tutStep>0){tutStep--;drawTut();} };
+$("#tutNext").onclick = ()=>{ if(TUT[tutStep].practice){ startTest(false); return; } tutStep++; drawTut(); };
+
+/* --- тест --- */
+let tick=null, upTimer=null;
+function sKey(){ return "ba_s_"+S.room+"_"+norm(S.name); }
+function startTest(resume){
+  if(!resume){
+    const qs = buildQuestions(S.room, S.grade, S.n);
+    const r = mulberry(hash(S.room+"|"+norm(S.name)));
+    S.qs = qs.map(q=>({t:q.t, q:q.q, ans:q.ans, opts:shuffle(r,q.opts)}));
+    S.ans = Array(S.n).fill(null); S.cur=0; S.t0=Date.now(); S.leaves=0; S.done=false;
+  }
+  store(sKey(), S);
+  show("sTest"); drawQ(); send("test");
+  clearInterval(tick); tick=setInterval(()=>{ const left=S.m*60-(Date.now()-S.t0)/1000; $("#qTime").textContent="⏱ "+mmss(left); $("#qTime").classList.toggle("low", left<60); if(left<=0) finish("time"); },500);
+}
+function drawQ(){
+  const q=S.qs[S.cur];
+  $("#qNo").textContent = `${S.cur+1} / ${S.n}`;
+  $("#qTag").textContent = q.t;
+  $("#qText").textContent = q.q;
+  $("#qOpts").innerHTML = q.opts.map((o,i)=>`<button class="opt ${S.ans[S.cur]===i?"on":""}" data-i="${i}"><span class="L">${"ABCD"[i]}</span>${esc(o)}</button>`).join("");
+  $("#qOpts").querySelectorAll(".opt").forEach(b=>b.onclick=()=>{ S.ans[S.cur]=+b.dataset.i; store(sKey(),S); drawQ(); queueSend(); });
+  $("#qPrev").disabled = S.cur===0;
+  $("#qNext").disabled = S.cur===S.n-1;
+  $("#qNums").innerHTML = S.qs.map((_,i)=>`<button class="${S.ans[i]!==null?"ans":""} ${i===S.cur?"cur":""}" data-i="${i}">${i+1}</button>`).join("");
+  $("#qNums").querySelectorAll("button").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;drawQ();});
+}
+$("#qPrev").onclick = ()=>{ if(S.cur>0){S.cur--;drawQ();} };
+$("#qNext").onclick = ()=>{ if(S.cur<S.n-1){S.cur++;drawQ();} };
+$("#qFinish").onclick = ()=>{
+  const empty = S.ans.filter(a=>a===null).length;
+  modal(`<h3>Аяқтайсың ба?</h3><p>${empty?`Жауап берілмеген сұрақ: <b>${empty}</b>. Нөмірлерді басып тексер.`:"Барлық сұраққа жауап бердің."}</p>`,
+    [["Тексеремін","tbtn"],["✅ Иә, аяқтау","big green",()=>finish("done")]]);
+};
+function stats(){
+  let c=0; const wrongT={};
+  S.qs.forEach((q,i)=>{ const ok = S.ans[i]!==null && q.opts[S.ans[i]]===q.ans; if(ok) c++; else wrongT[q.t]=(wrongT[q.t]||0)+1; });
+  const weak = Object.entries(wrongT).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>x[0]).join(", ");
+  return {correct:c, answered:S.ans.filter(a=>a!==null).length, weak};
+}
+function send(status){
+  const st=stats();
+  apiPost({a:"live", r:S.room, c:S.cls||(S.grade+"-сынып"), name:S.name, correct:st.correct, answered:st.answered, total:S.n, status, secs:Math.round((Date.now()-S.t0)/1000), weak:st.weak, leaves:S.leaves||0});
+}
+function queueSend(){ clearTimeout(upTimer); upTimer=setTimeout(()=>send("test"), 1500); }
+function finish(why){
+  if(S.done) return;
+  clearInterval(tick); clearTimeout(upTimer);
+  S.done=true; S.why=why; S.secs=Math.round((Date.now()-S.t0)/1000);
+  store(sKey(),S);
+  send(why==="out"?"out":"done");
+  $("#modal").hidden=true;
+  showResult();
+}
+document.addEventListener("visibilitychange", ()=>{
+  if(!S || S.done || $("#sTest").hidden) return;
+  if(document.hidden){ S.leaves=(S.leaves||0)+1; store(sKey(),S);
+    if(S.leaves>=2) finish("out"); else send("test");
+  } else if(S.leaves===1){
+    modal("<h3>⚠️ Ескерту!</h3><p>Сен тесттен шығып кеттің. Тағы бір рет шықсаң, тест аяқталып, нәтиже мұғалімге «сайттан шықты» деп барады.</p>",[["Түсіндім","big"]]);
+  }
+});
+function showResult(){
+  const st=stats(); const pct=Math.round(100*st.correct/S.n);
+  $("#rWho").textContent = `${S.name} · ${S.cls||S.grade+"-сынып"} · жарыс ${S.room}`;
+  $("#rScore").textContent = `${st.correct}/${S.n}`;
+  $("#rStars").textContent = pct>=85?"⭐⭐⭐":pct>=60?"⭐⭐":pct>=35?"⭐":"💪";
+  $("#rMsg").textContent = S.why==="out" ? "Тест сайттан шыққаның үшін аяқталды." : pct>=85?"Керемет! Шыңға жақынсың!":pct>=60?"Жақсы! Қатеңді қарап шық.":"Берілме! Қатемен жұмыс — дайындықтың басы.";
+  const wrong = S.qs.map((q,i)=>({q,i})).filter(({q,i})=>!(S.ans[i]!==null && q.opts[S.ans[i]]===q.ans));
+  $("#rWrong").innerHTML = wrong.length ? wrong.map(({q,i})=>`<div class="wrong"><span class="hint">${i+1}. ${esc(q.t)}</span><br>${esc(q.q)}<br>${S.ans[i]!==null?`Сенің жауабың: <s>${esc(q.opts[S.ans[i]])}</s> · `:"Жауап берілмеген · "}Дұрысы: <b>${esc(q.ans)}</b></div>`).join("") : "<p style='font-size:20px'>🎉 Қате жоқ!</p>";
+  show("sRes");
+}
+
+/* ======================= ІСКЕ ҚОСУ ======================= */
+(function boot(){
+  const p = Object.fromEntries(new URLSearchParams(location.search));
+  if(p.r && /^\d{4}$/.test(p.r)){ joinRoom(p); return; }
+  show("home");
+})();
+</script>
+</body>
+</html>

@@ -20,6 +20,8 @@ function clean_(x) {
   return s;
 }
 function doPost(e) {
+  const d0 = JSON.parse((e && e.postData && e.postData.contents) || '{}');
+  if (d0.a === 'live' || d0.a === 'room' || d0.a === 'consent') return tjPost_(d0);   // TelefonJarys.gs
   const lock = LockService.getScriptLock();
   lock.waitLock(15000);
   try {
@@ -34,6 +36,7 @@ function doPost(e) {
 }
 function doGet(e) {
   const p = (e && e.parameter) || {};
+  if (p.a) return tjGet_(p);                                                     // TelefonJarys.gs
   if (p.key !== TEACHER_KEY) return out_({ ok: false, error: 'Кілт қате' });
   const since = Number(p.since || 0);
   const v = sheet_().getDataRange().getValues(); v.shift();

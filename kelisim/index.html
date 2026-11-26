@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ата-ана келісімі · Білім Арена — Шың 140</title>
+<meta name="author" content="Юлдашев Кадыржан Фазылович">
+<meta name="description" content="Қағаздың орнына онлайн ата-ана келісімі: тест, WhatsApp хабарлама, фото/бейнеге түсіру. Ө. Жәнібеков атындағы ЖББМ.">
+<style>
+:root{--bg:#0d1326;--bg2:#141c36;--panel:#1b2547;--line:#2e3c6e;--ink:#eef2ff;--mute:#9aa6d1;--ok:#3ddc84;--bad:#ff4d5e;--acc:#7c8cff;--inf:#ffb000;--mat:#ff7ad9;--phy:#5ce1e6}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1000px 600px at 80% -10%,#25336b 0,transparent 60%),var(--bg);color:var(--ink);font:17px/1.5 "Segoe UI","Trebuchet MS",system-ui,sans-serif}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+[hidden]{display:none!important}
+.wrap{max-width:620px;margin:0 auto;padding:16px 14px 40px}
+.top{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.brand{font-weight:800;font-size:24px;line-height:1.15;margin-right:auto}
+.brand span{background:linear-gradient(90deg,var(--inf),var(--mat),var(--phy));-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font-size:13px;font-weight:500;color:var(--mute)}
+.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;flex:none}
+.lang button{background:var(--panel);border:0;padding:8px 10px;font-weight:700;color:var(--mute)}
+.lang button.on{background:var(--acc);color:#fff}
+.card{background:linear-gradient(180deg,var(--panel),var(--bg2));border:2px solid var(--line);border-radius:18px;padding:18px;margin-bottom:14px}
+h1{font-size:28px;margin:0 0 6px;line-height:1.2}
+.hint{color:var(--mute);font-size:15px}
+label.f{display:block;margin:12px 0 6px;font-weight:700}
+.in{width:100%;background:#0f1734;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font-size:18px}
+.in:focus{outline:none;border-color:var(--acc)}
+.cons{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line)}
+.cons:first-of-type{border-top:0}
+.cons p{margin:0;flex:1}
+.cons p b{display:block}
+.yn{display:flex;flex:none;border:2px solid var(--line);border-radius:12px;overflow:hidden}
+.yn button{background:#111a3a;border:0;padding:10px 12px;font-weight:800;min-width:54px}
+.yn button.y.on{background:var(--ok);color:#062b14}
+.yn button.n.on{background:var(--bad);color:#fff}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-top:12px;font-weight:700}
+.chk input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:var(--ok)}
+.sigbox{position:relative;background:#fff;border-radius:12px;height:150px;touch-action:none;margin-top:6px}
+.sigbox canvas{width:100%;height:100%;display:block;border-radius:12px}
+.sigbox .ph{position:absolute;inset:0;display:grid;place-items:center;color:#9aa;pointer-events:none;font-size:16px}
+.sigtools{display:flex;justify-content:flex-end;margin-top:6px}
+.tbtn{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;font-size:15px}
+.big{width:100%;background:linear-gradient(90deg,#1fbf6b,var(--ok));border:0;border-radius:14px;padding:16px;font-size:21px;font-weight:800;color:#062b14;margin-top:16px}
+.big.red{background:none;border:2px solid var(--bad);color:var(--bad);font-size:17px;padding:12px}
+.err{color:var(--bad);font-weight:700;min-height:24px;margin-top:8px}
+.done{text-align:center}
+.done .ic{font-size:64px}
+.sum{text-align:left;background:#111a3a;border:1px solid var(--line);border-radius:12px;padding:12px;margin:12px 0}
+.sum div{padding:3px 0}
+.sum img{max-width:220px;background:#fff;border-radius:8px;margin-top:6px}
+footer{color:var(--mute);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><span>Білім Арена</span><small>Шың 140 · Ө. Жәнібеков атындағы ЖББМ</small></div>
+    <div class="lang"><button data-l="kk" class="on">ҚАЗ</button><button data-l="uz">ЎЗБ</button></div>
+  </div>
+
+  <form id="form" class="card" novalidate>
+    <h1 data-t="title"></h1>
+    <p class="hint" data-t="intro" style="margin:0"></p>
+    <div id="prev" class="hint" hidden style="margin-top:10px;color:var(--inf)"></div>
+
+    <label class="f" for="child" data-t="child"></label>
+    <input class="in" id="child" autocomplete="off" required>
+    <label class="f" for="cls" data-t="cls"></label>
+    <input class="in" id="cls" placeholder="5 А" autocomplete="off" required>
+    <label class="f" for="parent" data-t="parent"></label>
+    <input class="in" id="parent" autocomplete="name" required>
+    <label class="f" for="phone" data-t="phone"></label>
+    <input class="in" id="phone" type="tel" inputmode="tel" placeholder="+7 7__ ___ __ __" autocomplete="tel" required>
+
+    <h2 style="font-size:20px;margin:20px 0 4px" data-t="consH"></h2>
+    <div id="consList"></div>
+
+    <label class="chk"><input type="checkbox" id="iam"><span data-t="iam"></span></label>
+
+    <label class="f" data-t="sign"></label>
+    <div class="sigbox"><canvas id="sig" width="360" height="150"></canvas><div class="ph" id="sigPh" data-t="signPh"></div></div>
+    <div class="sigtools"><button type="button" class="tbtn" id="sigClr" data-t="clear"></button></div>
+
+    <p class="hint" data-t="privacy"></p>
+    <div class="err" id="err"></div>
+    <button class="big" id="send" type="submit" data-t="submit"></button>
+    <button class="big red" id="revoke" type="button" hidden data-t="revoke"></button>
+  </form>
+
+  <div class="card done" id="ok" hidden>
+    <div class="ic">✅</div>
+    <h1 id="okH"></h1>
+    <p data-t="okP"></p>
+    <div class="sum" id="sum"></div>
+    <p class="hint" data-t="okShot"></p>
+    <button class="tbtn" id="again" data-t="again"></button>
+  </div>
+
+  <footer>Шың 140 · Білім Арена · Юлдашев К.Ф.</footer>
+</div>
+
+<script src="../baqylau/config.js"></script>
+<script>
+{
+const API = (window.BQ_URL || "").trim();
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const load = (k,d) => { try{ const v=localStorage.getItem(k); return v?JSON.parse(v):d; }catch(e){ return d; } };
+const store = (k,v) => { try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
+
+const TX = {
+ kk:{
+  title:"Ата-ана келісімі",
+  intro:"Құрметті ата-ана! Балаңыз «Білім Арена» мен «Шың 140» платформаларында тест, жарыс және олимпиадаға дайындалады. Қағазға қол қоюдың орнына — осы онлайн нысанды толтырыңыз. 1 минут кетеді.",
+  child:"Баланың аты-жөні", cls:"Сыныбы", parent:"Ата-ананың аты-жөні", phone:"Телефон (WhatsApp)",
+  consH:"Келісесіз бе?",
+  c1:["Тест пен жарыстар","Баламның «Білім Арена» мен «Шың 140» платформаларында тест пен жарыстарға қатысуына және нәтижесі мұғалімнің кестесінде сақталуына келісемін."],
+  c2:["WhatsApp хабарлама","Баламның нәтижесі туралы мұғалімнен WhatsApp арқылы хабарлама алуға келісемін."],
+  c3:["Фото және бейне","Сабақ, тест, жарыс және олимпиада кезінде баламды фото/бейнеге түсіруге келісемін (мектептің оқу мақсатында)."],
+  c4:["Жариялау","Сол фото/бейнені мектептің ресми парақшаларында (Instagram, YouTube) жариялауға келісемін."],
+  yes:"Иә", no:"Жоқ",
+  iam:"Мен осы баланың ата-анасымын (заңды өкілімін).",
+  sign:"Саусағыңызбен қол қойыңыз", signPh:"✍️ Осы жерге қол қойыңыз", clear:"Тазалау",
+  privacy:"Мәліметтерді тек сынып мұғалімі көреді, үшінші тұлғаға берілмейді. Келісімді кез келген уақытта өзгертуге немесе қайтарып алуға болады — осы бетті қайта ашыңыз.",
+  submit:"✅ Келісім беру", revoke:"Келісімді толық қайтарып алу",
+  errFill:"Барлық жолды толтырыңыз.", errPhone:"Телефон нөмірін тексеріңіз.", errYN:"Әр сұраққа «Иә» не «Жоқ» деп жауап беріңіз.", errIam:"Ата-анасы екеніңізді белгілеңіз.", errSig:"Қол қойыңыз.",
+  okH:"Рахмет! Келісіміңіз қабылданды", okHr:"Келісім қайтарылып алынды", okP:"Мұғалім мұны өз кестесінде көреді.",
+  okShot:"Қаласаңыз, осы экранды скриншот етіп сақтап қойыңыз.", again:"Өзгерту", prev:"Сіз бұл телефоннан бұрын келісім бергенсіз: ",
+  date:"Күні", sAll:"Ата-анасы"
+ },
+ uz:{
+  title:"Ота-она розилиги",
+  intro:"Ҳурматли ота-она! Фарзандингиз «Билим Арена» ва «Шың 140» платформаларида тест, мусобақа ва олимпиадага тайёрланади. Қоғозга имзо қўйиш ўрнига — шу онлайн шаклни тўлдиринг. 1 дақиқа кетади.",
+  child:"Фарзандингизнинг исми-шарифи", cls:"Синфи", parent:"Ота-онанинг исми-шарифи", phone:"Телефон (WhatsApp)",
+  consH:"Розимисиз?",
+  c1:["Тест ва мусобақалар","Фарзандимнинг «Билим Арена» ва «Шың 140» платформаларида тест ва мусобақаларда қатнашишига ҳамда натижаси ўқитувчининг жадвалида сақланишига розиман."],
+  c2:["WhatsApp хабар","Фарзандимнинг натижаси ҳақида ўқитувчидан WhatsApp орқали хабар олишга розиман."],
+  c3:["Фото ва видео","Дарс, тест, мусобақа ва олимпиада пайтида фарзандимни фото/видеога олишга розиман (мактабнинг ўқув мақсадида)."],
+  c4:["Эълон қилиш","Ўша фото/видеоларни мактабнинг расмий саҳифаларида (Instagram, YouTube) эълон қилишга розиман."],
+  yes:"Ҳа", no:"Йўқ",
+  iam:"Мен шу боланинг ота-онасиман (қонуний вакилиман).",
+  sign:"Бармоғингиз билан имзо қўйинг", signPh:"✍️ Шу ерга имзо қўйинг", clear:"Тозалаш",
+  privacy:"Маълумотларни фақат синф ўқитувчиси кўради, учинчи шахсларга берилмайди. Розиликни исталган вақтда ўзгартириш ёки қайтариб олиш мумкин — шу саҳифани қайта очинг.",
+  submit:"✅ Розилик бериш", revoke:"Розиликни тўлиқ қайтариб олиш",
+  errFill:"Барча майдонларни тўлдиринг.", errPhone:"Телефон рақамини текширинг.", errYN:"Ҳар бир саволга «Ҳа» ёки «Йўқ» деб жавоб беринг.", errIam:"Ота-онаси эканингизни белгиланг.", errSig:"Имзо қўйинг.",
+  okH:"Раҳмат! Розилигингиз қабул қилинди", okHr:"Розилик қайтариб олинди", okP:"Ўқитувчи буни ўз жадвалида кўради.",
+  okShot:"Хоҳласангиз, шу экранни скриншот қилиб сақлаб қўйинг.", again:"Ўзгартириш", prev:"Сиз бу телефондан аввал розилик бергансиз: ",
+  date:"Сана", sAll:"Ота-онаси"
+ }
+};
+let L = load("ba_lang", (navigator.language||"").startsWith("uz") ? "uz" : "kk");
+const val = {c1:null,c2:null,c3:null,c4:null};
+
+function render(){
+  const t = TX[L];
+  document.documentElement.lang = L==="uz" ? "uz-Cyrl" : "kk";
+  document.querySelectorAll("[data-t]").forEach(el => { el.textContent = t[el.dataset.t] || ""; });
+  document.querySelectorAll(".lang button").forEach(b => b.classList.toggle("on", b.dataset.l===L));
+  $("#consList").innerHTML = ["c1","c2","c3","c4"].map(k => `<div class="cons"><p><b>${esc(t[k][0])}</b>${esc(t[k][1])}</p><div class="yn" data-k="${k}"><button type="button" class="y ${val[k]===true?"on":""}">${t.yes}</button><button type="button" class="n ${val[k]===false?"on":""}">${t.no}</button></div></div>`).join("");
+  $("#consList").querySelectorAll(".yn").forEach(g => {
+    g.querySelector(".y").onclick = () => { val[g.dataset.k]=true; render(); };
+    g.querySelector(".n").onclick = () => { val[g.dataset.k]=false; render(); };
+  });
+  const prev = load("ba_consent", null);
+  $("#prev").hidden = !prev; $("#revoke").hidden = !prev || prev.revoke;
+  if(prev) $("#prev").textContent = t.prev + prev.child + " · " + new Date(prev.t).toLocaleString("ru-RU");
+}
+document.querySelectorAll(".lang button").forEach(b => b.onclick = () => { L=b.dataset.l; store("ba_lang",L); render(); });
+
+/* --- қолтаңба --- */
+const cv = $("#sig"), cx = cv.getContext("2d");
+let drawing=false, inked=false;
+cx.lineWidth=2.6; cx.lineCap="round"; cx.lineJoin="round"; cx.strokeStyle="#0b1d4a";
+const pos = e => { const r=cv.getBoundingClientRect(); return [(e.clientX-r.left)*cv.width/r.width, (e.clientY-r.top)*cv.height/r.height]; };
+cv.addEventListener("pointerdown", e => { drawing=true; cv.setPointerCapture(e.pointerId); const [x,y]=pos(e); cx.beginPath(); cx.moveTo(x,y); });
+cv.addEventListener("pointermove", e => { if(!drawing) return; const [x,y]=pos(e); cx.lineTo(x,y); cx.stroke(); if(!inked){ inked=true; $("#sigPh").hidden=true; } });
+["pointerup","pointercancel","pointerleave"].forEach(ev => cv.addEventListener(ev, () => drawing=false));
+$("#sigClr").onclick = () => { cx.clearRect(0,0,cv.width,cv.height); inked=false; $("#sigPh").hidden=false; };
+
+/* --- жіберу --- */
+const phoneOk = p => { let d=p.replace(/\D/g,""); if(d.length===11&&d[0]==="8") d="7"+d.slice(1); if(d.length===10) d="7"+d; return d.length===11 ? "+"+d : ""; };
+function post(o){
+  if(!API){ const a=load("ba_demo_cons",[]); a.push(Object.assign({t:Date.now(), revoked:!!o.revoke, sig:o.sig?1:0}, o)); store("ba_demo_cons",a); return Promise.resolve(); }
+  return fetch(API, {method:"POST", mode:"no-cors", body:JSON.stringify(o)}).catch(()=>{});
+}
+function finish(o){
+  const t=TX[L];
+  store("ba_consent", {child:o.child, cls:o.cls, parent:o.parent, phone:o.phone, t:Date.now(), revoke:!!o.revoke});
+  $("#okH").textContent = o.revoke ? t.okHr : t.okH;
+  const y = v => v ? "✅ "+t.yes : "✖ "+t.no;
+  $("#sum").innerHTML = `<div><b>${esc(o.child)}</b> · ${esc(o.cls)}</div><div>${esc(t.sAll)}: ${esc(o.parent)} · ${esc(o.phone)}</div>` +
+    ["c1","c2","c3","c4"].map(k=>`<div>${esc(t[k][0])}: ${y(o[k])}</div>`).join("") +
+    `<div>${esc(t.date)}: ${new Date().toLocaleString("ru-RU")}</div>` + (o.sig?`<img src="${o.sig}" alt="">`:"");
+  $("#form").hidden=true; $("#ok").hidden=false; window.scrollTo(0,0);
+}
+function collect(){
+  const t=TX[L], e=$("#err");
+  const o = {a:"consent", child:$("#child").value.trim().replace(/\s+/g," "), cls:$("#cls").value.trim(), parent:$("#parent").value.trim(), phone:phoneOk($("#phone").value), lang:L};
+  if(!o.child||!o.cls||!o.parent||!$("#phone").value.trim()){ e.textContent=t.errFill; return null; }
+  if(!o.phone){ e.textContent=t.errPhone; return null; }
+  return o;
+}
+$("#form").onsubmit = async ev => {
+  ev.preventDefault();
+  const t=TX[L], e=$("#err"); e.textContent="";
+  const o = collect(); if(!o) return;
+  if(Object.values(val).some(v=>v===null)){ e.textContent=t.errYN; return; }
+  if(!$("#iam").checked){ e.textContent=t.errIam; return; }
+  if(!inked){ e.textContent=t.errSig; return; }
+  Object.assign(o, val, {sig: cv.toDataURL("image/png")});
+  $("#send").disabled=true; await post(o); $("#send").disabled=false;
+  finish(o);
+};
+$("#revoke").onclick = async () => {
+  const prev=load("ba_consent",null); if(!prev) return;
+  const o = {a:"consent", child:prev.child, cls:prev.cls, parent:prev.parent, phone:prev.phone, lang:L, c1:false,c2:false,c3:false,c4:false, revoke:true, sig:""};
+  await post(o); finish(o);
+};
+$("#again").onclick = () => { $("#ok").hidden=true; $("#form").hidden=false; render(); };
+
+/* бастапқы мәндер */
+const q = new URLSearchParams(location.search);
+const prev = load("ba_consent", null);
+if(q.get("c")) $("#cls").value = q.get("c");
+if(prev){ $("#child").value=prev.child; if(!q.get("c")) $("#cls").value=prev.cls; $("#parent").value=prev.parent; $("#phone").value=prev.phone; }
+render();
+}
+</script>
+</body>
+</html>
