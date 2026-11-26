@@ -34,6 +34,7 @@ function tjSheet_(name, head) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   let sh = ss.getSheetByName(name);
   if (!sh) { sh = ss.insertSheet(name); sh.appendRow(head); sh.setFrozenRows(1); sh.getRange(1, 1, 1, head.length).setFontWeight('bold'); }
+  if (sh.getRange(1, head.length).getValue() === '') sh.getRange(1, 1, 1, head.length).setValues([head]).setFontWeight('bold');   // ескі парақтың тақырыбын толықтыру
   return sh;
 }
 const TJ_LIVE_HEAD = ['Жаңартылды', 'Жарыс', 'Сынып', 'Аты-жөні', 'Дұрыс', 'Жауап берді', 'Барлығы', 'Күйі', 'Секунд', 'Әлсіз тақырып', 'Шығу саны'];
