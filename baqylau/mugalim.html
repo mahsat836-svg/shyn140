@@ -75,6 +75,18 @@ ol.steps li{margin:6px 0}
     <button class="btn" id="cCopy">Кодты көшіру</button>
     <pre id="code">Жүктелуде…</pre>
   </details>
+  <details id="mailBox" style="margin-top:12px"><summary>📧 Үздіктерді поштаға жіберу — jmahsat@inbox.ru (3 минут, бір рет)</summary>
+    <p class="muted" style="margin:8px 0">Күн сайын 18:00-де бүгінгі 1–2–3 орын (әр сынып пен пән бойынша), әр жұма 17:00-де «Апта үздіктері» мен «Сынып үздіктері» поштаға келеді. Code.gs өзгермейді.</p>
+    <ol class="steps">
+      <li>Google Кесте → <b>Кеңейтімдер → Apps Script</b>.</li>
+      <li>Сол жақтағы «Файлдар» жанындағы <b>«+» → «Сценарий»</b>, атауы: <b>Mail</b>.</li>
+      <li>Ішіндегіні өшіріп, төмендегі кодты қойыңыз, 💾 сақтаңыз.</li>
+      <li>Жоғарыдағы тізімнен <b>setupMailTriggers</b> таңдап → <b>▶ Орындау</b>. Google рұқсат сұрайды → рұқсат беріңіз.</li>
+      <li><b>testMail</b> таңдап → <b>▶ Орындау</b>. Поштаңызға тексеру хаты келеді (Спам қалтасын да қараңыз).</li>
+    </ol>
+    <button class="btn" id="mCopy">Mail кодын көшіру</button>
+    <pre id="mcode">Жүктелуде…</pre>
+  </details>
 </section>
 
 <h2>Қазір</h2>
@@ -140,6 +152,9 @@ $('#sSave').onclick = async () => {
 $('#sCopy').onclick = () => navigator.clipboard.writeText(studentLink());
 fetch('Code.gs').then(r => r.text()).then(t => $('#code').textContent = t).catch(() => $('#code').textContent = 'Code.gs файлын ашу мүмкін болмады.');
 $('#cCopy').onclick = () => navigator.clipboard.writeText($('#code').textContent);
+if (location.hash === '#mail') { $('#setup').hidden = false; fillSetup(); $('#mailBox').open = true; }
+fetch('Mail.gs').then(r => r.text()).then(t => $('#mcode').textContent = t).catch(() => $('#mcode').textContent = 'Mail.gs файлын ашу мүмкін болмады.');
+$('#mCopy').onclick = () => navigator.clipboard.writeText($('#mcode').textContent).then(() => { $('#mCopy').textContent = '✓ Көшірілді'; setTimeout(() => $('#mCopy').textContent = 'Mail кодын көшіру', 2000); });
 
 /* ---------- деректер ---------- */
 async function load() {
